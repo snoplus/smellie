@@ -214,22 +214,28 @@ def SEPIA2_COM_GetSerialNumber(iDevIdx,iSlotId):
 
 	SEPIA2_COM_GetSerialNumber_API(p1,p2,p3,p4)
 
+	#return p4.value
+
 def SEPIA2_SCM_GetLaserSoftLock(iDevIdx,iSlotId): 
 
-	pbSoftLocked = " " ##this produces a copy of previous memory
+	pbSoftLocked = 0 ##this produces a copy of previous memory
+	UCHARP = ctypes.POINTER(ctypes.c_ubyte) ## sets up an unsigned character pointer
 	##pbSoftLocked = "10" ## this produces 10
 	
-	SEPIA2_SCM_GetLaserSoftLock_Proto = ctypes.WINFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_char_p)
+	SEPIA2_SCM_GetLaserSoftLock_Proto = ctypes.WINFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,UCHARP)
 	SEPIA2_SCM_GetLaserSoftLock_Params = (1,"p1",0),(1,"p2",0),(1,"p3",0),
 	SEPIA2_SCM_GetLaserSoftLock_API = SEPIA2_SCM_GetLaserSoftLock_Proto(("SEPIA2_SCM_GetLaserSoftLock",sepiadll),SEPIA2_SCM_GetLaserSoftLock_Params)
 	
 	p1 = ctypes.c_int(iDevIdx)	   
 	p2 = ctypes.c_int(iSlotId)  
-	p3 = ctypes.c_char_p(pbSoftLocked)
+        
+        char_sepia = ctypes.c_int(pbSoftLocked)	
+	addr = ctypes.addressof(char_sepia)
+	p3 = ctypes.cast(addr, UCHARP)
 
 	SEPIA2_SCM_GetLaserSoftLock_API(p1,p2,p3)
 	
-	print p3.value 
+	return p3.contents.value
 
 def SEPIA2_SCM_SetLaserSoftLock(iDevIdx,iSlotId,pbSoftLocked): 
 
@@ -264,7 +270,7 @@ def SEPIA2_SCM_GetLaserLocked(iDevIdx,iSlotId):
 
 	SEPIA2_SCM_GetLaserLocked_API(p1,p2,p3)
 	
-	return p3.value
+	return p3.contents.value
 
 def SEPIA2_SOM_GetFreqTrigMode(iDevIdx, iSlotID):
         iFreqTrigMode = 0

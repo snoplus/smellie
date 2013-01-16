@@ -1,5 +1,3 @@
-#Written by Christopher Jones to control a Fibre Switch using an RS323 Serial Port
-
 import serial
 
 def SetFSChannel(channel_number):

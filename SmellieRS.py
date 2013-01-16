@@ -2,7 +2,7 @@
 # This requires the LabJackPython Software that has been adapted to work for a Windows 7 64-bit machine
 # Please Check the u12SMELLIE.py script for more details  
 
-import u12SMELLIE
+import u12SMELLIE,time
  
 d = u12SMELLIE.U12()
 
@@ -23,6 +23,8 @@ def Execute():
     d.eDigitalOut(0,0)
     #Raises D0
     d.eDigitalOut(0,1)
+    time.sleep(30)      ##time for sepia to power up 
+
 
 #gets the channel displayed on the Fibre Switch 
 def GetDisplayChannel():
