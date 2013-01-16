@@ -1,3 +1,5 @@
+#Written by Christopher Jones 11/01/2013
+
 import serial
 
 def SetFSChannel(channel_number):
