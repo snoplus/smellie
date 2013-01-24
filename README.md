@@ -4,15 +4,16 @@ smellie
 a scattering module in the embedded led light injection entity
 
 * file and function names are a work in progress but should be changed to be more self-explanatory,
-  e.g. fibreSwitch.py instead of fs.py,
-       laserSwitch.py instead of SmellieRS.py
+  e.g. laserSwitch.py instead of SmellieRS.py
        pysepiaUser.py instead of safepysepia.py
 
 * please update when altering or adding to code
 
 Contains:
-- fs.py -- Contains the commands for the fibre switch
-        -- SetFSChannel(x) writes through serial port to fibre switch to switch to channel "x"
+- fibreSwitch.py -- Contains the commands for controlling the fibre switch
+                 -- SetFSChannel(x) changes the fibre switch channel via serial port to the channel "x", between 1 and 70
+                 -- SetIOChannels(i, o) changes the fibre switch channel via serial port to the input channel "i", between 1 and 5, and output channel "o", between 1 and 14
+                        * The calculation of the overall channel number "x" from the input and output channels is done automatically by the function
 
 - SmellieRS.py -- Contains the commands for the laser switch
                -- ChannelUp() change selected channel up one number (0-5)
@@ -20,8 +21,7 @@ Contains:
                -- GetDisplayChannel() returns selected channel
                -- GetLastChannel() returns currently active channel
                -- SetRSChannel(x) changes selected channel to "x"
-               -- CheckExe() checks if Execute() command is in progress (hardware freezes user out while laser switch
-                             is happening so software needs to be aware of this)
+               -- CheckExe() checks if Execute() command is in progress (hardware freezes user out while laser switch is happening so software needs to be aware of this)
 
 - pysepia.py -- Contains the basic commands of the laser driver box
              -- These are just the default C++ functions in python wrappers.
@@ -39,13 +39,9 @@ Contains:
                  -- laser_soft_lock_on(device_id,slot_id) sets soft lock on
                  -- laser_soft_lock_off(device_id,slot_id) sets soft lock off
 
-- simple_smellie_run.py -- Contains a mock smellie "run" initialising the software, checking for errors,
-                           setting parameters before switching laser on. Laser is then locked and 
-                           system closed down.
+- simple_smellie_run.py -- Contains a mock smellie "run" initialising the software, checking for errors, setting parameters before switching laser on. Laser is then locked and system closed down.
 - tcpip_simple_smellie_run.py -- Contains a mock smellie "run" but with communication to ORCA via TCP/IP Protocol. 
 			   This program recieves commands from ORCA (from commands in smellie_orca_control.py).
-			   A run typically involves initialising the software, checking for errors,
-                           setting parameters before switching laser on. Laser is then locked and 
-                           system closed down. 
+			   A run typically involves initialising the software, checking for errors, setting parameters before switching laser on. Laser is then locked and system closed down. 
 - smellie_orca_control.py -- Contains the commands to control a SMELLIE RUN from the ORCA Terminal. 
 			   This communicates with SMELLIE via the tcpip_simple_smellie_run.py script 
