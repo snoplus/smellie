@@ -9,17 +9,17 @@ a scattering module in the embedded led light injection entity
 * please update when altering or adding to code
 
 Contains:
-* fibreSwitch.py - Contains the commands for controlling the fibre switch  
--- SetFSChannel(x): changes the fibre switch channel via serial port to the channel "x", between 1 and 70  
--- SetIOChannels(i, o): changes the fibre switch channel via serial port to the input channel "i", between 1 and 5, and output channel "o", between 1 and 14  
+* fibreSwitch.py - contains the commands for controlling the fibre switch  
+--  SetFSChannel(x): changes the fibre switch channel via serial port to the channel "x", between 1 and 70  
+--  SetIOChannels(i, o): changes the fibre switch channel via serial port to the input channel "i", between 1 and 5, and output channel "o", between 1 and 14  
 
-- laserSwitch.py -- Contains the commands for controlling the laser switch
-                 -- ChannelUp(): changes the selected channel up by 1
-                 -- Execute(): switches the active channel to the selected channel, and then waits 30 seconds to allow the SEPIA Unit to reset
-                 -- GetSelectedChannel(): returns the selected channel as shown on the Laser Switch's front panel 8-segment display
-                 -- GetActiveChannel(): returns the currently active channel as shown on the Laser Switch's front panel LEDs
-                 -- SetSelectedChannel(x): changes the selected channel to "x", between 0 and 5 inclusive
-                 -- CheckExecution(): checks if the Execute() command is currently in progress (the hardware locks out user-control while switching between lasers, so the software needs to be aware of this)
+* laserSwitch.py - contains the commands for controlling the laser switch  
+--  ChannelUp(): changes the selected channel up by 1  
+--  Execute(): switches the active channel to the selected channel, and then waits 30 seconds to allow the SEPIA Unit to reset  
+--  GetSelectedChannel(): returns the selected channel as shown on the Laser Switch's front panel 8-segment display  
+--  GetActiveChannel(): returns the currently active channel as shown on the Laser Switch's front panel LEDs  
+--  SetSelectedChannel(x): changes the selected channel to "x", between 0 and 5 inclusive  
+--  CheckExecution(): checks if the Execute() command is currently in progress (the hardware locks out user-control while switching between lasers, so the software needs to be aware of this)  
 
 
 (code below still needs to be cleaned up)
