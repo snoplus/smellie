@@ -40,7 +40,7 @@ def set_laser_intensity(new_intensity,iDevIdx):
 	SEPIA2_SLM_SetParameters(iDevIdx,200,frequency,new_intensity) 			##sets the Parameters on the laser			
         SEPIA2_SLM_GetParameters(iDevIdx, 200)
 
-# this function sets the frequency of the laser (Options are 80,40,20,10,external,internal)
+# this function sets the frequency of the laser (Options)
 def set_laser_frequency(new_frequency,iDevIdx):
 
 	if (new_frequency >= 0 and new_frequency < 8):

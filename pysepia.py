@@ -332,10 +332,10 @@ def SEPIA2_SLM_GetParameters(iDevIdx, iSlotId):
         
         returnval = SEPIA2_SLM_GetParameters_API(p1,p2,p3,p4,p5,p6)
         ##print "sucess or not for get parameters 0 or <0: " + str(returnval)
-        print "Intensity = " + str(p6.contents.value) + "%"
-        print "Frequency number = " + str(p3.contents.value)
-        print "Pulse Mode = " + str(p4.contents.value)
-        print "Head ID = " + str(p5.contents.value)
+        #print "Intensity = " + str(p6.contents.value) + "%"
+        #print "Frequency number = " + str(p3.contents.value)
+        #print "Pulse Mode = " + str(p4.contents.value)
+        #print "Head ID = " + str(p5.contents.value)
 	## this was added on 11/01/2013
 	return p6.contents.value,p3.contents.value,p4.contents.value,p5.contents.value 	## this was added on 11/01/2013
 
