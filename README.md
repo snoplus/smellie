@@ -9,9 +9,9 @@ a scattering module in the embedded led light injection entity
 * please update when altering or adding to code
 
 Contains:
-* fibreSwitch.py - Contains the commands for controlling the fibre switch
--- SetFSChannel(x): changes the fibre switch channel via serial port to the channel "x", between 1 and 70
--- SetIOChannels(i, o): changes the fibre switch channel via serial port to the input channel "i", between 1 and 5, and output channel "o", between 1 and 14
+* fibreSwitch.py - Contains the commands for controlling the fibre switch  
+-- SetFSChannel(x): changes the fibre switch channel via serial port to the channel "x", between 1 and 70  
+-- SetIOChannels(i, o): changes the fibre switch channel via serial port to the input channel "i", between 1 and 5, and output channel "o", between 1 and 14  
 
 - laserSwitch.py -- Contains the commands for controlling the laser switch
                  -- ChannelUp(): changes the selected channel up by 1
