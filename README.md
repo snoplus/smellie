@@ -4,24 +4,25 @@ smellie
 a scattering module in the embedded led light injection entity
 
 * file and function names are a work in progress but should be changed to be more self-explanatory,
-  e.g. laserSwitch.py instead of SmellieRS.py
-       pysepiaUser.py instead of safepysepia.py
+  e.g. pysepiaUser.py instead of safepysepia.py
 
 * please update when altering or adding to code
 
 Contains:
-- fibreSwitch.py -- Contains the commands for controlling the fibre switch
-                 -- SetFSChannel(x) changes the fibre switch channel via serial port to the channel "x", between 1 and 70
-                 -- SetIOChannels(i, o) changes the fibre switch channel via serial port to the input channel "i", between 1 and 5, and output channel "o", between 1 and 14
-                        * The calculation of the overall channel number "x" from the input and output channels is done automatically by the function
+* fibreSwitch.py - Contains the commands for controlling the fibre switch
++ SetFSChannel(x): changes the fibre switch channel via serial port to the channel "x", between 1 and 70
++ SetIOChannels(i, o): changes the fibre switch channel via serial port to the input channel "i", between 1 and 5, and output channel "o", between 1 and 14
 
-- SmellieRS.py -- Contains the commands for the laser switch
-               -- ChannelUp() change selected channel up one number (0-5)
-               -- Execute() switches to selected channel and waits 30s to allow laser driver to reset
-               -- GetDisplayChannel() returns selected channel
-               -- GetLastChannel() returns currently active channel
-               -- SetRSChannel(x) changes selected channel to "x"
-               -- CheckExe() checks if Execute() command is in progress (hardware freezes user out while laser switch is happening so software needs to be aware of this)
+- laserSwitch.py -- Contains the commands for controlling the laser switch
+                 -- ChannelUp(): changes the selected channel up by 1
+                 -- Execute(): switches the active channel to the selected channel, and then waits 30 seconds to allow the SEPIA Unit to reset
+                 -- GetSelectedChannel(): returns the selected channel as shown on the Laser Switch's front panel 8-segment display
+                 -- GetActiveChannel(): returns the currently active channel as shown on the Laser Switch's front panel LEDs
+                 -- SetSelectedChannel(x): changes the selected channel to "x", between 0 and 5 inclusive
+                 -- CheckExecution(): checks if the Execute() command is currently in progress (the hardware locks out user-control while switching between lasers, so the software needs to be aware of this)
+
+
+(code below still needs to be cleaned up)
 
 - pysepia.py -- Contains the basic commands of the laser driver box
              -- These are just the default C++ functions in python wrappers.
