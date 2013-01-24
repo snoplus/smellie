@@ -79,7 +79,7 @@ print "here check safe states"
 
 #setting up the relay box
 
-rs.SetRSChannel(4)				##sets the relay channel to 1
+rs.SetRSChannel(3)				##sets the relay channel to 1
 sepia.close(iDevIdx)
 rs.Execute()                                    ##executes the relay switch channel
 iDevIdx,iModuleType,iSlotID = sepia.initialise() #Initialise the Sepia 2 box
@@ -99,7 +99,7 @@ print "here2"
 #sepia.close(iDevIdx)
 #sys.exit("forced exit here")
 
-fs.SetFSChannel(54)				##sets the fibre switch channel to 1 
+fs.SetFSChannel(29)				##sets the fibre switch channel to 1 
 check_set_states(iDevIdx,iSlotID,input_intensity,input_frequency)
 
 ##TODO: Dry test using only the PMT's (this section needs to be put in ) 
@@ -107,7 +107,7 @@ check_set_states(iDevIdx,iSlotID,input_intensity,input_frequency)
 ##TODO: Send ORCA Parameters 
 
 sepia.laser_soft_lock_off(iDevIdx,iSlotID)		## this function unlocks the laser 
-time.sleep(5)						## pulse laser for 10 seconds
+time.sleep(30)						## pulse laser for 10 seconds
 sepia.laser_soft_lock_on(iDevIdx,iSlotID)
 set_safe_states(iDevIdx,iSlotID)	##sets all the laser components to their safe states 
 ##TODO: Check that the states have been set properly 

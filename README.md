@@ -42,3 +42,10 @@ Contains:
 - simple_smellie_run.py -- Contains a mock smellie "run" initialising the software, checking for errors,
                            setting parameters before switching laser on. Laser is then locked and 
                            system closed down.
+- tcpip_simple_smellie_run.py -- Contains a mock smellie "run" but with communication to ORCA via TCP/IP Protocol. 
+			   This program recieves commands from ORCA (from commands in smellie_orca_control.py).
+			   A run typically involves initialising the software, checking for errors,
+                           setting parameters before switching laser on. Laser is then locked and 
+                           system closed down. 
+- smellie_orca_control.py -- Contains the commands to control a SMELLIE RUN from the ORCA Terminal. 
+			   This communicates with SMELLIE via the tcpip_simple_smellie_run.py script 
