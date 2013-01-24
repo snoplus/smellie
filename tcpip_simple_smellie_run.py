@@ -1,6 +1,6 @@
 ## Written by Christopher Jones 22/01/2013
 ## This is a simple SMELLIE run 
-## SmellieRS = relay switch on smellie, fs = fibre switch on smellie, safepysepia are safe functions for the sepia 2 laser box 
+## SmellieRS = relay switch on smellie, fibreSwitch = fibre switch on smellie, safepysepia are safe functions for the sepia 2 laser box 
 
 # Import all the functions in these python modules
 
@@ -8,7 +8,7 @@ import sys,time
 import safepysepia as sepia
 import pysepia
 import SmellieRS as rs
-import fs
+import fibreSwitch as fs
 import socket as conn                     # get socket constructor and constants
 
 

@@ -82,7 +82,7 @@ def CheckExe():
 	    return  
 
 def help():
-	print "SmellieFS Commands include:\n -	SetChannel(0-5)\n -	GetLastChannel()\n -	Execute()\n -	GetDisplayChannel()\n -	ChannelUp()\n -	help()\n -	CheckExe()\n Please see the LabJackPython module for more information https://github.com/labjack/LabJackPython"            
+	print "SmellieRS Commands include:\n -	SetChannel(0-5)\n -	GetLastChannel()\n -	Execute()\n -	GetDisplayChannel()\n -	ChannelUp()\n -	help()\n -	CheckExe()\n Please see the LabJackPython module for more information https://github.com/labjack/LabJackPython"            
 
 
 
