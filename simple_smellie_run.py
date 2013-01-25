@@ -1,10 +1,10 @@
 # This is a simple SMELLIE run 
 # Written by Christopher Jones (11/01/2013)
-# Additional changes by Krish Majumdar (24/01/2013)
+# Additional changes by Krish Majumdar (24 and 25/01/2013)
 
 # Import all functions found in the following python modules
 import sys, time
-import safepysepia as sepia		# safe functions for the sepia 2 laser box 
+import pysepiaUser as sepia		# User commands and functions for the SEPIA II Laser Driver Unit
 import pysepia
 import laserSwitch as rs		# commands for the Laser Switch
 import fibreSwitch as fs		# commands for the Fibre Switch
@@ -27,7 +27,7 @@ def set_safe_states(iDevIdx,iSlotID):
 
 
 def check_safe_states(iDevIdx,iSlotID):
-	intensity,frequency_number,pulse_mode,head_id = sepia.get_laser_states(iDevIdx)
+	intensity,frequency_number,pulse_mode,head_id = sepia.get_laser_parameters(iDevIdx)
         print intensity,frequency_number,pulse_mode,head_id
 	if (intensity != 0 or frequency_number != 6 or pulse_mode != 1):
 		##TODO: Send command to ORCA to cancel the run
@@ -51,7 +51,7 @@ def check_safe_states(iDevIdx,iSlotID):
 	return 	
 
 def check_set_states(iDevIdx,iSlotID,input_intensity,input_frequency):
-	intensity2,frequency_number2,pulse_mode2,head_id2 = sepia.get_laser_states(iDevIdx)
+	intensity2,frequency_number2,pulse_mode2,head_id2 = sepia.get_laser_parameters(iDevIdx)
 	if (intensity2 != input_intensity or frequency_number2 != input_frequency):
 		##TODO: Send command to ORCA to cancel the run 		
 		sys.exit('States have not been correctly set! Aborting run!')
