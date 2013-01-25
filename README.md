@@ -1,12 +1,10 @@
-smellie
+SMELLIE
 =======
 
-a scattering module in the embedded led light injection entity
+Scattering Module for the Embedded LED Light Injection Entity
 
-* file and function names are a work in progress but should be changed to be more self-explanatory,
-  e.g. pysepiaUser.py instead of safepysepia.py
-
-* please update when altering or adding to code
+* File and function names are a work in progress
+* Please update this readme when altering or adding to the code
 
 Contains:
 * fibreSwitch.py - contains the commands for controlling the fibre switch  
@@ -21,24 +19,26 @@ Contains:
 -- SetSelectedChannel(x): changes the selected channel to "x", between 0 and 5 inclusive  
 -- CheckExecution(): checks if the Execute() command is currently in progress (the hardware locks out user-control while switching between lasers, so the software needs to be aware of this)  
 
+* pysepia.py  - contains the basic commands for controlling the SEPIA II Laser Driver unit  
+-- These are just the default C++ functions in python wrappers  
+-- More details can be found in the Sepia II Users Manual  
+-- THIS SCRIPT SHOULD NOT BE ALTERED
+
+* pysepiaUser.py - contains the commands for Users to control the SEPIA II Laser Driver unit  
+-- All pysepia.py commands are available here, but now arranged into more user-friendly forms
+-- initialise(): opens USB communication, gets module map, device id, module type, etc ...
+-- close(): frees module map and closes USB communication
+-- check_pulse_mode(pulse_mode): checks that the laser is set to "Pulse" mode rather than "Continuous"
+-- set_laser_intensity(new_intensity,device_id): sets laser intensity, between 0 and 100
+-- set_laser_frequency(new_frequency,device_id): sets laser frequency, integer between 0 and 8
+-- get_laser_parameters(device_id): displays the intensity, frequency, pulse mode and head id 
+-- get_laser_lock_status(device_id,slot_id): checks whether the laser is soft-locked
+-- laser_soft_lock_on(device_id,slot_id): sets the laser soft-lock to "on"
+-- laser_soft_lock_off(device_id,slot_id): sets the laser soft-lock to "off"
+
 
 (code below still needs to be cleaned up)
 
-- pysepia.py -- Contains the basic commands of the laser driver box
-             -- These are just the default C++ functions in python wrappers.
-             -- More details in Sepia2 users manual
-
-- safepysepia.py -- Contains commands for the user for the laser driver box
-                 -- The basic pysepia commands arranged into useful forms
-                 -- initialise() opens USB communication, gets module map, device id, module type, etc...
-                 -- close() free module map and close USB communication
-                 -- check_pulse_mode(pulse_mode) check laser is set to pulse mode rather than continuous
-                 -- set_laser_intensity(new_intensity,device_id) sets laser intensity (if sensible) 
-                 -- set_laser_frequency(new_frequency,device_id) sets laser frequency (if sensible)
-                 -- get_laser_states(device_id) gets intensity, frequency, pulse mode, head id 
-                 -- get_laser_lock_status(device_id,slot_id) checks whether laser is locked
-                 -- laser_soft_lock_on(device_id,slot_id) sets soft lock on
-                 -- laser_soft_lock_off(device_id,slot_id) sets soft lock off
 
 - simple_smellie_run.py -- Contains a mock smellie "run" initialising the software, checking for errors, setting parameters before switching laser on. Laser is then locked and system closed down.
 - tcpip_simple_smellie_run.py -- Contains a mock smellie "run" but with communication to ORCA via TCP/IP Protocol. 
