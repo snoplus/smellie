@@ -1,15 +1,14 @@
-## Written by Christopher Jones 22/01/2013
-## This is a simple SMELLIE run 
-## SmellieRS = relay switch on smellie, fibreSwitch = fibre switch on smellie, safepysepia are safe functions for the sepia 2 laser box 
+# This is a simple SMELLIE run 
+# Written by Christopher Jones (11/01/2013)
+# Additional changes by Krish Majumdar (24/01/2013)
 
-# Import all the functions in these python modules
-
-import sys,time
-import safepysepia as sepia
+# Import all functions found in the following python modules
+import sys, time
+import safepysepia as sepia		# safe functions for the sepia 2 laser box 
 import pysepia
-import SmellieRS as rs
-import fibreSwitch as fs
-import socket as conn                     # get socket constructor and constants
+import laserSwitch as rs		# commands for the Laser Switch
+import fibreSwitch as fs		# commands for the Fibre Switch
+import socket as conn           # Socket constructor and constants
 
 
 ##TO NOTE: sys.exit() commands are only in place for the moment in reality these would abort the run and send a message to ORCA 
@@ -22,7 +21,7 @@ def set_safe_states(iDevIdx,iSlotID):
 	sepia.set_laser_intensity(0,iDevIdx)          #sets the intensity to 0%
 	## TODO: Need to fix the frequencies in safepysepia and also need to check the numbers for internal and external triggers. 
 	sepia.set_laser_frequency(6,iDevIdx) 		##sets the frequency to external trigger need to check this
-	rs.SetRSChannel(0)			        ##sets the relay box to channel 0 (default channel)
+	rs.SetSelectedChannel(0)			        ##sets the relay box to channel 0 (default channel)
 	sepia.close(iDevIdx)
 	rs.Execute()                                    ##executes the relay switch channel
 	
@@ -50,10 +49,10 @@ def check_safe_states(iDevIdx,iSlotID,connection):
                 connection.send(sepia_wrong_pulse_mode_flag)
                 main() ##Cancel run and only continue if a new ORCA command is sent    
 
-	relay_switch_default_channel = rs.GetDisplayChannel() ##Check relay switch channel status 	
+	relay_switch_default_channel = rs.GetSelectedChannel() ##Check relay switch channel status 	
 	if (relay_switch_default_channel != 0):
                 print "Relay Switch box not set to correct default channel"
-                rs.SetRSChannel(0)
+                rs.SetSelectedChannel(0)
                 rs.Execute()
                 connection.send(relay_switch_wrong_default_flag)
                 main()
@@ -81,7 +80,7 @@ def check_sepia_box_connection(iModuleType,connection):
                 connection.send(continue_flag)
 
 def check_relay_switch(connection):
-        check_relay_switch = rs.GetDisplayChannel()
+        check_relay_switch = rs.GetSelectedChannel()
         if (check_relay_switch == 7):
                 print "Relay Switch Box not connected properly to power and/or SNODROP DAQ"
                 connection.send(relay_switch_no_connection_flag)
@@ -166,7 +165,7 @@ main()
 sys.exit("bad exit")
 #setting up the relay box
 
-rs.SetRSChannel(3)				##sets the relay channel to 1
+rs.SetSelectedChannel(3)				##sets the relay channel to 1
 sepia.close(iDevIdx)
 rs.Execute()                                    ##executes the relay switch channel
 iDevIdx,iModuleType,iSlotID = sepia.initialise() #Initialise the Sepia 2 box
