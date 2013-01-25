@@ -4,7 +4,7 @@ SMELLIE
 Scattering Module for the Embedded LED Light Injection Entity
 
 * File and function names are a work in progress
-* Please update this readme when altering or adding to the code
+* Please update this README when altering or adding to the code
 
 Contains:
 * fibreSwitch.py - contains the commands for controlling the fibre switch  
@@ -25,16 +25,16 @@ Contains:
 -- THIS SCRIPT SHOULD NOT BE ALTERED
 
 * pysepiaUser.py - contains the commands for Users to control the SEPIA II Laser Driver unit  
--- All pysepia.py commands are available here, but now arranged into more user-friendly forms
--- initialise(): opens USB communication, gets module map, device id, module type, etc ...
--- close(): frees module map and closes USB communication
--- check_pulse_mode(pulse_mode): checks that the laser is set to "Pulse" mode rather than "Continuous"
--- set_laser_intensity(new_intensity,device_id): sets laser intensity, between 0 and 100
--- set_laser_frequency(new_frequency,device_id): sets laser frequency, integer between 0 and 8
--- get_laser_parameters(device_id): displays the intensity, frequency, pulse mode and head id 
--- get_laser_lock_status(device_id,slot_id): checks whether the laser is soft-locked
--- laser_soft_lock_on(device_id,slot_id): sets the laser soft-lock to "on"
--- laser_soft_lock_off(device_id,slot_id): sets the laser soft-lock to "off"
+-- All pysepia.py commands are available here, but now arranged into more user-friendly forms  
+-- initialise(): opens USB communication, gets module map, device id, module type, etc ...  
+-- close(): frees module map and closes USB communication  
+-- check_pulse_mode(pulse_mode): checks that the laser is set to "Pulse" mode rather than "Continuous"  
+-- set_laser_intensity(new_intensity,device_id): sets laser intensity, between 0 and 100  
+-- set_laser_frequency(new_frequency,device_id): sets laser frequency, integer between 0 and 8  
+-- get_laser_parameters(device_id): displays the intensity, frequency, pulse mode and head id  
+-- get_laser_lock_status(device_id,slot_id): checks whether the laser is soft-locked  
+-- laser_soft_lock_on(device_id,slot_id): sets the laser soft-lock to "on"  
+-- laser_soft_lock_off(device_id,slot_id): sets the laser soft-lock to "off"  
 
 
 (code below still needs to be cleaned up)
