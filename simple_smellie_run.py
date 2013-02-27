@@ -1,15 +1,16 @@
-# This is a simple SMELLIE run 
-# Written by Christopher Jones (11/01/2013)
-# Additional changes by Krish Majumdar (24 and 25/01/2013)
+## Written by Christopher Jones 11/01/2013
+## This is a simple SMELLIE run 
+## SmellieRS = relay switch on smellie, fs = fibre switch on smellie, safepysepia are safe functions for the sepia 2 laser box 
 
-# Import all functions found in the following python modules
-import sys, time
-import pysepiaUser as sepia		# User commands and functions for the SEPIA II Laser Driver Unit
+# Import all the functions in these python modules
+
+import sys,time
+import safepysepia as sepia
 import pysepia
-import laserSwitch as rs		# commands for the Laser Switch
-import fibreSwitch as fs		# commands for the Fibre Switch
+import SmellieRS as rs
+import fs 
 
-# NOTE: sys.exit() commands are only in place for the moment ... in reality, these would abort the run and send a message to ORCA 
+##TO NOTE: sys.exit() commands are only in place for the moment in reality these would abort the run and send a message to ORCA 
 
 
 def set_safe_states(iDevIdx,iSlotID):
@@ -17,7 +18,7 @@ def set_safe_states(iDevIdx,iSlotID):
 	sepia.set_laser_intensity(0,iDevIdx)          #sets the intensity to 0%
 	## TODO: Need to fix the frequencies in safepysepia and also need to check the numbers for internal and external triggers. 
 	sepia.set_laser_frequency(6,iDevIdx) 		##sets the frequency to external trigger need to check this
-	rs.SetSelectedChannel(0)			        ##sets the laser switch to channel 0 (default channel)
+	rs.SetRSChannel(0)			        ##sets the relay box to channel 0 (default channel)
 	sepia.close(iDevIdx)
 	rs.Execute()                                    ##executes the relay switch channel
         #sepia.initialise()
@@ -27,14 +28,14 @@ def set_safe_states(iDevIdx,iSlotID):
 
 
 def check_safe_states(iDevIdx,iSlotID):
-	intensity,frequency_number,pulse_mode,head_id = sepia.get_laser_parameters(iDevIdx)
+	intensity,frequency_number,pulse_mode,head_id = sepia.get_laser_states(iDevIdx)
         print intensity,frequency_number,pulse_mode,head_id
 	if (intensity != 0 or frequency_number != 6 or pulse_mode != 1):
 		##TODO: Send command to ORCA to cancel the run
         	sepia.set_laser_intensity(0,iDevIdx)
 		sys.exit('Safe states are not correctly set! Aborting run! (1)')
 	##Check relay switch channel status 	
-	relay_switch_default_channel = rs.GetSelectedChannel()
+	relay_switch_default_channel = rs.GetDisplayChannel()
 	if (relay_switch_default_channel != 0):
 		##TODO: Send command to ORCA to cancel the run
                 print "Stuff going wrong"
@@ -51,7 +52,7 @@ def check_safe_states(iDevIdx,iSlotID):
 	return 	
 
 def check_set_states(iDevIdx,iSlotID,input_intensity,input_frequency):
-	intensity2,frequency_number2,pulse_mode2,head_id2 = sepia.get_laser_parameters(iDevIdx)
+	intensity2,frequency_number2,pulse_mode2,head_id2 = sepia.get_laser_states(iDevIdx)
 	if (intensity2 != input_intensity or frequency_number2 != input_frequency):
 		##TODO: Send command to ORCA to cancel the run 		
 		sys.exit('States have not been correctly set! Aborting run!')
@@ -78,7 +79,7 @@ print "here check safe states"
 
 #setting up the relay box
 
-rs.SetSelectedChannel(3)				##sets the relay channel to 1
+rs.SetRSChannel(3)				##sets the relay channel to 1
 sepia.close(iDevIdx)
 rs.Execute()                                    ##executes the relay switch channel
 iDevIdx,iModuleType,iSlotID = sepia.initialise() #Initialise the Sepia 2 box
