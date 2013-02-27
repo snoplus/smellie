@@ -1,0 +1,68 @@
+{
+"doc_type": "source",
+"run_name": "SMELLIE",
+"approved": true,
+
+"hw": [
+    {
+        "sub_run_id": 1,
+        "relay_switch_channel": 1,
+        "set_intensity": 100
+    },
+    {
+        "sub_run_id": 2,
+        "relay_switch_channel": 2,
+        "set_intensity": 100
+    },
+    {
+        "sub_run_id": 3,
+        "relay_switch_channel": 3,
+        "set_intensity": 100
+    },
+    {
+        "sub_run_id": 4,
+        "relay_switch_channel": 4,
+        "set_intensity": 100
+    },
+    {
+        "sub_run_id": 5,
+        "relay_switch_channel": 5,
+        "set_intensity": 100
+    },
+    {
+        "sub_run_id": 6,
+        "relay_switch_channel": 6,
+        "set_intensity": 100
+    },
+    {
+        "sub_run_id": 7,
+        "relay_switch_channel": 7,
+        "set_intensity": 100
+    },
+    {
+        "sub_run_id": 8,
+        "relay_switch_channel": 8,
+        "set_intensity": 100
+    }
+],
+
+"run_list": [
+    {
+        "run_id": 1,
+        "hw": [ ],
+        "laser_selected": [2],
+        "smellie_driven": true,
+        "nb_pulses": 10000,
+        "smellie_pulse_rate": 100
+    },
+    {
+        "run_id": 2,
+        "hw": [ ],
+        "led_selected": [1],
+        "smellie_driven": true,
+        "nb_pulses": 10000,
+        "sellie_pulse_rate": 1000
+    }
+]
+}
+
