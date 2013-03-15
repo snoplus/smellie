@@ -1,0 +1,31 @@
+
+The Monitoring PMT Units (MPU) must be kept completely light-tight in order to give reliable results.
+For each of the scenarios detailed below, note the RMS of the PMT-Out signal as measured by an oscilloscope connected via a short-length BNC cable to the PMT-Out socket.
+The scenarios should be performed in the order given, and obviously with the MPU's lid screwed tightly on.
+
+--------------------------------------------------
+
+
+1) No external lights, MPU power OFF, no fibre connected to the MPU
+	- whatever value this gives is due to the scope itself - digital scopes will produce their own internal noise.  This reading can therefore be taken as the "zero" baseline.
+
+2) No external lights, MPU Power ON, no fibre connected to the MPU
+	- any change from the value in step 1) above must be due to noise in the (now powered) electronics themselves.
+	- the electronic noise level at the time of assembling the MPU was found to be around 5 microvolts.
+
+3) External lights ON, MPU Power ON, no fibre connected to the MPU
+	- any change from the value in step 2) above indicates that there is indeed a light-leak somewhere.
+	- check for gaps between components, or ill-fitting gaskets or aluminium plates in the fibre-coupler.  Also check that the MPU lid is tightly screwed on.
+
+4) No external lights, MPU Power ON, fibre IS connected to the MPU
+	- this should be exactly the same as the value in step 2) above.
+	- if there is any change from the value in step 2), try covering the entire fibre to shield it from external light.
+
+5) External lights ON, MPU Power ON, fibre IS connected to the MPU
+	- any change from the value in step 3) above indicates that the fibre is not connecting correctly into the fibre coupler.
+	- check that the fibre is indeed secure and not moving around in the coupler assembly.
+
+--------------------------------------------------
+
+
+If the MPU is completely light-tight, all 5 steps above will produce identical values of the signal RMS.
