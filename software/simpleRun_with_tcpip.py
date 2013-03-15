@@ -1,6 +1,6 @@
 # This is a Simple SMELLIE Run that uses the TCP/IP Networking to Communicate between SNOdrop and another computer (simulating the use of ORCA)
 # Written by Christopher Jones (18/02/2013)
-# Additional changes by Krish Majumdar (04/03/2013, 05/03/2013)
+# Additional changes by Krish Majumdar (04/03/2013, 05/03/2013, 15/03/2013)
 
 # Import all the functions in the following python modules:
 import sys, time
@@ -9,7 +9,7 @@ import pysepia
 import laserSwitch as rs
 import fibreSwitch as fs
 import socket as conn                # socket constructor and constants
-import sm_analogue as ni
+import niADC as ni
 
 
 # Incorporate a timeout on the socket
@@ -135,6 +135,30 @@ def ORCA_set_laser_parameters(connection):
         main()
 
 
+def complete_self_test(connection, iDevIdx, iSlotID):
+    print "Simple TCP/IP Run (Complete Self Test) - Beginning complete Self-Test ... "
+
+    read_signal = ni.AcquireAnalogue()
+    number_of_measurements = 10
+    voltage_signal = read_signal.start(number_of_measurements)
+    read_signal.stop()
+    print "Simple TCP/IP Run (Complete Self Test) - Voltage Signal: " + voltage_signal
+        
+	## TODO Self-Test is to performed here!!!
+        
+	## NEED TO CHANGE THE LINE BELOW ONCE SELF-TEST HAS BEEN IMPLEMENTED
+    self_test_status = 1
+    ## NEED TO CHANGE THE LINE ABOVE ONCE SELF-TEST HAS BEEN IMPLEMENTED
+        
+	if (self_test_status == 1):
+        print "Simple TCP/IP Run (Complete Self Test) - Self-Test was Successful"
+        connection.send(continue_flag)
+    else:
+        print "Simple TCP/IP Run (Complete Self Test) - Self-Test Failed"
+        connection.send(self_test_fail)
+        main()
+
+
 # Wait for a TCP/IP command (from ORCA), and then check and set the Selected Fibre Switch Channel
 def ORCA_set_fs_channel(connection):
     fs_channel_set = timeout(connection, 10)    # get the fibreSwitch channel, with a 10 second timeout
@@ -186,30 +210,6 @@ except:
     sepiaUser.laser_soft_lock_on(iDevIdx, iSlotID)
     connection.send(run_failure_flag)
     main()
-
-
-def complete_self_test(connection, iDevIdx, iSlotID):
-    print "Simple TCP/IP Run (Complete Self Test) - Beginning complete Self-Test ... "
-
-    read_signal = ni.AcquireAnalogue()
-    number_of_measurements = 10
-    voltage_signal = read_signal.start(number_of_measurements)
-    read_signal.stop()
-    print "Simple TCP/IP Run (Complete Self Test) - Voltage Signal: " + voltage_signal
-        
-	## TODO Self-Test is to performed here!!!
-        
-	## NEED TO CHANGE THE LINE BELOW ONCE SELF-TEST HAS BEEN IMPLEMENTED
-    self_test_status = 1
-    ## NEED TO CHANGE THE LINE ABOVE ONCE SELF-TEST HAS BEEN IMPLEMENTED
-        
-	if (self_test_status == 1):
-        print "Simple TCP/IP Run (Complete Self Test) - Self-Test was Successful"
-        connection.send(continue_flag)
-    else:
-        print "Simple TCP/IP Run (Complete Self Test) - Self-Test Failed"
-        connection.send(self_test_fail)
-        main()
 
 
 ##### START OF THE MAIN PROGRAM ####################################################################################################
@@ -319,3 +319,5 @@ except conn.timeout:
     main()
 
 sys.exit("Simple TCP/IP Run (Main Try/Catch) - bad exit")
+
+

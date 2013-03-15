@@ -8,7 +8,7 @@ import pysepiaUser as sepiaUser
 import pysepia
 import laserSwitch as rs
 import fibreSwitch as fs
-import sm_analogue as ni
+import niADC as ni
 
 
 def set_to_safe_state(iDevIdx, iSlotID):
@@ -42,22 +42,21 @@ def test_run(ls_channel, fs_input_channel, logfile, iDevIdx, iModuleType, iSlotI
         sepiaUser.laser_soft_lock_off(iDevIdx, iSlotID)		     # unlock the laser 
         time.sleep(1)						
 
-        # this section of code is for generating a pulse via the NI Box, and reading the PMT value #
-        ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##
-        #trigger_frequency = 10000
-        #number_of_pulses = 100000
-        #digi_trig = ni.GenerateDigitalTrigger(trigger_frequency,number_of_pulses)
-        #read_signal = ni.AcquireAnalogue()
-        #number_of_measurements = 1  
-        #voltage_signal = str(read_signal.start(number_of_measurements))
-        #digi_trig.start()
-        #digi_trig.stop()
-        #read_signal = ni.AcquireAnalogue()
-        #a = raw_input("Generating pulse train. Press Enter to interrupt ...\n")
-        #read_signal.stop()
-        #print voltage_signal                      # we need to decide how we would like this data to be outputted
-        #logfile.write(str(ls_channel) + '\t' + str(channel_number) + '\t' + voltage_signal[1:-1] + '\n')
-        ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##
+        # this section of code is for generating a pulse via the NI Box, and reading the PMT value
+        trigger_frequency = 10000
+        number_of_pulses = 100000
+        digi_trig = ni.GenerateDigitalTrigger(trigger_frequency, number_of_pulses)
+        read_signal = ni.AcquireAnalogue()
+        number_of_measurements = 1  
+        voltage_signal = str(read_signal.start(number_of_measurements))
+		digi_trig.start()
+        
+		digi_trig.stop()
+        read_signal = ni.AcquireAnalogue()
+        a = raw_input("Generating pulse train ... press Enter to interrupt ...\n")
+        read_signal.stop()
+        
+		logfile.write(str(ls_channel) + '\t' + str(channel_number) + '\t' + voltage_signal[1:-1] + '\n')
         
 		sepiaUser.laser_soft_lock_on(iDevIdx, iSlotID)
 
