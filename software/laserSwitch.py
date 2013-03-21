@@ -61,10 +61,10 @@ def SetSelectedChannel(picked_channel):
         print "Laser Switch (Set Selected Channel) - The channel number is not valid ... it must be between 0 and 5 inclusive."
         return 0 
     else:
-        current_display_channel = GetDisplayChannel()
+        current_display_channel = GetSelectedChannel()
         while (picked_channel != current_display_channel):
             ChannelUp()
-            current_display_channel = GetDisplayChannel()
+            current_display_channel = GetSelectedChannel()
         return
 
 
