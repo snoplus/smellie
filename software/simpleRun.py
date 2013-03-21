@@ -20,40 +20,34 @@ def set_safe_states(iDevIdx, iSlotID):
     
 	
 def check_safe_states(iDevIdx, iSlotID):
-    # Get the current states of Sepia and the LaserSwitch
+	# Get the current states of Sepia and the LaserSwitch
 	intensity,frequency_number,pulse_mode,head_id = sepiaUser.get_laser_parameters(iDevIdx)
-    ls_channel = rs.GetActiveChannel()
-	
+	ls_channel = rs.GetActiveChannel()
 	if (intensity != 0):
-	    sepiaUser.set_laser_intensity(0, iDevIdx)
-        sys.exit('Simple Run (Check Safe States) - The laser Intensity is not at SAFE value (0%)')
-    if (frequency_number != 6):
-        sepiaUser.set_laser_frequency(6, iDevIdx)
-        sys.exit('Simple Run (Check Safe States) - The laser Frequency is not at SAFE value (6 - external rising edge)')
-    if (pulse_mode != 1):
-        sys.exit('Simple Run (Check Safe States) - The laser Pulse Mode is not set correctly (1 - pulse mode, NOT continuous)')
+		sepiaUser.set_laser_intensity(0, iDevIdx)
+		sys.exit('Simple Run (Check Safe States) - The laser Intensity is not at SAFE value (0%)')
+	if (frequency_number != 6):
+		sepiaUser.set_laser_frequency(6, iDevIdx)
+		sys.exit('Simple Run (Check Safe States) - The laser Frequency is not at SAFE value (6 - external rising edge)')
+	if (pulse_mode != 1):
+		sys.exit('Simple Run (Check Safe States) - The laser Pulse Mode is not set correctly (1 - pulse mode, NOT continuous)')
 	if (ls_channel != 0):
 		rs.SetSelectedChannel(0)
-        rs.Execute()
-        sepiaUser.close(iDevIdx)
+		rs.Execute()
+		sepiaUser.close(iDevIdx)
 		sys.exit('Simple Run (Check Safe States) - The Laser Switch safe-state is not correctly set ... aborting run!')
-	
-	# Check the laser soft-lock status 	
-	lock_check = sepiaUser.get_laser_lock_status(iDevIdx, iSlotID)
-	
-	if (laser_lock_on_check != 1):
-		sepiaUser.laser_soft_lock_on(iDevIdx, iSlotID)
-		sys.exit('Simple Run (Check Safe States) - Laser Soft-lock is not enabled ... aborting run!')
-	
+		# Check the laser soft-lock status 	
+		lock_check = sepiaUser.get_laser_lock_status(iDevIdx, iSlotID)
+		if (laser_lock_on_check != 1):
+			sepiaUser.laser_soft_lock_on(iDevIdx, iSlotID)
+			sys.exit('Simple Run (Check Safe States) - Laser Soft-lock is not enabled ... aborting run!')
 	return 	
 
 
 def check_current_states(iDevIdx, iSlotID, input_intensity, input_frequency):
-	intensity,frequency_number,pulse_mode,head_id = sepiaUser.get_laser_parameters(iDevIdx)
-	
+	intensity,frequency_number,pulse_mode,head_id = sepiaUser.get_laser_parameters(iDevIdx)	
 	if (intensity != input_intensity or frequency_number != input_frequency):
 		sys.exit('Simple Run (Check Current States) - Laser States have not been correctly set to your specified values ... aborting run!')
-
 	return 	
 
 
