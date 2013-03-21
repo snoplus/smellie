@@ -1,0 +1,102 @@
+
+
+1) Unpack all equipment and connect up power cables as follows:
+
+- CANADIAN MAINS: Sepia II Unit
+		: SNOdrop PC
+		: Laser Switch
+- TRANSFORMER + ENGLISH MULTI-ADAPTER: Fibre Switch
+				     : PMT Power Supply
+				     : Power Meter
+
+2) Lasers should be set up on the breadboard using the Allen screws and key from Oxford (see "laser_breadboard.jpg")
+
+-------------------------
+
+
+3) LASER Testing
+- remember to change the power meter wavelength for each laser, and ZERO the meter between measurements
+
+- BARE readings: photodiode is placed directly in front of laser-head (see "bare_reading.jpg")
+- Sepia settings: 20Mhz internal triggering, 100% laser intensity
+
+- The results below are from testing in the SNOLab Surface Electronics Lab
+- Note: these were done with the lights ON, but the zero should mostly take care of this offset
+
+-- 375nm: 0.495mW (Oxford: 0.494mW, Manual: 0.49mW)
+-- 405nm: 1.99mW (Oxford: 1.99mW, Manual: 1.9mW)
+-- 440nm: 1.93mW (Oxford: 1.92mW, Manual: 1.8mW)
+-- 500nm: 1.068mW (Oxford: 1.091mW, Manual: 1.1mW)
+
+- COUPLING readings: photodiode connected to end of 1m fibre, which is coupled to the laser-head
+- same Sepia settings as above
+
+-- 375nm: 0.433mW (87.5% of the bare reading above)
+-- 405nm: 1.799mW (90.5%)
+-- 440nm: 1.705mW (88.6%)
+-- 500nm: 0.999mW (93.5%)
+
+-------------------------
+
+
+4) LASER and FIBRE SWITCH TESTING
+- power connections: 2x Canadian mains from back of Laser Switch
+		   : 1x cable between Sepia and Laser Switch (3-pin male-to-female)
+
+- connect all 4 lasers via LEMO cables into the Laser Switch channels 1 to 4
+- connect all 4 lasers by optical fibre into the Fibre Switch inputs 1 to 4
+- uncap all 14 Fibre Switch outputs and make sure Fibre Switch is BELOW EYE-LEVEL
+
+- the test script will run over all 4(5) inputs, and for each one run over all 14 outputs
+- check by eye to see if laser light is emitted from each output
+- the "laser switch" argument in the test script must match the Laser Switch channels being used
+
+- since we only have 4 lasers, we still need to check input 5 on the Fibre Switch and channels 0 and 5 on the Laser Switch
+- repeat the test script, but with modified arguments for these combinations (see test script for details)
+
+-- all 6 Laser Switch channels work, and there were no problems when switching between them
+-- all input/outputs channel combinations on the Fibre Switch work (qualitatively)
+
+-------------------------
+
+
+5) PMT BOX TESTING
+- this is to check that there has been no damage to the PMT boxes during shipping
+
+- connect the input trigger (either from NI or ORCA), and output the TrigOut signal to a scope ... should (and did) see -1 to 2V square(ish) wave
+- connect a single laser (only 1 is required for this test) to the PMT-fibre coupling, and output the PMTOut signal to scope ... should see standard PMT pulse
+- connect the SampledOut signal to scope ... should see a rising signal following the PMT pulse, and then hold at the peak PMT value
+
+- CALIBRATE the PMT boxes (using the steps outlined in the separate document)
+-- PMT box SN191924 was calibrated with no problems
+-- PMT box SN191925 has a very slight (~20mV) initial peak on the sampled output, even after calibration (for reference, SN191924 had a peak indistinguishable from noise, <10mV)
+
+
+-------------------------
+
+
+6) BEAMSPLITTER TESTING
+- we want to characterise: the splitter's split ratio (i.e. check that it is as advertised)
+			 : the variability per pulse of the split ratio (hopefully this does not change much or at all)
+
+FOR EACH LASER:
+
+	- connect a single laser into PMT Box 1 via a 1m patch fibre, and the PMT-Out socket of the PMT Box into a scope with a 50ohm load
+	- adjust the gain on the PMT Box until the peak value is 2V
+	- repeat the above 2 steps for PMT Box 2
+	-- NOTE that the gains will be different for the 2 PMT boxes, because one of them has a MTP connection, which results in overall more lost light between laser and PMT
+
+
+	FOR EACH BEAMSPLITTER:
+
+		- connect the splitter's Input 1 to the laser, Output A to PMT Box 1, and Output B to PMT Box 2
+
+		FOR VARYING LASER INTENSITY:
+
+			- fire 10,000 laser pulses through the splitter, and record the resulting sampled output voltage PER PULSE from each PMT Box (see software script)
+
+		- switch the beamsplitter outputs ... i.e. now connect Output B to PMT Box 1, and Output A to PMT Box 2
+		- repeat the varying laser intensity measurement using the software script
+
+		-- Note that because the lasers have different operational ranges (in terms of intensity), the actual range of varying intensities will be different for each laser
+
