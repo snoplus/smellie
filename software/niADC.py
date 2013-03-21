@@ -18,7 +18,7 @@ class GenerateDigitalTrigger():
 		taskHandle = TaskHandle(0)
 		DAQmxCreateTask("",byref(taskHandle))
 		high_time = 0.0000005	
-		low_time = 1 / (2.0 * frequency) - high_time
+		low_time = 1 / (1.0 * frequency) - high_time
 		DAQmxCreateCOPulseChanTime(taskHandle,"Dev1/ctr0","",DAQmx_Val_Seconds,DAQmx_Val_Low,0.0,low_time,high_time)
 		DAQmxCfgImplicitTiming(taskHandle,DAQmx_Val_FiniteSamps,number_of_pulses)    
 
