@@ -11,9 +11,9 @@ from pysepia import *	# Import all functions present in pysepia.py
 # Initialise the laser so that it is ready for commands
 # This function must be performed before sending any commands to the laser
 def initialise():
-	iDevIdx = SEPIA2_USB_OpenDevice()	# open the USB device  
+        iDevIdx = SEPIA2_USB_OpenDevice()	# open the USB device  
 	SEPIA2_FWR_GetModuleMap(iDevIdx)	# retrieve the module map 
-	iSlotID = 000			
+	iSlotID = 200			
 	iModuleType = SEPIA2_COM_GetModuleType(iDevIdx,200,1)	# the value 200 is the slot section for the Sepia II Unit 
 	SEPIA2_COM_DecodeModuleType(iModuleType)	            # decode the module map
 	return iDevIdx,iModuleType,iSlotID

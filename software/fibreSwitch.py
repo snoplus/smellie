@@ -38,4 +38,3 @@ def SetIOChannels(input_channel, output_channel):
     ser.close()							# close serial port
     return
 
-SetIOChannels(10, 20)
