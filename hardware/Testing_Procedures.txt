@@ -3,13 +3,13 @@
 1) Unpack all equipment and connect up power cables as follows:
 
 - CANADIAN MAINS: Sepia II Unit
-		: SNOdrop PC
-		: Laser Switch
+				: SNOdrop PC
+				: Laser Switch
 - TRANSFORMER + ENGLISH MULTI-ADAPTER: Fibre Switch
-				     : PMT Power Supply
-				     : Power Meter
+									 : PMT Power Supply
+								     : Power Meter
 
-2) Lasers should be set up on the breadboard using the Allen screws and key from Oxford (see "laser_breadboard.jpg")
+2) Lasers should be set up on the breadboard using the Allen screws and key from Oxford (see "Setup_Breadboard.jpg")
 
 -------------------------
 
@@ -17,7 +17,7 @@
 3) LASER Testing
 - remember to change the power meter wavelength for each laser, and ZERO the meter between measurements
 
-- BARE readings: photodiode is placed directly in front of laser-head (see "bare_reading.jpg")
+- BARE readings: photodiode is placed directly in front of laser-head (see "Testing_BarePowerReading.jpg")
 - Sepia settings: 20Mhz internal triggering, 100% laser intensity
 
 - The results below are from testing in the SNOLab Surface Electronics Lab
