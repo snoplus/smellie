@@ -6,7 +6,6 @@ Hardware Information
 * More technical information will (eventually) be available in some sort of User's Manual  
 * Please update this README when altering existing or adding new files  
 
--------------------------
 
 Contents:
 -------  
@@ -19,13 +18,14 @@ Contents:
 -- Basic information about the functionality and usage of each component is also given  
 -- For those components that have been designed and built by collaboration members, contact information has been provided  
 -- If you are new to SMELLIE, please read the information in this document before attempting to use the hardware!  
--- This information should be accompanied by the following files:  
--- __Laser_Wavelength_Timing_Spectra.pdf__ - plots of the wavelength and pulse-time distributions for each of the 4 SMELLIE lasers (supplied by the manufacturer)  
--- __FibreSwitch_Logic_Diagrams.pdf__ - the internal switching mechanisms of the FibreSwitch, showing which input/output combinations use which switching blocks  
--- __FibreSwitch_Insertion_Losses.xlsx__ - the results of testing performed at Oxford University (October 2012) to determine the light losses through the FibreSwitch as a result of fibre-coupling and attenuation  
--- __Monitoring_PMT_Electronics_Analogue.pdf__ - schematic of the Monitoring PMT's Analogue PCB  
--- __Monitoring_PMT_Electronics_Digital.pdf__ - schematic of the Monitoring PMT's Digital PCB  
--- __Monitoring_PMT_Electronics_Trigger.pdf__ - schematic of the Monitoring PMT's Trigger-Selection PCB  
+-- This information should be accompanied by the following files:
+    + __Laser_Wavelength_Timing_Spectra.pdf__ - plots of the wavelength and pulse-time distributions for each of the 4 SMELLIE lasers (supplied by the manufacturer)
+    + __FibreSwitch_Logic_Diagrams.pdf__ - the internal switching mechanisms of the FibreSwitch, showing which input/output combinations use which switching blocks
+    + __FibreSwitch_Insertion_Losses.xlsx__ - the results of testing performed at Oxford University (October 2012) to determine the light losses through the FibreSwitch as a result of fibre-coupling and attenuation
+    + __Monitoring_PMT_Electronics_Analogue.pdf__ - schematic of the Monitoring PMT's Analogue PCB
+    + __Monitoring_PMT_Electronics_Digital.pdf__ - schematic of the Monitoring PMT's Digital PCB
+    + __Monitoring_PMT_Electronics_Trigger.pdf__ - schematic of the Monitoring PMT's Trigger-Selection PCB  
+_
 
 * __Setup_Procedure.txt__  
 -- This outlines the steps that should be taken to mount the SMELLIE hardware on the 3 electronics trays that will then go into the ELLIE electronics rack  
