@@ -1,0 +1,44 @@
+
+These instructions should be accompanied by the files:
+	* Monitoring_PMT_Calibration.jpg - photograph of the inside of the Monitoring PMT box, showing the three variable pots that need to be adjusted for calibration
+	* Monitoring_PMT_Correct_Output.jpg - photograph of the expected output of the Monitoring PMT when correctly calibrated
+
+--------------------------------------------------
+
+
+1) Connect ONE of the Trigger-In sockets to its respective trigger source (either the NI Unit or TUBii ... it does not matter which)
+2) Connect the Trigger-Out socket to an oscilloscope with a 50ohm load (either physical or built into the scope)
+
+3) With the lid screwed on securely, turn the power on to the Monitoring PMT and leave standing for 30 minutes
+	- this will allow the Monitoring PMT to reach its stable operating temperature, which is important since the various offsets present in the electronics are temperature-dependent
+
+4) Remove the lid of the Monitoring PMT
+
+-- the following 2 steps 5) and 6) must be performed IN THE SPECIFIED ORDER
+-- see "Monitoring_PMT_Setup.jpg" for visual aid
+5) Connect a multimeter (with the highest DC voltage resolution scale) to the PMT-Out socket, and adjust the RV2 variable pot (located in the middle of the analogue board) until the multimeter reads exactly 0.
+6) Connect the multimeter to the Sampled-Out socket, and adjust the RV1 variable pot (located at the corner of the analogue board) until the multimeter reads exactly 0.
+	
+In both of these steps, the multimeter reading will pass through an inflection point as the pot is turned (i.e. the voltage will go from negative to positive, through zero).
+
+7) Remove the multimeter, and attach a BNC cable from the Sampled-Out socket to the oscilloscope with a 50ohm load (this simulates the 50ohm load present on the CAEN ADC)
+8) Attach the Trigger-Out socket via BNC to the Sepia Unit's external trigger socket, and take a branch to the oscilloscope, now with a 1Mohm load on the scope (this waveform can be turned off since viewing it is not actually required)
+9) Set the scope to trigger off the RISING EDGE of the Trigger-Out channel
+
+-- see "Monitoring_PMT_Setup.jpg" for visual aid
+10) Adjust the Timing Pot (located on the digital board) to give the maximum Sampled-Out voltage on the scope
+	- adjusting the timing pot will have the following effects:
+	a) it will change the width of the Trigger-Out pulse, but since the scope is triggering off the rising edge of the Trigger-Out signal, this edge will remain fixed in time
+	   (i.e. only the falling edge of the Trigger-Out pulse will shift left and right)
+	b) it will increase or decrease the Sampled-Out signal's hold-voltage value - this will go through a maximum value as the pot is adjusted
+
+--------------------------------------------------
+
+
+Once all of these steps are performed, the Monitoring PMT's lid can be replaced and screwed back on - it is now ready for use.
+
+To check that the Monitoring PMT is correctly set up:
+- connect the Trigger-Out, PMT-Out and Sampled-Out sockets via BNC cable to an oscilloscope, with the first two using 1Mohm loading and the last with 50ohm loading
+- display the PMT-Out channel only, and adjust the gain pot on the Monitoring PMT so that the peak voltage on the PMT-Out channel is 2.00V (or as close as possible)
+- display all 3 channels on the same timing and voltage scales, grounded at the same level
+	* the outputs should now look as shown in "Monitoring_PMT_Correct_Output.jpg"
