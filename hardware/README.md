@@ -3,48 +3,55 @@ Hardware Information
 
 * The information in this folder is for SMELLIE users to refer to while setting up and actually using the hardware  
 * It also acts a repository for useful procedures and online technical data  
-* More technical information will (eventually) be available in (a / the) User's Manual  
+* More technical information will (eventually) be available in some sort of User's Manual  
+* Please update this README when altering existing or adding new files  
 
 -------------------------
 
 
-List of SMELLIE Hardware Components:  
+Contains:  
 
-* 4 laser-heads  
--- these produce (almost) monochromatic light at wavelengths of 375, 407, 446 and 495nm  
+* README.md  
+-- the file that you are reading right now  
 
-* PicoQuant SEPIA II Laser Driver Unit  
--- this powers and operates the 4 laser-heads and is software-controlled  
--- it can only do so for a single laser-head at a time (since there is only a single driver unit)  
+* Hardware_List_and_Information.txt  
+-- This lists all of the off-detector SMELLIE hardware components, i.e. those that are located in the ELLIE electronics rack in the DCR  
+-- Basic information about the functionality and usage of each component is also given  
+-- For those components that have been designed and built by collaboration members, contact information has been provided  
+-- If you are new to SMELLIE, please read the information in this document before attempting to use the hardware!  
+-- This information is supplemented with the following files:  
 
-* Laser Switch Unit  
--- this allows us to drive all 4 laser-heads (non-simultaneously) from the single Sepia Driver Unit  
--- it removes the problem of manually having to change LEMO cables in and out of the Sepia unit, since the laserSwitch is software-controlled  
--- there are 2 identical units ... one is at SNOLab as part of the SMELLIE system, and the other is at Oxford University  
--- both were designed and built at Oxford University by Mr. Rik Elliot (r.elliott2@physics.ox.ac.uk)  
+* Laser_Wavelength_Timing_Spectra.pdf - plots of the wavelength and pulse-time distributions for each of the 4 SMELLIE lasers (supplied by the manufacturer)  
+* FibreSwitch_Logic_Diagrams.pdf - the internal switching mechanisms of the FibreSwitch, showing which input/output combinations use which switching blocks  
+* FibreSwitch_Insertion_Losses.xlsx - the results of testing performed at Oxford University (October 2012) to determine the light losses through the FibreSwitch as a result of fibre-coupling and attenuation  
+* Monitoring_PMT_Electronics_Analogue.pdf - schematic of the Monitoring PMT's Analogue PCB  
+* Monitoring_PMT_Electronics_Digital.pdf - schematic of the Monitoring PMT's Digital PCB  
+* Monitoring_PMT_Electronics_Trigger.pdf - schematic of the Monitoring PMT's Trigger-Selection PCB  
 
-* Laser Components 5x14 Fibre Switch Unit  
--- this takes light from any one of the lasers (5 [4 + 1 spare] inputs) and routes it to one of 14 (12 + 2 spare) output fibres that go directly into the detector  
--- this makes it possible to send light from any single laser to any one of the 12 allocated SMELLIE positions in the detector via computer-control  
+* Setup_Procedure.txt  
+-- This outlines the steps that should be taken to mount the SMELLIE hardware on the 3 electronics trays that will then go into the ELLIE electronics rack  
+-- These instructions should be accompanied by the following files:  
 
-* Monitoring PMT Unit  
--- this allows us to monitor the per-pulse laser intensity  
--- this is important to know, since it relates to a) the voltage supplied to the SNO+ CAEN ADCs for data-taking, and b) the number of photons entering the detector  
--- the PMT Unit also converts the incoming internal / ORCA trigger signal from the standard (0 to 5)V to the (-2 to +1)V that is required by the SEPIA Unit  
--- there are 2 identical units ... one is at SNOLab as part of the SMELLIE system, and the other is at Oxford University  
--- both were designed and built at Oxford University by Mr. John Saunders (j.saunders1@physics.ox.ac.uk)  
+* Setup_Layout_Trays.jpg - the layouts of the 3 SMELLIE electronics trays  
+* Setup_Layout_Rack_SMELLIE.pdf - a schematic of the bottom half of the ELLIE electronics rack, showing the positions of the 3 SMELLIE trays  
+* Setup_Layout_Rack_FULL.jpg - a schematic of the entire ELLIE electronics rack, including the TELLIE components located in the top half  
 
-* Power Supply Unit  
--- this supplies power to the Monitoring PMT Unit  
--- there are 2 identical units (one for each Monitoring PMT Unit) ... one is at SNOLab as part of the SMELLIE system, and the other is at Oxford University  
--- both were designed and built at Oxford University by Mr. John Saunders (j.saunders1@physics.ox.ac.uk)  
+* Monitoring_PMT_Calibration_Procedure.txt  
+-- This outlines the steps that are required to correctly calibrate the Monitoring PMT prior to use  
+-- Calibration only needs to be performed when the Monitoring PMT electronics have been changed or after the unit has been subjected to particularly heavy physical movement (i.e. shipping)  
+-- These instructions should be accompanied by the following files:  
 
-* Beamsplitters  
--- the light from each laser is split into 2 parts, one of which enters the detector via the fibreSwitch, and the other is sent to the Monitoring PMT  
--- there is one beamsplitter for each laser (although the splitting ratios may be different since the laser powers are not identical)  
+* Monitoring_PMT_Calibration.jpg - a photograph of the inside of the Monitoring PMT unit, showing the 3 PCBs, and the 3 variable pots that need to be adjusted during calibration  
+* Monitoring_PMT_Correct_Output.jpg - a photograph of the expected output of the Monitoring PMT when it has been correctly calibrated  
 
-* National Instruments ADC Unit  
--- this performs several functions for the SMELLIE system:  
-		1) it provides an internal trigger signal source for the lasers (as opposed to the external trigger that can be supplied by ORCA)  
-		2) it reads out the output voltage from the Monitoring PMT Unit in order to check the per-pulse laser intensity  
--- this unit is software-controlled  
+* Monitoring_PMT_LightTightness_Procedure.txt  
+-- This outlines the steps for checking that the Monitoring PMT is light-tight  
+-- Possible solutions are also given for any problems that may be encountered  
+
+* Testing_Procedures.txt  
+-- These instructions should be used to check the status of the SMELLIE hardware  
+-- Testing steps are provided for the lasers, the Sepia Unit, the LaserSwitch, the FibreSwitch and the Monitoring PMT  
+-- Testing should be performed after every time the hardware is changed, or subjected to particularly heavy physical movement (i.e. shipping)  
+-- These instructions should be accompanied by the following files:  
+
+* Testing_BarePower.jpg - a photograph showing the setup that should be used to check the bare power of the lasers  
