@@ -1,0 +1,44 @@
+{
+"doc_type": "smellie_calibration_tables",
+"approved": true,
+"calibration_measurements": [
+	{
+	"entry_id":1,
+	"laser_id":1,
+	"fibre_id":1,
+	"nb_photons_seen_per_pulse":10000,
+	"smellie_monitoring_pmt_voltage":2.1,
+	"laser_intensity": 100
+	},
+	
+	{
+	"entry_id":1,
+	"laser_id":1,
+	"fibre_id":2,
+	"nb_photons_seen_per_pulse":10001,
+	"smellie_monitoring_pmt_voltage":2.2,
+	"laser_intensity": 100
+	},
+	
+	{
+	"entry_id":1,
+	"laser_id":1,
+	"fibre_id":3,
+	"nb_photons_seen_per_pulse":10099,
+	"smellie_monitoring_pmt_voltage":2.0,
+	"laser_intensity": 100
+	}
+],
+
+"calibration_table": [
+    {
+		"calibration_measurements": [ ],
+		"calibration_table_id": 1,
+		"author": "Chris Jones",
+		"time_stamp": "2010-11-12T13:14:15"
+    }
+]
+
+
+}
+
