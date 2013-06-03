@@ -63,7 +63,7 @@ def check_connection(sockobj):
 		print "ORCA Control (Check Connection) - Successful connection made to SMELLIE"
 	else:
 		print "ORCA Control (Check Connection) - Signal that was received:" + str(data)
-		print "ORCA Control (Check Connection) - Expected Signal: " + check_connection_flag 
+		print "ORCA Control (Check Connection) - Expected Signal: " + str(check_connection_flag) 
 		sys.exit("ORCA Control (Check Connection) - No connection was made to SMELLIE")	 
 
 
@@ -123,7 +123,7 @@ def set_ls_channel(ls_channel, sockobj):
 	if (data == continue_flag):
 		print "ORCA Control (Set laserSwitch Channel) - Command to set Laser Switch Channel has been sent"
 	elif(data == timeout_flag):
-		sys.exit("ORCA Control (Set laserSwitch Channel) - SMELLIE has timed out)
+		sys.exit("ORCA Control (Set laserSwitch Channel) - SMELLIE has timed out")
 	else:
 		sys.exit("ORCA Control (Set laserSwitch Channel) - Please re-start SMELLIE and check all connections.  Re-run this program when the issue is resolved")
 		
@@ -133,7 +133,7 @@ def set_ls_channel(ls_channel, sockobj):
 		if data : break
 
 	if (data == continue_flag):
-		print "ORCA Control (Set laserSwitch Channel) - Laser Switch channel has been set to: " + ls_channel
+		print "ORCA Control (Set laserSwitch Channel) - Laser Switch channel has been set to: " + str(ls_channel)
 	elif (data == timeout_flag):
 		sys.exit("ORCA Control (Set laserSwitch Channel) - SMELLIE has timed out")
 	else:
@@ -148,7 +148,7 @@ def set_laser_parameters(intensity, frequency_mode, sockobj):
 	data = sockobj.recv(1024)
 	
 	if (data == continue_flag):
-		print "ORCA Control (Set Laser Parameters) - Laser Intensity set to: " + intensity + "%" 
+		print "ORCA Control (Set Laser Parameters) - Laser Intensity set to: " + str(intensity) + "%" 
 		sockobj.send(frequency_mode)
 	elif (data == timeout_flag):
 		sys.exit("ORCA Control (Set Laser Parameters) - SMELLIE has timed out")
@@ -180,12 +180,12 @@ def check_self_test(sockobj):
 
 
 def set_fs_channel(fs_input_channel, fs_output_channel, sockobj):
-	channel_number = ((fs_input_channel - 1) * 14) + fs_output_channel	
-	sockobj.send(channel_number)
+	channel_number = int(((float(fs_input_channel) - 1) * 14) + float(fs_output_channel))	
+	sockobj.send(str(channel_number))
 	data = sockobj.recv(1024)
 	
 	if (data == continue_flag):
-		print "ORCA Control (Set fibreSwitch Channel) - Fibre Switch channel set to: Input " + fs_input_channel + ", Output " + fs_output_channel + " ... overall channel " + channel_number
+		print "ORCA Control (Set fibreSwitch Channel) - Fibre Switch channel set to: Input " + str(fs_input_channel) + ", Output " + str(fs_output_channel) + " ... overall channel " + str(channel_number)
 	elif (data == fs_channel_broken):
 		sys.exit("ORCA Control (Set fibreSwitch Channel) - The Fibre Switch channel has not been set correctly")
 	elif (data == timeout_flag):
@@ -199,7 +199,7 @@ def set_ni_pulse_number(number_of_pulses, sockobj):
 	data = sockobj.recv(1024)
 	
 	if (data == continue_flag):
-		print "ORCA Control (Set NI Pulse Number) - Number of Pulses to be sent to the NI box: " + number_of_pulses
+		print "ORCA Control (Set NI Pulse Number) - Number of Pulses to be sent to the NI box: " + str(number_of_pulses)
 	elif (data == pulse_number_too_high):
 		sys.exit("ORCA Control (Set NI Pulse Number) - The number of pulses is greater than 100,000 - this is too high")
 	elif (data == timeout_flag):
@@ -213,7 +213,7 @@ def set_ni_trigger_frequency(trigger_frequency, sockobj):
 	data = sockobj.recv(1024)
 	
 	if (data == continue_flag):
-		print "ORCA Control (Set NI Trigger Frequency) - Trigger Frequency of the NI box is set to:" + trigger_frequency + " Hz"
+		print "ORCA Control (Set NI Trigger Frequency) - Trigger Frequency of the NI box is set to:" + str(trigger_frequency)	 + " Hz"
 	elif (data == trigger_frequency_flag):
 		print data 
 		sys.exit("ORCA Control (Set NI Trigger Frequency) The NI box's trigger frequency is not correctly set")
@@ -269,7 +269,7 @@ def get_subrun_parameters(subrun):
 ##### START OF THE MAIN PROGRAM ####################################################################################################
 	
 def main():		
-	ip_address = "192.168.0.1" 
+	ip_address = "142.51.71.62" 
 	
 	sockobj = initialise_socket(ip_address)
 	check_connection(sockobj)			
@@ -279,19 +279,19 @@ def main():
 	check_laserSwitch(sockobj)
 	check_safe_states(sockobj)
 	
-	run = 1
-	run_id,ls_channel,number_of_pulses,pulse_frequency = get_run_parameters(run)  
+	#run = 1
+	#run_id,ls_channel,number_of_pulses,pulse_frequency = get_run_parameters(run)  
 	#print "ORCA Control (Main): " + run_id,ls_channel,number_of_pulses,pulse_frequency
-	subrun = 6
-	subrun_id,fs_input_channel,fs_output_channel,intensity = get_subrun_parameters(subrun)   
+	#subrun = 6
+	#subrun_id,fs_input_channel,fs_output_channel,intensity = get_subrun_parameters(subrun)   
 	#print "ORCA Control (Main): " + subrun_id,fs_input_channel,fs_output_channel,intensity
 	
-	#ls_channel = '1'
-	#number_of_pulses = '100000'
-	#pulse_frequency = '10000'
-	#fs_input_channel = '1'
-	#fs_output_channel = '1'
-	#intensity = '100'
+	ls_channel = '1'
+	number_of_pulses = '10'
+	pulse_frequency = '1'
+	fs_input_channel = '1'
+	fs_output_channel = '1'
+	intensity = '30'
 	frequency_mode = '6'
 	
 	set_ls_channel(ls_channel, sockobj)
