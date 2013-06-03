@@ -223,11 +223,12 @@ timeout_flag = '123456'                         # this is the timeout flag for a
 # Whenever there is an error, the program will revert back to this point and wait for more commands via TCP/IP (from ORCA)
 def main():
 	print "\n"
-	print "Simple TCP/IP Run (Main) - Starting SMELLIE ..."
-
+	print "Simple TCP/IP Run (Main) - Starting SMELLIE RUN..."
+	
         #Perform a clean open and close of the Sepia Laser Driver before talking to ORCA. 
         iDevIdx,iModuleType,iSlotID = sepiaUser.initialise()
         sepiaUser.laser_soft_lock_on(iDevIdx, iSlotID)
+	rs.SetSelectedChannel(0)
 	sepiaUser.close(iDevIdx)
         
 	myHost = ''                          # initialise the server machine ('' means: local host)
@@ -240,11 +241,11 @@ def main():
 
 	# Check for connection confimation from ORCA
 	print "Simple TCP/IP Run (Main) - Checking for connection confimation from ORCA ... "	
-	while 1:                                                    # listen until process killed
+	while 1:                                                        # listen until process killed
 		connection, address = conn.sockobj.accept()             # wait for next client connection
 		print 'Connection made to:' + str(address)              # connection is a new socket
 		if address : break		
-	connection.send(check_connection_flag)                      # send signal to ORCA  to check connection
+	connection.send(check_connection_flag)                          # send signal to ORCA  to check connection
 
 	# Check for SMELLIE initialisation commmand from ORCA
 	print "Simple TCP/IP Run (Main) - Looking for SMELLIE initialisation commmand from ORCA ... "
@@ -265,9 +266,9 @@ def main():
 	iDevIdx,iModuleType,iSlotID = sepiaUser.initialise()        # initialise Sepia
 	check_sepia_connection(iModuleType, connection)             # check that Sepia is working as expected
 	check_ls_connection(connection)                             # check that the laserSwitch is working as expected
-	set_safe_states(iDevIdx, iSlotID)	                        # sets all the Sepia parameters to their safe state values
-	iDevIdx,iModuleType,iSlotID = sepiaUser.initialise()        # need to reinitialise Sepia after turning off during the changing of the 		laserSwitch channel (part of set_safe_states)
-	check_safe_states(iDevIdx, iSlotID, connection)		        # check that all devices are in their safe-states
+	set_safe_states(iDevIdx, iSlotID)	                    # sets all the Sepia parameters to their safe state values
+	iDevIdx,iModuleType,iSlotID = sepiaUser.initialise()        # need to reinitialise Sepia after turning off during the changing of the laserSwitch channel (part of set_safe_states)
+	check_safe_states(iDevIdx, iSlotID, connection)		    # check that all devices are in their safe-states
 
 	print "Simple TCP/IP Run (Main) - Looking for a Confirmation from ORCA to start the SMELLIE run ... "
 	connection.settimeout(5)                                    # set a timeout for receiving data
@@ -285,7 +286,7 @@ def main():
 
 	print "Simple TCP/IP Run (Main) - Waiting for run parameters from ORCA ... "
 	ORCA_set_ls_channel(connection, iDevIdx)
-	iDevIdx,iModuleType,iSlotID = sepiaUser.initialise()        # need to reinitialise Sepia after turning off during the changing of the 		laserSwitch channel (part of ORCA_set_ls_channel)
+	iDevIdx,iModuleType,iSlotID = sepiaUser.initialise()        # need to reinitialise Sepia after turning off during the changing of the laserSwitch channel (part of ORCA_set_ls_channel)
 	ORCA_set_laser_parameters(connection)
 	complete_self_test(connection, iDevIdx, iSlotID)
 	sepiaUser.laser_soft_lock_on(iDevIdx, iSlotID)
