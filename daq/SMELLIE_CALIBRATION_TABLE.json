@@ -32,10 +32,10 @@
 
 "calibration_table": [
     {
-		"calibration_measurements": [ ],
-		"calibration_table_id": 1,
-		"author": "Chris Jones",
-		"time_stamp": "2010-11-12T13:14:15"
+	"calibration_measurements": [ ],
+	"calibration_table_id": 1,
+	"author": "Chris Jones",
+	"time_stamp": "2010-11-12T13:14:15"
     }
 ]
 

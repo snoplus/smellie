@@ -3,11 +3,11 @@
 "approved": true,
 
 "config_list": [
-    {
-		"config_id" : 1, 							//unique identification of this configuration 
-		"config_rev": 2, 							//configure revision number
+    	{
+		"config_id" : 1, 				//unique identification of this configuration 
+		"config_rev": 2, 				//configure revision number
 		"time_stamp": "2010-11-12T13:14:15", 		//ISO 8601 UTC	
-        "tcpip_communication_timeouts": [ ], 
+        	"tcpip_communication_timeouts": [ ], 
 		"safe_laser_switch_output" : 0,
 		"safe_fibre_switch_input" : 5,
 		"safe_fibre_switch_output" : 14,
@@ -34,12 +34,12 @@
 		"self_test_number_of_samples_per_pulse":100,		
 		"self_test_NI_trigger_output_pin": "/ctr0",
 		"self_test_NI_analogue_input_pin": "/ai0"	
-    },
+    	},
 	{
 		"config_id" : 2, 
 		"config_rev": 2,
 		"time_stamp": "2010-11-12T13:14:15", //ISO 8601 UTC
-        "tcpip_communication_timeouts": [ ], 
+        	"tcpip_communication_timeouts": [ ], 
 		"safe_laser_switch_output" : 0,
 		"safe_fibre_switch_input" : 5,
 		"safe_fibre_switch_output" : 14,
@@ -129,22 +129,22 @@
 
 "laser_head_to_fibre_splitter_map":[
 	{
-        "fibre_splitter_id": 1,
+        	"fibre_splitter_id": 1,
 		"fibre_spliter_type": "50/50"
 		"laser_head_wavelength": 375
     },
 	{
-        "fibre_splitter_id": 2,
+        	"fibre_splitter_id": 2,
 		"fibre_spliter_type": "99/1"
 		"laser_head_wavelength": 405
     },
 	{
-        "fibre_splitter_id": 3,
+        	"fibre_splitter_id": 3,
 		"fibre_spliter_type": "30/70"
 		"laser_head_wavelength": 440
     },	
 	{
-        "fibre_splitter_id": 4,
+        	"fibre_splitter_id": 4,
 		"fibre_spliter_type": "10/90"
 		"laser_head_wavelength": 500
     }
@@ -152,52 +152,52 @@
 
 "fibre_switch_from_laser_head_map":[
 	{
-        "input_channel": 1,
+        	"input_channel": 1,
 		"laser_head_wavelength": 375
-    },
+    	},
 	{
-        "input_channel": 2,
+        	"input_channel": 2,
 		"laser_head_wavelength": 405
-    },
+    	},
 	{
-        "input_channel": 3,
+        	"input_channel": 3,
 		"laser_head_wavelength": 440
-    },	
+    	},	
 	{
-        "input_channel": 4,
+        	"input_channel": 4,
 		"laser_head_wavelength": 500
-    },
+    	},
 	{
-        "input_channel": 5,
+        	"input_channel": 5,
 		"laser_head_wavelength": "NULL"
-    }
+    	}
 ],
 
 
 "laser_switch_to_laser_head_map":[
     {
         "output_channel": 0,
-		"laser_head_wavelength": 375
+	"laser_head_wavelength": 375
     },
     {
         "output_channel": 1,
-		"laser_head_wavelength": 405
+	"laser_head_wavelength": 405
     },
     {
         "output_channel": 2,
-		"laser_head_wavelength": 440
+	"laser_head_wavelength": 440
     },
-	    {
+    {
         "output_channel": 3,
-		"laser_head_wavelength": 500
+	"laser_head_wavelength": 500
     },
-	    {
+    {
         "output_channel": 4,
-		"laser_head_wavelength": "NULL"
+	"laser_head_wavelength": "NULL"
     },
-	    {
+    {
         "output_channel": 5,
-		"laser_head_wavelength": "NULL"
+	"laser_head_wavelength": "NULL"
     }
 ],
 
@@ -206,8 +206,9 @@
         "set_intensity_timeout": 10
     },
     {
-		"set_frequency_timeout": 10
-	}
+	"set_frequency_timeout": 10
+	
+    }
 ]
 
 }
