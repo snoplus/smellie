@@ -90,7 +90,6 @@ Contains:
 -- [THIS IS STILL A WORK-IN-PROGRESS]  
 
 * pmtMonitoring.py  
-* jsonCommands.py  
 * calibrationTable.json  
 * configuration.json  
 * exampleParameters.json  
