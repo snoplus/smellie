@@ -3,10 +3,10 @@
 "approved": true,
 
 "config_list": [
-    	{
-		"config_id" : 1, 				//unique identification of this configuration 
-		"config_rev": 2, 				//configure revision number
-		"time_stamp": "2010-11-12T13:14:15", 		//ISO 8601 UTC	
+	       {
+		"config_id" : 1, 				 
+		"config_rev": 2, 				
+		"time_stamp": "2010-11-12T13:14:15",				
         	"tcpip_communication_timeouts": [ ], 
 		"safe_laser_switch_output" : 0,
 		"safe_fibre_switch_input" : 5,
@@ -16,10 +16,10 @@
 		"fibre_switch_from_laser_head_map": [ ],
 		"fibre_switch_to_detector_fibre_map": [ ],
 		"laser_switch_wait": 30,
-		"laser_head_to_fibre_splitter_map": 
+		"laser_head_to_fibre_splitter_map":[ ],
 		"laser_switch_to_laser_head_map": [ ],
-		"sepia_laser_driver_module_slotID": 000, 
-		"sepia_laser_driver_primary_id": 1,
+		"sepia_laser_driver_module_slotID": "000", 
+		"sepia_laser_driver_primary_id":1,
 		"snodrop_ip_address": "192.168.0.1",
 		"orca_ip_address": "192.168.0.2",
 		"orca_server_port": 50007,
@@ -27,18 +27,18 @@
 		"tcpip_communication_max_string_length":1024,
 		"snodrop_max_number_listening_connections": 5,
 		"detector_database_server_ip_address": "192.168.0.3",
-		"NI_device_name": "Dev1"
+		"NI_device_name": "Dev1",
 		"self_test_number_of_pulses":10,
 		"self_test_trigger_frequency":10000,
 		"self_test_sampling_frequency":100000,
 		"self_test_number_of_samples_per_pulse":100,		
 		"self_test_NI_trigger_output_pin": "/ctr0",
 		"self_test_NI_analogue_input_pin": "/ai0"	
-    	},
-	{
+    		},
+		{
 		"config_id" : 2, 
 		"config_rev": 2,
-		"time_stamp": "2010-11-12T13:14:15", //ISO 8601 UTC
+		"time_stamp": "2010-11-12T13:14:15", 
         	"tcpip_communication_timeouts": [ ], 
 		"safe_laser_switch_output" : 0,
 		"safe_fibre_switch_input" : 5,
@@ -48,9 +48,9 @@
 		"fibre_switch_from_laser_head_map": [ ],
 		"fibre_switch_to_detector_fibre_map": [ ],
 		"laser_switch_wait": 30,
-		"laser_head_to_fibre_splitter_map": 
+		"laser_head_to_fibre_splitter_map": [ ],
 		"laser_switch_to_laser_head_map": [ ],
-		"sepia_laser_driver_module_slotID": 000, 
+		"sepia_laser_driver_module_slotID": "000", 
 		"sepia_laser_driver_primary_id": 1,
 		"snodrop_ip_address": "192.168.0.1",
 		"orca_ip_address": "192.168.0.2",
@@ -59,155 +59,79 @@
 		"tcpip_communication_max_string_length":1024,
 		"snodrop_max_number_listening_connections": 5,
 		"detector_database_server_ip_address": "192.168.0.3",
-		"NI_device_name": "Dev1"
+		"NI_device_name": "Dev1",
 		"self_test_number_of_pulses":10,
 		"self_test_trigger_frequency":10000,
 		"self_test_sampling_frequency":100000,
 		"self_test_number_of_samples_per_pulse":100,		
 		"self_test_NI_trigger_output_pin": "/ctr0",
 		"self_test_NI_analogue_input_pin": "/ai0"	
-    }
-
+    		}
+],
 "fibre_switch_to_detector_fibre_map":[
 	{
-        "output_channel": 1,
-		"detector_fibre": 1
-    },
+	"config_id":1,
+        "output_channel": [1,2,3,4,5,6,7,8,9,10,11,12,13,14],
+	"detector_fibre": ["a","b","c","d","e","f","g","h","i","j","k","l","z","y"]
+    	},
 	{
-        "output_channel": 2,
-		"detector_fibre": 2
-    },
-	{
-        "output_channel": 3,
-		"detector_fibre": 3
-    },
-	{
-        "output_channel": 4,
-		"detector_fibre": 4
-    },
-	{
-        "output_channel": 5,
-		"detector_fibre": 5
-    },
-	{
-        "output_channel": 6,
-		"detector_fibre": 6
-    },
-	{
-        "output_channel": 7,
-		"detector_fibre": 7
-    },
-	{
-        "output_channel": 8,
-		"detector_fibre": 8
-    },
-	{
-        "output_channel": 9,
-		"detector_fibre": 9
-    },
-	{
-        "output_channel": 10,
-		"detector_fibre": 10
-    },
-	{
-        "output_channel": 11,
-		"detector_fibre": 11
-    },
-	{
-        "output_channel": 12,
-		"detector_fibre": 12
-    },
-	{
-        "output_channel": 13,
-		"detector_fibre": 13
-    },
-	{
-        "output_channel": 14,
-		"detector_fibre": 14
-    }
+	"config_id":2,
+        "output_channel": [1,2,3,4,5,6,7,8,9,10,11,12,13,14],
+	"detector_fibre": ["w","za","c","d","e","f","g","h","i","j","k","l","z","y"]
+    	}
+
 ],
 
 "laser_head_to_fibre_splitter_map":[
 	{
-        	"fibre_splitter_id": 1,
-		"fibre_spliter_type": "50/50"
-		"laser_head_wavelength": 375
-    },
+	"config_id":1,
+	"fibre_splitter_id":[375,405,440,500],
+	"fibre_spliter_type": ["50/50","99/1","30/70","10/90"]
+   	},
 	{
-        	"fibre_splitter_id": 2,
-		"fibre_spliter_type": "99/1"
-		"laser_head_wavelength": 405
-    },
-	{
-        	"fibre_splitter_id": 3,
-		"fibre_spliter_type": "30/70"
-		"laser_head_wavelength": 440
-    },	
-	{
-        	"fibre_splitter_id": 4,
-		"fibre_spliter_type": "10/90"
-		"laser_head_wavelength": 500
-    }
+	"config_id":2,
+	"fibre_splitter_id":[375,405,440,500],
+	"fibre_spliter_type": ["99/1","50/50","10/90","30/70"]
+   	}
 ],
 
 "fibre_switch_from_laser_head_map":[
 	{
-        	"input_channel": 1,
-		"laser_head_wavelength": 375
+	"config_id":1,
+	"input_channel":[1,2,3,4,5],
+	"laser_head_wavelength":["375","405","440","500","NULL"]
     	},
 	{
-        	"input_channel": 2,
-		"laser_head_wavelength": 405
-    	},
-	{
-        	"input_channel": 3,
-		"laser_head_wavelength": 440
-    	},	
-	{
-        	"input_channel": 4,
-		"laser_head_wavelength": 500
-    	},
-	{
-        	"input_channel": 5,
-		"laser_head_wavelength": "NULL"
+	"config_id":2,
+	"input_channel":[1,2,3,4,5],
+	"laser_head_wavelength":["405","375 ","440","500","NULL"]
     	}
 ],
 
 
 "laser_switch_to_laser_head_map":[
     {
-        "output_channel": 0,
-	"laser_head_wavelength": 375
+	"config_id":1,
+	"output_channel":[0,1,2,3,4,5],
+	"laser_head_wavelength": ["375","405","440","500","NULL"]
     },
     {
-        "output_channel": 1,
-	"laser_head_wavelength": 405
-    },
-    {
-        "output_channel": 2,
-	"laser_head_wavelength": 440
-    },
-    {
-        "output_channel": 3,
-	"laser_head_wavelength": 500
-    },
-    {
-        "output_channel": 4,
-	"laser_head_wavelength": "NULL"
-    },
-    {
-        "output_channel": 5,
-	"laser_head_wavelength": "NULL"
-    }
+    	"config_id":2,
+	"input_channel":[1,2,3,4,5],
+	"laser_head_wavelength":["375","405","440","500","NULL"]
+    }		
 ],
 
 "tcpip_communication_timeouts": [
     {
-        "set_intensity_timeout": 10
+	"config_id":1,
+	"timeout_name":["intensity_timeout","frequency_timeout"],
+        "timeout_value":[10,10]
     },
     {
-	"set_frequency_timeout": 10
-	
+	"config_id":2,
+	"timeout_name":["intensity_timeout","frequency_timeout"],
+        "timeout_value":[30,30]
     }
 ]
 
