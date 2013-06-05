@@ -7,7 +7,7 @@
 # Any value error/deliminter compiler errors for this script will most likely be the 
 # JSON file you are trying to read is in an incorrect format 
 
-import json
+import simplejson as json
 
 # Read in the JSON parameter-file
 def ReadJSON(filename):
@@ -16,16 +16,20 @@ def ReadJSON(filename):
 
 
 # Return the Run number for future reference
-def returnRun(dict, run):
-    for i in range(0, len(dict['run_list']), 1):
-        if dict['run_list'][i]['run_id'] == run:
+def returnRun(dict, run,run_name):
+    for i in range(0, len(dict[run_name]), 1):
+        idValue = run_name[:-5]
+        idValue = idValue + "_id"
+        if dict[run_name][i][idValue] == run:
             return i
 
 
 # Return the SubRun number for future reference
-def returnSubRun(dict, subrun):
-    for i in range(0, len(dict['hw']), 1):
-        if dict['hw'][i]['sub_run_id'] == subrun:
+def returnSubRun(dict, subrun,run_name,run_tracker):
+    for i in range(0, len(dict[run_name]), 1):
+        # "sub_run_id" is an example of run_name
+        # "hw" is an example of the run_name 
+        if dict[run_name][i][run_tracker] == subrun:
             return i	
 
 # Read the Run parameters from the JSON Script
@@ -33,7 +37,7 @@ def getRunParameters(run):
     file = './SMELLIE_very_short.json'
     dict = ReadJSON(file)
     
-    irun = returnRun(dict, run)
+    irun = returnRun(dict, run,'run_list')
     run_id = dict['run_list'][irun]['run_id']
     laser_id = dict['run_list'][irun]['laser_selected'][0]
     number_of_pulses = dict['run_list'][irun]['nb_pulses']
@@ -45,17 +49,15 @@ def getRunParameters(run):
 def getSubRunParameters(subrun):
     file = './SMELLIE_very_short.json'
     dict = ReadJSON(file)    
-    isubrun = returnSubRun(dict, subrun)
+    isubrun = returnSubRun(dict, subrun,"hw","sub_run_id")
     subrun_id = dict['hw'][isubrun]['sub_run_id']
     fsInputChannel = dict['hw'][isubrun]['fibre_switch_channel']
     return subrun_id,fsInputChannel
-
-def 
 	
 def getSubRunParameters(run, subrun):
     file = './SMELLIE_very_short.json'
     dict = ReadJSON(file) 
-    irun = returnRun(dict, run)
+    irun = returnRun(dict, run,'run_list')
     nameList = ['laser_id','author','time_stamp','make_smellie_calibration_table','smellie_calibration_table_reference','trigger_mode','laser_selected','smellie_deriven','number_of_pulses','pulse_frequency']
     valueList = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']    
     valueList[0] = dict['run_list'][irun]['laser_selected'][0]
@@ -69,22 +71,28 @@ def getSubRunParameters(run, subrun):
     valueList[8] = dict['run_list'][irun]['nb_pulses']
     valueList[9] = dict['run_list'][irun]['smellie_pulse_frequency']
 	
-    isubrun = returnSubRun(dict, subrun)
+    isubrun = returnSubRun(dict, subrun,"hw","sub_run_id")
     subrun_id = dict['hw'][isubrun]['sub_run_id']
     fsInputChannel = dict['hw'][isubrun]['fibre_switch_channel']
     print "Configuration parameters are:"
     for i in range(0,10):
         print str(nameList[i]) + "\t" +  str(valueList[i])
-    print "\nSubRun Parameters are:"
-    print subrun_id,fsInputChannel
+    #print "\nSubRun Parameters are:"
+    #print subrun_id,fsInputChannel
 
 def getConfigurationParameters(configId):
-     file = './SMELLIE_config.json'
-     dict = READJSON(file)
-     iconfig = returnRun(dict,configId)
-     nameList = ['config_id','config_rev','time_stamp','tcpip_coummincation_timeouts','safe_laser_switch_output','safe_fibre_switch_output','fibre_switch_serial_port'.'fibre_switch_baud_rate','fibre_switch_from_laser_head_map','fibre_switch_to_detector_fibre_map','laser_switch_wait','laser_head_to_fibre_splitter_map','laser_switch_to_laser_head_map','sepia_laser_driver_module_slotID','sepia_laser_driver_primary_id','sndrop_ip_address','orca_ip_address','orca_server_port','snodrop_client_port','tcpip_communication_max_string_length','snodrop_max_number_listening_connections','detector_database_server_ip_address','NI_device_name','self_test_number_of_pulses','self_test_trigger_frequency','self_test_sampling_frequency','self_test_number_of_samples_per_pulse','self_test_NI_trigger_output_pin','self_test_NI_analogue_input_pin']
-     valueList = [' ',' ',' ',' ',' ',' ',' '.' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']
+     filename = './smellie_config.json'
+     dict = ReadJSON(filename)
+     iconfig = returnRun(dict,configId,'config_list')
+     print iconfig
+     nameList = ['config_id','config_rev','time_stamp','tcpip_communication_timeouts','safe_laser_switch_output','safe_fibre_switch_output','fibre_switch_serial_port','fibre_switch_baud_rate','fibre_switch_from_laser_head_map','fibre_switch_to_detector_fibre_map','laser_switch_wait','laser_head_to_fibre_splitter_map','laser_switch_to_laser_head_map','sepia_laser_driver_module_slotID','sepia_laser_driver_primary_id','snodrop_ip_address','orca_ip_address','orca_server_port','snodrop_client_port','tcpip_communication_max_string_length','snodrop_max_number_listening_connections','detector_database_server_ip_address','NI_device_name','self_test_number_of_pulses','self_test_trigger_frequency','self_test_sampling_frequency','self_test_number_of_samples_per_pulse','self_test_NI_trigger_output_pin','self_test_NI_analogue_input_pin']
+     valueList = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']
+     for i in range(0,29): 
+         valueList[i] = dict['config_list'][iconfig][nameList[i]]
+         print nameList[i],valueList[i]
      
-    
-GetSubRunParameters(2,1)
-GetConfigurationParameters(1)
+     print dict['laser_switch_to_laser_head_map'][0] # this will print the first configuration in the database 
+
+        
+getSubRunParameters(2,1)
+getConfigurationParameters(1)
