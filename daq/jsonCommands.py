@@ -91,8 +91,9 @@ def getConfigurationParameters(configId):
          valueList[i] = dict['config_list'][iconfig][nameList[i]]
          print nameList[i],valueList[i]
      
-     print dict['laser_switch_to_laser_head_map'][0] # this will print the first configuration in the database 
-
+     for i in range(0,5):
+         print dict['laser_switch_to_laser_head_map'][0]['output_channel'][i],dict['laser_switch_to_laser_head_map'][0]['laser_head_wavelength'][i] # this will print the first configuration in the database 
+         
         
 getSubRunParameters(2,1)
 getConfigurationParameters(1)

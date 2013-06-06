@@ -112,7 +112,7 @@
 "laser_switch_to_laser_head_map":[
     {
 	"config_id":1,
-	"output_channel":[0,1,2,3,4,5],
+	"output_channel":[1,2,3,4,5],
 	"laser_head_wavelength": ["375","405","440","500","NULL"]
     },
     {
