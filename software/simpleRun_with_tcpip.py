@@ -6,21 +6,12 @@
 
 # Import all the functions in the following python modules:
 import sys, time
-#import pysepiaUser as sepiaUser
-#import pysepia
-#import laserSwitch as rs
-#import fibreSwitch as fs
-#import socket as conn                # socket constructor and constants
-#import niADC as ni
-import jsonSMELLIE as json
-
-def openConfigData():
-	configId = 1 
-	global nameList,valueList 
-	print "Configuring SMELLIE using Config_id :" + str(configId)
-	nameList, valueList = json.getConfigurationParameters(configId)
-	print valueList[0]	
-	
+import pysepiaUser as sepiaUser
+import pysepia
+import laserSwitch as rs
+import fibreSwitch as fs
+import socket as conn                # socket constructor and constants
+import niADC as ni	
 
 # Incorporate a timeout on the socket
 # If data isn't received before the timeout, the SMELLIE software will restart
@@ -231,10 +222,7 @@ trigger_frequency_flag = '132'                  # this flag indicates that the t
 timeout_flag = '123456'                         # this is the timeout flag for all calls to the timeout function
 
 # Whenever there is an error, the program will revert back to this point and wait for more commands via TCP/IP (from ORCA)
-def main():
-	openConfigData()
-	sys.exit("JSON::Exit placed here to test the JSON file is being read into parameters properly")
-	
+def main():	
 	print "\n"
 	print "Simple TCP/IP Run (Main) - Starting SMELLIE RUN..."
 	
@@ -309,8 +297,6 @@ def main():
 	perform_run(connection, number_of_pulses, trigger_frequency, iDevIdx, iSlotID)    # complete the SMELLIE run
 
 	sys.exit("Simple TCP/IP Run (Main) - good exit")
-
-main() ##GET RID OF THIS MAIN IN THE END !!!!
 
 # try the main function, and if anything goes wrong then return to the start of the main function 
 try:	

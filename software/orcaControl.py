@@ -2,8 +2,9 @@
 # Written by Christopher Jones (17/01/2013, 11/03/2013)
 # Additional changes by Krish Majumdar (05/03/2013, 15/03/2013)
 
-import sys, time, json
+import sys, time
 from socket import *         # portable socket interface and constants
+import jsonSMELLIE as json
 
 continue_flag = '5189'                          # this is the flag to continue to the next stage of a run
 check_connection_flag = '10'                    # this checks if the connection is present
@@ -26,25 +27,15 @@ trigger_frequency_flag = '132'                  # this flag indicates that the t
 timeout_flag = '123456'                         # this is the timeout flag for all calls to the timeout function
 
 
-# Read in the JSON parameter-file
-def ReadJSON(filename):
-    dataDict = json.load(open(filename))
-    return dataDict
+def openConfigData(configId):
+    global nameList,valueList
+    nameList, valueList = json.getConfigurationParameters(configId)
+    print "Testing SMELLIE configuration file readout"
+    for i in range(0,len(nameList)):
+        print nameList[i],valueList[i]	
 
-
-# Return the Run number for future reference
-def returnRun(dict, run):
-	for i in range(0, len(dict['run_list']), 1):
-		if dict['run_list'][i]['run_id'] == run:
-			return i
-
-
-# Return the SubRun number for future reference
-def returnSubRun(dict, subrun):
-	for i in range(0, len(dict['hw']), 1):
-		if dict['hw'][i]['sub_run_id'] == subrun:
-			return i	
-
+openConfigData(1)
+sys.exit("Planned Exit used for testing this code")
 
 # Initialise the TCP/IP socket with an IP address 
 def initialise_socket(ip_address):	
@@ -234,37 +225,7 @@ def run_completion(sockobj):
 	elif (data == timeout_flag):
 		sys.exit("ORCA Control (Run Completion) - SMELLIE has timed out")
 	else:
-		sys.exit("ORCA Control (Run Completion) - Unknown error - please re-start SMELLIE and check all connections.  Re-run this program when the issue is resolved")
-
-
-
-##### THE 2 FUNCTIONS BELOW NEEDS TO BE SORTED OUT BY CHRIS #####
-
-# Read the Run parameters from the JSON Script
-def get_run_parameters(run):
-	file = './SMELLIE_very_short.json'
-	dict = ReadJSON(file)
-    
-	irun = returnRun(dict, run)
-	run_id = dict['run_list'][irun]['run_id']
-	laser_id = dict['run_list'][irun]['laser_selected'][0]
-	number_of_pulses = dict['run_list'][irun]['nb_pulses']
-	pulse_frequency = dict['run_list'][irun]['smellie_pulse_frequency']
-	return run_id,laser_id,number_of_pulses,pulse_frequency
-
-
-# Read the Run parameters from the JSON Script
-def get_subrun_parameters(subrun):
-	file = './SMELLIE_very_short.json'
-	dict = ReadJSON(file)
-    
-	isubrun = returnSubRun(dict, subrun)
-	subrun_id = dict['hw'][isubrun]['sub_run_id']
-	fsInputChannel = dict['hw'][isubrun]['fs_input_channel']
-	fsOutputChannel = dict['hw'][isubrun]['fs_output_channel']
-	intensity = dict['hw'][isubrun]['intensity']
-	return subrun_id,fsInputChannel,fsOutputChannel,intensity
-	
+		sys.exit("ORCA Control (Run Completion) - Unknown error - please re-start SMELLIE and check all connections.  Re-run this program when the issue is resolved")	
 
 ##### START OF THE MAIN PROGRAM ####################################################################################################
 	
