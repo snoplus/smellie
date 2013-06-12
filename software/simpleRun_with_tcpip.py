@@ -2,15 +2,25 @@
 # Written by Christopher Jones (18/02/2013)
 # Additional changes by Krish Majumdar (04/03/2013, 05/03/2013, 15/03/2013)
 
+#TESTING THE CURRENT VERSION OF SMELLIE SIMPLE RUN! NEED TO CHANGE THE MAIN() ONCE CODE IS BUILT
+
 # Import all the functions in the following python modules:
 import sys, time
-import pysepiaUser as sepiaUser
-import pysepia
-import laserSwitch as rs
-import fibreSwitch as fs
-import socket as conn                # socket constructor and constants
-import niADC as ni
+#import pysepiaUser as sepiaUser
+#import pysepia
+#import laserSwitch as rs
+#import fibreSwitch as fs
+#import socket as conn                # socket constructor and constants
+#import niADC as ni
+import jsonSMELLIE as json
 
+def openConfigData():
+	configId = 1 
+	global nameList,valueList 
+	print "Configuring SMELLIE using Config_id :" + str(configId)
+	nameList, valueList = json.getConfigurationParameters(configId)
+	print valueList[0]	
+	
 
 # Incorporate a timeout on the socket
 # If data isn't received before the timeout, the SMELLIE software will restart
@@ -222,6 +232,9 @@ timeout_flag = '123456'                         # this is the timeout flag for a
 
 # Whenever there is an error, the program will revert back to this point and wait for more commands via TCP/IP (from ORCA)
 def main():
+	openConfigData()
+	sys.exit("JSON::Exit placed here to test the JSON file is being read into parameters properly")
+	
 	print "\n"
 	print "Simple TCP/IP Run (Main) - Starting SMELLIE RUN..."
 	
@@ -297,9 +310,10 @@ def main():
 
 	sys.exit("Simple TCP/IP Run (Main) - good exit")
 
+main() ##GET RID OF THIS MAIN IN THE END !!!!
 
 # try the main function, and if anything goes wrong then return to the start of the main function 
-try:
+try:	
 	main()
 except conn.error:
 	print "Simple TCP/IP Run (Main Try/Catch) - Connection error: SMELLIE is restarting ... "

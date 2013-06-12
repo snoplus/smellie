@@ -6,6 +6,8 @@ SMELLIE Specifications for the SNO+ DAQ
 
 -------------------------
 
+*jsonCommands.py is
+This is a file to test opening and reading json files for a SMELLIE run. This will not directly be used in a SMELLIE run. 
 
 Contains json files which are SMELLIE Specifications for the SNO+ DAQ:  
 
