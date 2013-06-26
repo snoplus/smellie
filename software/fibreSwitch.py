@@ -5,13 +5,30 @@
 
 import serial
 
+global serialPortNumber,serialPortBaudRate
+serialPortBaudRate = 57600
+serialPortNumber = 0
+
+def SetSerialPort(newSerialPortNumber):
+    global serialPortNumber    
+    serialPortNumber = newSerialPortNumber
+
+def SetSerialBaudRate(newSerialBaudRate):
+    global serialPortBaudRate
+    serialPortBaudRate = newSerialBaudRate
+
+def GetSerialPort():
+    return serialPortNumber
+
+def GetSerialBaudRate():
+    return serialPortBaudRate
 
 def SetFSChannel(channel_number):
     # invalid channel_number values will not be accepted
     if (channel_number < 1) or (channel_number > 70):
         print "FibreSwitch (SetFSChannel) - The channel number is not valid ... it must between 1 and 70 inclusive."
 
-    ser = serial.Serial(0,57600)			# open first serial port, 57600 is the baud rate
+    ser = serial.Serial(serialPortNumber,serialPortBaudRate)			# open first serial port, 57600 is the baud rate
     print ser.portstr					# check which port was really used
     ser.write("ch" + str(channel_number))		# write the command to change channel number
     ser.write("\r\n")					# executes the previously written command
@@ -31,7 +48,7 @@ def SetIOChannels(input_channel, output_channel):
     # calculate the correct channel number from the given input and output channels
     channel_number = ((input_channel - 1) * 14) + output_channel
 
-    ser = serial.Serial(0,57600)				# open first serial port, 57600 is the baud rate
+    ser = serial.Serial(serialPortNumber,serialPortBaudRate)				# open first serial port, 57600 is the baud rate
     print ser.portstr						# check which port was really used
     ser.write("ch" + str(channel_number))			# write the command to change channel number
     ser.write("\r\n")						# executes the previously written command

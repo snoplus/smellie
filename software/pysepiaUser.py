@@ -7,14 +7,30 @@
 import time, sys
 from pysepia import *	# Import all functions present in pysepia.py
 
+global sepia_iSlotID,sepiaPrimaryId
+sepia_iSlotID = 200
+sepiaPrimaryId = 1
+
+def setSepiaSlotId(newSlotId):
+        global sepia_iSlotId
+        sepia_iSlotId = newSlotId
+
+def setSepiaPrimaryId(newPrimaryId):
+        global sepiaPrimaryId
+        sepiaPrimaryId = newPrimaryId
+
+def getSepiaSlotId():
+        return sepia_iSlotId
+
+def setSepiaPrimaryId():
+        return sepiaPrimaryId
 
 # Initialise the laser so that it is ready for commands
 # This function must be performed before sending any commands to the laser
 def initialise():
         iDevIdx = SEPIA2_USB_OpenDevice()	# open the USB device  
-	SEPIA2_FWR_GetModuleMap(iDevIdx)	# retrieve the module map 
-	iSlotID = 200			
-	iModuleType = SEPIA2_COM_GetModuleType(iDevIdx,200,1)	# the value 200 is the slot section for the Sepia II Unit 
+	SEPIA2_FWR_GetModuleMap(iDevIdx)	# retrieve the module map 		
+	iModuleType = SEPIA2_COM_GetModuleType(iDevIdx,sepia_iSlotId,sepiaPrimaryId)   # the value 200 is the slot section for the Sepia II Unit 
 	SEPIA2_COM_DecodeModuleType(iModuleType)	            # decode the module map
 	return iDevIdx,iModuleType,iSlotID
 
@@ -42,10 +58,10 @@ def set_laser_intensity(new_intensity, iDevIdx):
 	else:
 		pass
 
-	intensity,frequency,pulse_mode,head_id = SEPIA2_SLM_GetParameters(iDevIdx, 200)		# get the current laser parameters
-	check_pulse_mode(pulse_mode) 								# check that the laser is in "Pulse Mode"
-	SEPIA2_SLM_SetParameters(iDevIdx,200,frequency,new_intensity)						# set the new intensity as the laser parameter
-	SEPIA2_SLM_GetParameters(iDevIdx, 200)
+	intensity,frequency,pulse_mode,head_id = SEPIA2_SLM_GetParameters(iDevIdx,sepia_iSlotId)  # get the current laser parameters
+	check_pulse_mode(pulse_mode) 								  # check that the laser is in "Pulse Mode"
+	SEPIA2_SLM_SetParameters(iDevIdx,sepia_iSlotId,frequency,new_intensity)			  # set the new intensity as the laser parameter
+	SEPIA2_SLM_GetParameters(iDevIdx,sepia_iSlotId)
 
 
 # Set the frequency mode of the laser
@@ -56,14 +72,14 @@ def set_laser_frequency(new_frequency, iDevIdx):
 		# NOTE: I may need to change this call when integrating with an ORCA-like system 
 		sys.exit("pysepiaUser (Set Laser Frequency) - Input frequency mode is not valid ... possible values are: 0 (80MHz), 1 (40MHz), 2 (20MHz), 3 (10MHz), 4 (5MHz), 5 (2.5MHz), 6 (external rising edge), 7 (external falling edge)")  
 
-	intensity,frequency,pulse_mode,head_id = SEPIA2_SLM_GetParameters(iDevIdx, 200)		# get the current laser parameters
-	check_pulse_mode(pulse_mode)								# check that the laser is in "Pulse Mode"	
-	SEPIA2_SLM_SetParameters(iDevIdx,200,new_frequency,intensity)				# set the new frequency as the laser parameter
-   	SEPIA2_SLM_GetParameters(iDevIdx, 200)
+	intensity,frequency,pulse_mode,head_id = SEPIA2_SLM_GetParameters(iDevIdx,sepia_iSlotId)	# get the current laser parameters
+	check_pulse_mode(pulse_mode)								        # check that the laser is in "Pulse Mode"	
+	SEPIA2_SLM_SetParameters(iDevIdx,sepia_iSlotId,new_frequency,intensity)				# set the new frequency as the laser parameter
+   	SEPIA2_SLM_GetParameters(iDevIdx,sepia_iSlotId)
 
 
 def get_laser_parameters(iDevIdx):
-	new_intensity,new_frequency,new_pulse_mode,new_head_id = SEPIA2_SLM_GetParameters(iDevIdx, 200)
+	new_intensity,new_frequency,new_pulse_mode,new_head_id = SEPIA2_SLM_GetParameters(iDevIdx,sepia_iSlotId)
 	return new_intensity,new_frequency,new_pulse_mode,new_head_id
 
 

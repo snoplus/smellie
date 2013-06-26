@@ -18,7 +18,7 @@
 		"laser_switch_wait": 30,
 		"laser_head_to_fibre_splitter_map":[ ],
 		"laser_switch_to_laser_head_map": [ ],
-		"sepia_laser_driver_module_slotID": "000", 
+		"sepia_laser_driver_module_slotID": "200", 
 		"sepia_laser_driver_primary_id":1,
 		"snodrop_ip_address": "192.168.0.1",
 		"orca_ip_address": "192.168.0.2",
