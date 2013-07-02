@@ -32,16 +32,56 @@ def readConfigFile(config_id):
         global sepiaSlotId, sepiaPrimaryId
         sepiaPrimaryId = jsoncmd.getConfigPara(config_id,"sepia_laser_driver_module_slotID") 
         sepiaSlotId = jsoncmd.getConfigPara(config_id,"sepia_laser_driver_primary_id")
+
+        global snodropClientPort,snodropMaxListenConn
+        snodropClientPort = jsoncmd.getConfigPara(config_id,"snodrop_client_port")        
+        snodropMaxListenConn = jsoncmd.getConfigPara(config_id,"snodrop_max_number_listening_connections")
         
+        global niDeviceName, selfTestNiTriggerOutputPin, selfTestNiAnalogueInputPin 
+        niDeviceName = jsoncmd.getConfigPara(config_id,"NI_device_name")
+        selfTestNiTriggerOutputPin = jsoncmd.getConfigPara(config_id,"self_test_NI_trigger_output_pin")
+        selfTestNiAnalogueInputPin = jsoncmd.getConfigPara(config_id,"self_test_NI_analogue_input_pin")
+        
+        global selfTestTriggerFreq, selfTestSamplingFreq, selfTestSamplesPerPulse, selfTestNumPulses
+        selfTestTriggerFreq = jsoncmd.getConfigPara(config_id,"self_test_trigger_frequency")
+        selfTestSamplingFreq = jsoncmd.getConfigPara(config_id,"self_test_sampling_frequency")
+        selfTestSamplesPerPulse = jsoncmd.getConfigPara(config_id,"self_test_number_of_samples_per_pulse")
+        selfTestNumPulses = jsoncmd.getConfigPara(config_id,"self_test_number_of_pulses")
+
+        global IntensityTimeoutTCPIP,  FrequecyTimeoutTCPIP, TCPIPTimeouts, FibreSwitchTimeout 
+        global niTriggerTimeout, nipulseFetchTimeout, laserSwitchTimeout
+        TCPIPTimeouts = jsoncmd.getConfigPara(config_id,"tcpip_communication_timeouts")
+        IntensityTimeoutTCPIP = TCPIPTimeouts[0]
+        FrequecyTimeoutTCPIP = TCPIPTimeouts[1]
+        FibreSwitchTimeout = TCPIPTimeouts[2]
+        niTriggerTimeout = TCPIPTimeouts[3]
+        nipulseFetchTimeout = TCPIPTimeouts[4]
+        laserSwitchTimeout = TCPIPTimeouts[5]
         
 
 config_id = 1
 readConfigFile(config_id)                   ##Read all configuration 
+print snodropClientPort, snodropMaxListenConn
+print niDeviceName, selfTestNiTriggerOutputPin, selfTestNiAnalogueInputPin
+print selfTestTriggerFreq, selfTestSamplingFreq, selfTestSamplesPerPulse, selfTestNumPulses
+print TCPIPTimeouts, IntensityTimeoutTCPIP, FrequecyTimeoutTCPIP, FibreSwitchTimeout, niTriggerTimeout, nipulseFetchTimeout,laserSwitchTimeout
+sys.exit()
 fs.SetSerialPort(fibreSwitchSerialPort)     ##Configure the Serial Port ID
 fs.SetSerialBaudRate(fibreSwitchBaudRate)   ##Configure the Serial Baud Rate
+
+#####FOLLOWING PARAMETERS NEED TO BE READ IN FOR TESTING JSON READOUT #############
+
+##NEED THESE PARAMETERS FOR TESTING WITH THE LASER  ###############################
 #sepiaUser.setSepiaSlotId(sepiaSlotId)       ##Confiugre the Sepia Laser Box slotID
 #sepiaUser.setSepiaPrimaryId(sepiaPrimaryId) ##Configure the Sepia Laser Primary Id
-sys.exit()
+###################################################################################
+
+##NEED THESE PARAMETERS FOR TESTING WITH NI BOX ###################################
+# ni.setDevName(niDeviceName)
+# ni.setTriggerOutputPin(selfTestNiTriggerOutputPin)
+# ni.setAnalogueInput(selfTestNiAnalogueInputPin)
+###################################################################################
+
 
 # Incorporate a timeout on the socket
 # If data isn't received before the timeout, the SMELLIE software will restart
@@ -135,7 +175,7 @@ def check_ls_connection(connection):
 
 # Wait for a TCP/IP command (from ORCA), and then check and set the Selected Laser Switch Channel
 def ORCA_set_ls_channel(connection, iDevIdx):
-	ls_channel_set = timeout(connection, 10)    # get the laserSwitch channel, with a 10 second timeout
+	ls_channel_set = timeout(connection, laserSwitchTimeout)    # get the laserSwitch channel, with a 10 second timeout
 	connection.send(continue_flag)
 	print "Simple TCP/IP Run (ORCA Set laserSwitch Channel) - Laser Switch channel is set to:" + ls_channel_set
 	rs.SetSelectedChannel(int(ls_channel_set))
@@ -146,10 +186,10 @@ def ORCA_set_ls_channel(connection, iDevIdx):
 
 # Wait for a TCP/IP command (from ORCA), and then check and set the Laser Intensity and Frequency
 def ORCA_set_laser_parameters(connection):
-	intensity_set = timeout(connection, 10)   # get the laser intensity, with a 10 second timeout
-	connection.send(continue_flag)            # continue
-	frequency_set = timeout(connection,10)    # get the laser frequency mode, with a 10 second timeout
-	connection.send(continue_flag)            # continue
+	intensity_set = timeout(connection, IntensityTimeoutTCPIP)   # get the laser intensity, with a 10 second timeout
+	connection.send(continue_flag)                               # continue
+	frequency_set = timeout(connection, FrequencyTimeoutTCPIP)   # get the laser frequency mode, with a 10 second timeout
+	connection.send(continue_flag)                               # continue
 	print "Simple TCP/IP Run (ORCA Set Laser Parameters) - Laser is set to intensity:" + intensity_set + "%"
 
 	if (frequency_set == '6'):
@@ -188,7 +228,7 @@ def ORCA_set_fs_channel(connection):
 
 # Wait for a TCP/IP command (from ORCA), and then check and set the NI Box's Pulse Number
 def ORCA_ni_get_pulses(connection):
-	pulse_number_set = timeout(connection, 10)    # get the number of pulses to be generated by the NI box, with a 10 second timeout
+	pulse_number_set = timeout(connection, nipulseFetchTimeout)    # get the number of pulses to be generated by the NI box, with a 10 second timeout
 	if (int(pulse_number_set) <= 100000):
 		connection.send(continue_flag)
 		print "Simple TCP/IP Run (ORCA Set NI No. of Pulses) - Generate " + str(int(pulse_number_set)) + " pulses"
@@ -201,7 +241,7 @@ def ORCA_ni_get_pulses(connection):
 # Wait for a TCP/IP command (from ORCA), and then check and set the NI Box's Trigger Frequency
 def ORCA_ni_get_trigger_frequency(connection):
 	try:
-		trigger_frequency = timeout(connection, 10)
+		trigger_frequency = timeout(connection, niTriggerTimeout)
 		connection.send(continue_flag)
 		print "Simple TCP/IP Run (ORCA Set NI Trigger Frequency) - Trigger Frequency: " + str(int(trigger_frequency)) + "Hz"
 		return int(trigger_frequency)
@@ -263,7 +303,7 @@ def main():
 	sepiaUser.close(iDevIdx)
         
 	myHost = ''                          # initialise the server machine ('' means: local host)
-	myPort = 50007                       # listen on a non-reserved port number
+	myPort = snodropClientPort           # listen on a non-reserved port number
 
 	conn.sockobj = conn.socket(conn.AF_INET, conn.SOCK_STREAM)       # make a TCP/IP socket object
 	conn.sockobj.settimeout(None)                                    # No timeout on the socket
@@ -280,7 +320,7 @@ def main():
 
 	# Check for SMELLIE initialisation commmand from ORCA
 	print "Simple TCP/IP Run (Main) - Looking for SMELLIE initialisation commmand from ORCA ... "
-	connection.settimeout(5)                                    # set a timeout of 5 seconds for receiving data
+	connection.settimeout(snodropMaxListenConn)        # set a timeout of 5 seconds for receiving data
 	try:
 		while 1:
     			start_init_data = connection.recv(tcpipMaxStringLength)

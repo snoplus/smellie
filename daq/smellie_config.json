@@ -33,7 +33,7 @@
 		"self_test_sampling_frequency":100000,
 		"self_test_number_of_samples_per_pulse":100,		
 		"self_test_NI_trigger_output_pin": "/ctr0",
-		"self_test_NI_analogue_input_pin": "/ai0"	
+		"self_test_NI_analogue_input_pin": "/ai0:1"	
     		},
 		{
 		"config_id" : 2, 
@@ -125,13 +125,13 @@
 "tcpip_communication_timeouts": [
     {
 	"config_id":1,
-	"timeout_name":["intensity_timeout","frequency_timeout"],
-        "timeout_value":[10,10]
+	"timeout_name":["intensity_timeout","frequency_timeout","fibreSwitch_timeout","nitrigger_timeout","nipulseFetch_timeout","laserSwitch_timeout"],
+        "timeout_value":[10,10,10,20,20,20]
     },
     {
 	"config_id":2,
-	"timeout_name":["intensity_timeout","frequency_timeout"],
-        "timeout_value":[30,30]
+	"timeout_name":["intensity_timeout","frequency_timeout","fibreSwitch_timeout","nitrigger_timeout","nipulseFetch_timeout","laserSwitch_timeout"],
+        "timeout_value":[30,30,30,10,20,20]
     }
 ]
 

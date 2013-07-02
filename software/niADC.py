@@ -3,13 +3,39 @@
 # Additional changes by Krish Majumdar (15/03/2013)
 # Corrections by Christopher Jones (21/03/2013)
 
-import time, ctypes
+import time, ctypes,sys
 import numpy as np 
 from DAQmxFunctions import *
 from DAQmxConstants import *
 from DAQmxTypes import *
 from DAQmxConfig import *
 from DAQmxCallBack import *
+
+global devName, triggerOutputPin, analogueInputPin
+devName = str("Dev1")
+triggerOutputPin = str("/ctrO")
+analogueInputPin = str("/ai0:1")
+
+def setDevName(newDevName):
+        global devName
+        devName = str(newDevName)
+
+def getDevName():
+        return devName
+
+def setTriggerOutputPin(newTrigPin):
+        global triggerOutputPin
+        triggerOutputPin = str(newTrigPin)
+
+def getTriggerOutputPin():
+        return triggerOutputPin
+
+def setAnalogueInput(newAnaloguePin):
+        global analogueInputPin
+        analogueInputPin = newAnaloguePin
+
+def getAnalogueInput():
+        return analogueInputPin
 
 
 class GenerateDigitalTrigger():
@@ -19,7 +45,8 @@ class GenerateDigitalTrigger():
 		DAQmxCreateTask("",byref(taskHandle))
 		high_time = 0.0000005	
 		low_time = 1 / (1.0 * frequency) - high_time
-		DAQmxCreateCOPulseChanTime(taskHandle,"Dev1/ctr0","",DAQmx_Val_Seconds,DAQmx_Val_Low,0.0,low_time,high_time)
+                pulseDetails = str(devName + triggerOutputPin)
+		DAQmxCreateCOPulseChanTime(taskHandle,pulseDetails,"",DAQmx_Val_Seconds,DAQmx_Val_Low,0.0,low_time,high_time)
 		DAQmxCfgImplicitTiming(taskHandle,DAQmx_Val_FiniteSamps,number_of_pulses)    
 
 		self.taskHandle = taskHandle
@@ -42,7 +69,8 @@ class AcquireAnalogue():
 		DAQmxCreateTask("",byref(taskHandle))
 		self.number_of_measurements = number_of_measurements
 		sampling_frequency = 100000
-		DAQmxCreateAIVoltageChan(taskHandle,"Dev1/ai0:1","",DAQmx_Val_Diff,0.0,5.0,DAQmx_Val_Volts,None)
+                aiDetails = str(devName + analogueInputPin)
+		DAQmxCreateAIVoltageChan(taskHandle,aiDetails,"",DAQmx_Val_Diff,0.0,5.0,DAQmx_Val_Volts,None)
 		DAQmxCfgSampClkTiming(taskHandle,"",sampling_frequency,DAQmx_Val_Rising,DAQmx_Val_FiniteSamps,number_of_measurements)
 		self.taskHandle = taskHandle
 
