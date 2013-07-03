@@ -1,0 +1,44 @@
+<html>
+<head>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+
+  <script>
+    
+    $(function() {
+    
+    
+    var people = [];
+    
+    $.getJSON('smellie_config.json', function(data) {
+    $.each(data.config_list, function(i, f) {
+    var tblRow = "<tr>" + "<td>" + f.config_id + "</td>" +
+      "<td>" + f.config_rev + "</td>" + "<td>" + f.laser_switch_wait + "</td>" + "</tr>"
+    $(tblRow).appendTo("#userdata tbody");
+    });
+    
+    });
+    
+    });
+  </script>
+</head>
+
+<body>
+
+  <div class="wrapper">
+<div class="profile">
+  <table id= "userdata" border="2">
+    <thead>
+      <th>Config ID</th>
+      <th>Config Revision</th>
+      <th>Laser Waiting Time</th>
+    </thead>
+    <tbody>
+      
+       </tbody>
+  </table>
+  
+</div>
+  </div>
+  
+</body>
+</html>
