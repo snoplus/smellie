@@ -6,13 +6,13 @@
 
 # Import all the functions in the following python modules:
 import sys, time
-#import pysepiaUser as sepiaUser
-#import pysepia
-import jsonSMELLIE as jsoncmd
-#import laserSwitch as rs
+import pysepiaUser as sepiaUser
+import pysepia
+import jsonCommands as jsoncmd
+import laserSwitch as rs
 import fibreSwitch as fs
-#import socket as conn                # socket constructor and constants
-#import niADC as ni
+import socket as conn                # socket constructor and constants
+import niADC as ni
 
 ##DECLARE GLOBAL VARIABLES TAKEN FROM THE CONFIG FILE
 def readConfigFile(config_id):
@@ -26,12 +26,12 @@ def readConfigFile(config_id):
         fibreSwitchBaudRate = jsoncmd.getConfigPara(config_id,"fibre_switch_baud_rate")
         
         global laserSwitchWait,tcpipMaxStringLength        
-        laserSwitchWait = jsoncmd.getConfigPara(config_id,"laser_switch_wait")
+        #laserSwitchWait = jsoncmd.getConfigPara(config_id,"laser_switch_wait")
         tcpipMaxStringLength = jsoncmd.getConfigPara(config_id,"tcpip_communication_max_string_length")
     
         global sepiaSlotId, sepiaPrimaryId
-        sepiaPrimaryId = jsoncmd.getConfigPara(config_id,"sepia_laser_driver_module_slotID") 
-        sepiaSlotId = jsoncmd.getConfigPara(config_id,"sepia_laser_driver_primary_id")
+        sepiaSlotId = jsoncmd.getConfigPara(config_id,"sepia_laser_driver_module_slotID") 
+        sepiaPrimaryId = jsoncmd.getConfigPara(config_id,"sepia_laser_driver_primary_id")
 
         global snodropClientPort,snodropMaxListenConn
         snodropClientPort = jsoncmd.getConfigPara(config_id,"snodrop_client_port")        
@@ -48,38 +48,33 @@ def readConfigFile(config_id):
         selfTestSamplesPerPulse = jsoncmd.getConfigPara(config_id,"self_test_number_of_samples_per_pulse")
         selfTestNumPulses = jsoncmd.getConfigPara(config_id,"self_test_number_of_pulses")
 
-        global IntensityTimeoutTCPIP,  FrequecyTimeoutTCPIP, TCPIPTimeouts, FibreSwitchTimeout 
+        global IntensityTimeoutTCPIP,  FrequencyTimeoutTCPIP, TCPIPTimeouts, FibreSwitchTimeout 
         global niTriggerTimeout, nipulseFetchTimeout, laserSwitchTimeout
         TCPIPTimeouts = jsoncmd.getConfigPara(config_id,"tcpip_communication_timeouts")
         IntensityTimeoutTCPIP = TCPIPTimeouts[0]
-        FrequecyTimeoutTCPIP = TCPIPTimeouts[1]
+        FrequencyTimeoutTCPIP = TCPIPTimeouts[1]
         FibreSwitchTimeout = TCPIPTimeouts[2]
         niTriggerTimeout = TCPIPTimeouts[3]
         nipulseFetchTimeout = TCPIPTimeouts[4]
-        laserSwitchTimeout = TCPIPTimeouts[5]
-        
+        laserSwitchTimeout = TCPIPTimeouts[5] 
+        #sys.exit("forced exit for testing 21 august 2013 morning ")
 
 config_id = 1
 readConfigFile(config_id)                   ##Read all configuration 
-print snodropClientPort, snodropMaxListenConn
-print niDeviceName, selfTestNiTriggerOutputPin, selfTestNiAnalogueInputPin
-print selfTestTriggerFreq, selfTestSamplingFreq, selfTestSamplesPerPulse, selfTestNumPulses
-print TCPIPTimeouts, IntensityTimeoutTCPIP, FrequecyTimeoutTCPIP, FibreSwitchTimeout, niTriggerTimeout, nipulseFetchTimeout,laserSwitchTimeout
-sys.exit()
+#print snodropClientPort, snodropMaxListenConn
+#print niDeviceName, selfTestNiTriggerOutputPin, selfTestNiAnalogueInputPin
+#print selfTestTriggerFreq, selfTestSamplingFreq, selfTestSamplesPerPulse, selfTestNumPulses
+#print TCPIPTimeouts, IntensityTimeoutTCPIP, FrequecyTimeoutTCPIP, FibreSwitchTimeout, niTriggerTimeout, nipulseFetchTimeout,laserSwitchTimeout
+#sys.exit()
 fs.SetSerialPort(fibreSwitchSerialPort)     ##Configure the Serial Port ID
 fs.SetSerialBaudRate(fibreSwitchBaudRate)   ##Configure the Serial Baud Rate
 
 #####FOLLOWING PARAMETERS NEED TO BE READ IN FOR TESTING JSON READOUT #############
 
-##NEED THESE PARAMETERS FOR TESTING WITH THE LASER  ###############################
-#sepiaUser.setSepiaSlotId(sepiaSlotId)       ##Confiugre the Sepia Laser Box slotID
-#sepiaUser.setSepiaPrimaryId(sepiaPrimaryId) ##Configure the Sepia Laser Primary Id
-###################################################################################
-
 ##NEED THESE PARAMETERS FOR TESTING WITH NI BOX ###################################
-# ni.setDevName(niDeviceName)
-# ni.setTriggerOutputPin(selfTestNiTriggerOutputPin)
-# ni.setAnalogueInput(selfTestNiAnalogueInputPin)
+ni.setDevName(niDeviceName)
+ni.setTriggerOutputPin(selfTestNiTriggerOutputPin)
+ni.setAnalogueInput(selfTestNiAnalogueInputPin)
 ###################################################################################
 
 
@@ -100,10 +95,17 @@ def timeout(connection, timeout_sec):
 
 def set_safe_states(iDevIdx, iSlotID):
 	sepiaUser.laser_soft_lock_on(iDevIdx, iSlotID)   # turn the laser soft-lock on
+        #print "setting laser intensity safe state"
 	sepiaUser.set_laser_intensity(0, iDevIdx)        # set the laser intensity to 0%
-	sepiaUser.set_laser_frequency(6, iDevIdx)        # set the laser frequency to external rising-edge trigger
-	rs.SetSelectedChannel(safeLaserSwitchOutput)	 # set the laserSwitch to channel 0 (default)
+        #print "setting laser frequency safe state"
+        sepiaUser.set_laser_frequency(6, iDevIdx)        # set the laser frequency to external rising-edge trigger 6 as default
+        #print "switching channel safe state"
+        rs.SetSelectedChannel(safeLaserSwitchOutput)	 # set the laserSwitch to channel 0 (default)
+        #print "initialising laser into safestates"
 	sepiaUser.close(iDevIdx)
+	#sys.exit("forced exit for testing")
+	#time.sleep(10)
+	#print "execute and wait"
 	rs.Execute()                                     # execute the laserSwitch channel change from above
 
 
@@ -296,11 +298,23 @@ def main():
 	print "\n"
 	print "Simple TCP/IP Run (Main) - Starting SMELLIE RUN..."
 	
-        #Perform a clean open and close of the Sepia Laser Driver before talking to ORCA. 
+        #Perform a clean open and close of the Sepia Laser Driver before talking to ORCA.
+        print "Simple TCP/IP Run (Main) - Attempting to initialise the Laser Driver..."
         iDevIdx,iModuleType,iSlotID = sepiaUser.initialise()
         sepiaUser.laser_soft_lock_on(iDevIdx, iSlotID)
-	rs.SetSelectedChannel(safeLaserSwitchOutput)
 	sepiaUser.close(iDevIdx)
+	#sys.exit("User Forced close")
+
+        #for testi in range(0,2):
+        #        iDevIdx,iModuleType,iSlotId = sepiaUser.initialise()
+        #        print iDevIdx,iModuleType,iSlotId
+        #        set_safe_states(iDevIdx, iSlotID)
+                #sepiaUser.laser_soft_lock_on(iDevIdx, iSlotID)
+                #rs.SetSelectedChannel(safeLaserSwitchOutput)
+                #sepiaUser.close(iDevIdx)
+        #       print 'finished test' + str(testi)
+
+        #sys.exit('finshed the loop for exit')
         
 	myHost = ''                          # initialise the server machine ('' means: local host)
 	myPort = snodropClientPort           # listen on a non-reserved port number
@@ -365,8 +379,8 @@ def main():
 	number_of_pulses = ORCA_ni_get_pulses(connection)                                 # get the number of pulses from the NI box
 	trigger_frequency = ORCA_ni_get_trigger_frequency(connection)                     # get the trigger frequency of the NI box
 	perform_run(connection, number_of_pulses, trigger_frequency, iDevIdx, iSlotID)    # complete the SMELLIE run
-
-	sys.exit("Simple TCP/IP Run (Main) - good exit")
+        main()
+	#sys.exit("Simple TCP/IP Run (Main) - good exit")
 
 # try the main function, and if anything goes wrong then return to the start of the main function 
 try:	
@@ -378,6 +392,6 @@ except conn.timeout:
 	print "Simple TCP/IP Run (Main Try/Catch) - Connection timeout: SMELLIE is restarting ... "
 	main()
 
-sys.exit("Simple TCP/IP Run (Main Try/Catch) - bad exit")
+sys.exit("Simple TCP/IP Run (Main Try/Catch) - Please consult a SMELLIE Expert")
 
 

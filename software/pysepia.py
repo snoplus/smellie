@@ -48,12 +48,13 @@ def SEPIA2_USB_OpenDevice():
 	p1 = ctypes.c_int(iDevIdx)
 	p2 = ctypes.c_char_p(cSerialNumber)
 	iRetVal = SEPIA2_USB_OpenDevice_API(p1,p2)
-	
+        
 	if (iRetVal == 0):
 		print 'PYSEPIA: Connected to USB Device with serial number: ' + p2.value
 	else:
 		print 'PYSEPIA: Not Connected to USB Device'
-        return p1.value
+        #print 'SEPIA2_USB_OpenDevice::iDevIdx ' + str(p1.value)
+        return p1.value,iRetVal
         
 
 # Close the USB device and prints whether or not the USB has been successfully disconnected
@@ -66,6 +67,8 @@ def SEPIA2_USB_CloseDevice(iDevIdx):
 	iRetVal = 27
 	iRetVal = SEPIA2_USB_CloseDevice_API(p1)
 
+        #print 'SEPIA2_USB_CloseDevice::Return Value' + str(iRetVal)
+        
 	if (iRetVal == 0):
 		print 'PYSEPIA: Disconnected from USB Device'	
 	else:
@@ -171,7 +174,7 @@ def SEPIA2_FWR_GetLastError(iDevIdx):
 		
 	iRetVal = SEPIA2_FWR_GetLastError_API(p1,p2,p3,p4,p5,p6)
 
-	print 'PYSEPIA: ' + p3
+	print 'PYSEPIA::Error ' + str(p2.contents)
 
 
 def SEPIA2_COM_DecodeModuleType(iModuleType): 
@@ -184,9 +187,10 @@ def SEPIA2_COM_DecodeModuleType(iModuleType):
 	p1 = ctypes.c_int(iModuleType)
 	p2 = ctypes.c_char_p(cModuleType)
 
-	SEPIA2_COM_DecodeModuleType_API(p1,p2)
-
-	print 'PYSEPIA: Module Type: ' + p2.value
+        SEPIA2_COM_DecodeModuleType_API(p1,p2)
+	
+        #print 'PYSEPIA: Module Type return value: ' + str(returnval)
+	#print 'PYSEPIA: Module Type: ' + str(p2.value)
 
 
 # First argument ... iGetPrimary = 1 for primary module and = 0 for secondary module 
@@ -329,9 +333,9 @@ def SEPIA2_SOM_GetFreqTrigMode(iDevIdx, iSlotID):
 
 def SEPIA2_SLM_GetParameters(iDevIdx, iSlotId):
 	iFreqTrigMode = 0
-	bPulseMode = 10
-	iHead = 0
-	bIntensity = 10
+	bPulseMode = 1
+        iHead = 0
+	bIntensity = 0
 
 	INTP = ctypes.POINTER(ctypes.c_int)
 	UCHARP = ctypes.POINTER(ctypes.c_ubyte)		# sets up an unsigned character pointer
@@ -379,6 +383,8 @@ def SEPIA2_SLM_SetParameters(iDevIdx,iSlotId,iFreq,bIntensity):
 		bPulseMode = 1
 		print 'PYSEPIA: Pulse Mode must be enabled (set to "1").  Continuous Mode (set to "0") will damage the laserhead!'
 
+        UCHARP = ctypes.POINTER(ctypes.c_ubyte)
+        
 	SEPIA2_SLM_SetParameters_Proto = ctypes.WINFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 	SEPIA2_SLM_SetParameters_Params = (1,"p1",0),(1,"p2",0),(1,"p3",0),(1,"p4",0),(1,"p5",0),
 	SEPIA2_SLM_SetParameters_API = SEPIA2_SLM_SetParameters_Proto(("SEPIA2_SLM_SetParameters",sepiadll),SEPIA2_SLM_SetParameters_Params)
@@ -386,10 +392,12 @@ def SEPIA2_SLM_SetParameters(iDevIdx,iSlotId,iFreq,bIntensity):
 	p1 = ctypes.c_int(iDevIdx)
 	p2 = ctypes.c_int(iSlotId)
 	p3 = ctypes.c_int(iFreq)
+	
 	p4 = ctypes.c_int(bPulseMode)
 	p5 = ctypes.c_int(bIntensity)
-
-	SEPIA2_SLM_SetParameters_API(p1,p2,p3,p4,p5)
+	
+        returnvalue = SEPIA2_SLM_SetParameters_API(p1,p2,p3,p4,p5)
+	return returnvalue
 
 
 def SEPIA2_SLM_DecodeFreqTrigMode(iFreq):

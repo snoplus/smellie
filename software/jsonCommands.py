@@ -7,7 +7,11 @@
 # Any value error/deliminter compiler errors for this script will most likely be the 
 # JSON file you are trying to read is in an incorrect format 
 
-import simplejson as json
+#import simplejson as json
+try:
+        import simplejson as json
+except ImportError:
+        import json as json
 import sys
 
 # Read in the JSON parameter-file
@@ -85,27 +89,26 @@ def getConfigurationParameters(configId):
      filename = '../daq/smellie_config.json'
      dict = ReadJSON(filename)
      iconfig = returnRun(dict,configId,'config_list')
-     nameList = ['config_id','config_rev','time_stamp','tcpip_communication_timeouts','safe_laser_switch_output','safe_fibre_switch_output','fibre_switch_serial_port','fibre_switch_baud_rate','fibre_switch_from_laser_head_map','fibre_switch_to_detector_fibre_map','laser_switch_wait','laser_head_to_fibre_splitter_map','laser_switch_to_laser_head_map','sepia_laser_driver_module_slotID','sepia_laser_driver_primary_id','snodrop_ip_address','orca_ip_address','orca_server_port','snodrop_client_port','tcpip_communication_max_string_length','snodrop_max_number_listening_connections','detector_database_server_ip_address','NI_device_name','self_test_number_of_pulses','self_test_trigger_frequency','self_test_sampling_frequency','self_test_number_of_samples_per_pulse','self_test_NI_trigger_output_pin','self_test_NI_analogue_input_pin']
-     valueList = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']
-     for i in range(0,29): 
+     nameList = ['config_id','config_rev','time_stamp','tcpip_communication_timeouts','safe_laser_switch_output','safe_fibre_switch_input','safe_fibre_switch_output','fibre_switch_serial_port','fibre_switch_baud_rate','fibre_switch_from_laser_head_map','fibre_switch_to_detector_fibre_map','laser_switch_wait','laser_head_to_fibre_splitter_map','laser_switch_to_laser_head_map','sepia_laser_driver_module_slotID','sepia_laser_driver_primary_id','snodrop_ip_address','orca_ip_address','orca_server_port','snodrop_client_port','tcpip_communication_max_string_length','snodrop_max_number_listening_connections','detector_database_server_ip_address','NI_device_name','self_test_number_of_pulses','self_test_trigger_frequency','self_test_sampling_frequency','self_test_number_of_samples_per_pulse','self_test_NI_trigger_output_pin','self_test_NI_analogue_input_pin']
+     valueList = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']
+     for i in range(0,30): 
          if (i == 3): #tcpip_communication_timeouts 
-             nameList[i] = dict['tcpip_communication_timeouts'][configId-1]['timeout_name']
+             #nameList[i] = dict['tcpip_communication_timeouts'][configId-1]['timeout_name']
              valueList[i] = dict['tcpip_communication_timeouts'][configId-1]['timeout_value']
-             #print valueList[i]
-         elif(i == 8):
-             nameList[i] = dict['fibre_switch_from_laser_head_map'][configId-1]['input_channel']
+         elif(i == 9):
+             #nameList[i] = dict['fibre_switch_from_laser_head_map'][configId-1]['input_channel']
              valueList[i] = dict['fibre_switch_from_laser_head_map'][configId-1]['laser_head_wavelength']
              #print valueList[i]
-         elif(i ==9):
-             nameList[i] = dict['fibre_switch_to_detector_fibre_map'][configId-1]['output_channel']
+         elif(i ==10):
+             #nameList[i] = dict['fibre_switch_to_detector_fibre_map'][configId-1]['output_channel']
              valueList[i] = dict['fibre_switch_to_detector_fibre_map'][configId-1]['detector_fibre']
              #print valueList[i]
-         elif(i ==11):
-             nameList[i] = dict['laser_head_to_fibre_splitter_map'][configId-1]['fibre_splitter_id']
+         elif(i ==12):
+             #nameList[i] = dict['laser_head_to_fibre_splitter_map'][configId-1]['fibre_splitter_id']
              valueList[i] = dict['laser_head_to_fibre_splitter_map'][configId-1]['fibre_spliter_type']
              #print valueList[i]
-         elif(i== 12):
-             nameList[i] = dict['laser_switch_to_laser_head_map'][configId-1]['output_channel']
+         elif(i== 13):
+             #nameList[i] = dict['laser_switch_to_laser_head_map'][configId-1]['output_channel']
              valueList[i] = dict['laser_switch_to_laser_head_map'][configId-1]['laser_head_wavelength']
              #print valueList[i]
          else:

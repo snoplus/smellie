@@ -27,15 +27,16 @@ trigger_frequency_flag = '132'                  # this flag indicates that the t
 timeout_flag = '123456'                         # this is the timeout flag for all calls to the timeout function
 
 
-def openConfigData(configId):
-    global nameList,valueList
-    nameList, valueList = json.getConfigurationParameters(configId)
-    print "Testing SMELLIE configuration file readout"
-    for i in range(0,len(nameList)):
-        print nameList[i],valueList[i]	
+#def openConfigData(configId):
+    #global nameList,valueList
+#    nameList, valueList = json.getConfigurationParameters(configId)
+#    print "Testing SMELLIE configuration file readout"
+#    for i in range(0,len(nameList)): 
+#        print nameList[i],valueList[i]	
 
-openConfigData(1)
-sys.exit("Planned Exit used for testing this code")
+#openConfigData(1)
+#json.getConfigurationParameters(1)
+#sys.exit("Planned Exit used for testing this code")
 
 # Initialise the TCP/IP socket with an IP address 
 def initialise_socket(ip_address):	
@@ -85,6 +86,7 @@ def check_laserSwitch(sockobj):
 	
 	if (data == continue_flag):
 		print "ORCA Control (Check laserSwitch) - The Laser Switch is working correctly"
+		print "ORCA Control (Setting Safe States) - Please wait (for at least 1 minute)..."
 	else:
 		sys.exit("ORCA Control (Check laserSwitch) - The Laser Switch is not connected correctly to mains power and/or the SNOdrop PC ... re-run this program when the issue is resolved")
 
@@ -113,6 +115,7 @@ def set_ls_channel(ls_channel, sockobj):
 
 	if (data == continue_flag):
 		print "ORCA Control (Set laserSwitch Channel) - Command to set Laser Switch Channel has been sent"
+		print "ORCA Control (Setting laserSwitch Channel) - Please wait (for at least 1 minute)..."
 	elif(data == timeout_flag):
 		sys.exit("ORCA Control (Set laserSwitch Channel) - SMELLIE has timed out")
 	else:
@@ -230,7 +233,7 @@ def run_completion(sockobj):
 ##### START OF THE MAIN PROGRAM ####################################################################################################
 	
 def main():		
-	ip_address = "142.51.71.62" 
+	ip_address = "142.51.71.198" 
 	
 	sockobj = initialise_socket(ip_address)
 	check_connection(sockobj)			
@@ -247,7 +250,7 @@ def main():
 	#subrun_id,fs_input_channel,fs_output_channel,intensity = get_subrun_parameters(subrun)   
 	#print "ORCA Control (Main): " + subrun_id,fs_input_channel,fs_output_channel,intensity
 	
-	ls_channel = '1'
+	ls_channel = '4'
 	number_of_pulses = '10'
 	pulse_frequency = '1'
 	fs_input_channel = '1'
