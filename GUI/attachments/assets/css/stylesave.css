@@ -1,0 +1,185 @@
+body { 	
+	margin:0; padding:0; 
+    background-image:url('tweed.png');
+    background-repeat:repeat;
+    overflow:auto;
+    /*check*/
+     }
+html {
+    zoom: 1;
+    /*overflow:auto;*/
+    /*-moz-transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);*/
+}
+.Login {
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	position:fixed;
+	top:27%;
+	left:1.0%;
+	/*height:5%;
+	width:10%;*/
+	z-index:101;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #19B12B), color-stop(1, #19B12B) );
+	background:-moz-linear-gradient( center top, #B0FA97 5%, #19B12B 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	/*background-color:#31DF42;*/
+	background-color:#FBEFEF;
+	-moz-border-radius:0.5%;
+	-webkit-border-radius:0.5%;
+	border-radius:6px;
+	border:1px solid #19B12B;
+	display:inline-block;
+	/*color:#030303;*/
+	color:#11290A;
+	font-family:arial;
+	font-size:2.2vh;
+	font-weight:bold;
+	padding:0.5% 2.4%;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #ADADAD;
+}.Login:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #19B12B), color-stop(1, #19B12B) );
+	background:-moz-linear-gradient( center top, #B0FA97 5%, #BCFCA5 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+	/*background-color:#dfdfdf;*/
+	background-color:#FBEFEF;
+	position:fixed;
+	top:27%;
+	left:1.0%;
+}.Login:active {
+	/*position:fixe;*/
+	position:fixed;
+	top:27%;
+	left:1.0%;
+}
+
+.signUp {
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	position:fixed;
+	top:20%;
+	left:1.0%;
+	/*height:5%;
+	width:10%;*/
+	z-index:101;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #19B12B), color-stop(1, #19B12B) );
+	background:-moz-linear-gradient( center top, #B0FA97 5%, #19B12B 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	/*background-color:#31DF42;*/
+	background-color:#FBEFEF;
+	-moz-border-radius:0.5%;
+	-webkit-border-radius:0.5%;
+	border-radius:6px;
+	border:1px solid #19B12B;
+	display:inline-block;
+	/*color:#030303;*/
+	color:#11290A;
+	font-family:arial;
+	font-size:2.2vh;
+	font-weight:bold;
+	padding:0.5% 2.4%;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #ADADAD;
+}.signUp:hover {
+    position:fixed;
+    top:20%;
+    left:1.0%;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #19B12B), color-stop(1, #19B12B) );
+    background:-moz-linear-gradient( center top, #B0FA97 5%, #BCFCA5 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+    /*background-color:#dfdfdf;*/
+    background-color:#FBEFEF;
+}.signUp:active {
+    /*position:relative;*/
+    position:fixed;
+    top:20%;
+    left:1.0%;
+}
+#imglogo {position:fixed; top:2%; left:1%; z-index:101; height:15%; width:10%; opacity:1.0; border-radius:6px;}
+/*#imglogo {position:fixed;top:10%;left:0%;opacity:0.2; border-radius:10px;z-index:101;}
+#imglogo {position:fixed;top:50%;left:50%;margin-left:-150px;margin-top:-112px;opacity:0.2; border-radius:10px;z-index:101;}*/
+
+/*#imglogo {position:fixed;top:10%;left:0%;height:90%;width:70%;opacity:0.2; border-radius:2px;z-index:101;}*/
+
+#logoBox {position:fixed; display:none; top:15%; height:0px; width:10%; opacity:0.9; z-index:200; background: #eee;}
+/* Nice top bar example*/
+/*#sideBar{position:absolute;top:0; width:100%; height:15%; background: radial-gradient(ellipse at center, rgba(205,235,142,0.67) 0%,rgba(165,201,86,1) 100%);z-index:100;}*/
+
+#buttonBox{position:fixed; top:48%;right:22%; width:5%; height:5%;border-radius:20px;opacity:0.8;background: radial-gradient(ellipse at center, rgba(178,225,255,1) 0%,rgba(102,182,252,1) 100%);z-index:300;}
+
+#sideBar{position:fixed; top:10%;right:2%; width:20%; height:80%;border-radius:20px;opacity:0.8; 
+/*Green background*/
+/*background: radial-gradient(ellipse at center, rgba(248,255,232,1) 0%,rgba(227,245,171,1) 33%,rgba(183,223,45,1) 100%);*/
+
+/*Light dark/grey background */
+/*background: radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.23) 100%);*/
+
+/*Dark grey background*/
+/*background: radial-gradient(ellipse at center, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);*/
+
+/*Light Blue background*/
+background: radial-gradient(ellipse at center, rgba(178,225,255,1) 0%,rgba(102,182,252,1) 100%);
+
+/*Synterest*/
+/*background: radial-gradient(ellipse at center, rgba(248,255,232,1) 0%,rgba(227,245,171,1) 33%,rgba(176,250,151,1) 100%);*/
+
+/*synterest v2*/
+/*background: radial-gradient(ellipse at center, rgba(205,235,142,1) 0%,rgba(165,201,86,1) 100%);*/ 
+
+z-index:300;}
+
+
+/*Different example for top bar */
+/*#sideBar{position:absolute;top:0; width:100%; height:15%;z-index:100;}*/
+/*#mainDropBox{position:fixed; background: radial-gradient(ellipse at center, rgba(248,255,232,1) 0%,rgba(227,245,171,1) 33%,rgba(183,223,45,1) 100%);opacity:0.8; display:none; z-index:102}*/
+#mainDropBox{position:fixed; background: radial-gradient(ellipse at center, rgba(248,255,232,1) 0%,rgba(227,245,171,1) 33%,rgba(183,223,45,1) 100%);opacity:0.8; display:none; z-index:102}
+#map{ position:fixed; /*top:2%; left:13%;*/ width:100%; height:100%;}
+.popup {text-align: center;}
+.popup .slideshow {width: 100%;}
+.popup .slideshow .image {display: block;}
+.popup .slideshow .active {display: block;}
+.popup .slideshow img {width: 100%;}
+.popup .slideshow .caption {background: #eee;padding: 8px;}
+
+#map-ui {position: fixed; top: 12%; right: 2%;z-index: 100;}
+#map-ui ul {list-style: none; margin: 0; padding: 0;}
+#map-ui a {font-size: 13px; background: #FFF; color: #3C4E5A; display: block;
+           margin: 0; padding: 0; border: 1px solid #BBB; border-bottom-width: 0;
+           min-width: 138px; padding: 10px; text-decoration: none;}
+#map-ui a:hover { background: #ECF5FA;}
+#map-ui li:last-child a {border-bottom-width: 1px;
+			 -webkit-border-radius: 0 0 3px 3px;
+        border-radius: 0 0 3px 3px;
+    }
+#map-ui li:first-child a {
+        -webkit-border-radius: 3px 3px 0 0;
+        border-radius: 3px 3px 0 0;
+    }
+#map-ui a.active {
+        background: #3887BE;
+        border-color: #3887BE;
+        color: #FFF;
+    }
+
+/*#geoCoder-ui{position:fixed; bottom:5%; left: 40%; height:5%; width:10%; z-index: 100; font-size:3vh;}*/
+
+#locationFormTxt{min-width: 20%; position:fixed; bottom:45%; left:45%; z-index: 100; height:7%; width:20%;border-radius:6px; font-size:3vh;opacity:0.8;}
+
+/*#signupButton{background:#3887BE; position:fixed; top:12.5%; left:90%; height:5%;width:10%; z-index:101; font-size:4vh;}
+#loginButton{background:#3887BE;position:fixed;top:12.5%;left:20%;height:5%;width:10%;z-index:101; font-size:4vh;}*/
+#intelligentIcon {min-width:20px; position:fixed; top:35%; left:1%; z-index:101; height:10%; width:5%; opacity:1.0; border-radius:6px;}
+#miscIcon {min-width:20px; position:fixed; top:35%; left:7%; z-index:101; height:10%; width:5%; opacity:1.0; border-radius:6px;}
+#politicalIcon {min-width:20px; position:fixed; top:47%; left:1%; z-index:101; height:10%; width:5%; opacity:1.0; border-radius:6px;}
+#musicIcon {min-width:20px; position:fixed; top:71%; left:1%; z-index:101; height:10%; width:5%; opacity:1.0; border-radius:6px;}
+#starIcon {min-width:20px; position:fixed; top:59%; left:1%; z-index:101; height:10%; width:5%; opacity:1.0; border-radius:6px;}
+#partyIcon {min-width:20px; position:fixed; top:59%; left:7%; z-index:101; height:10%; width:5%; opacity:1.0; border-radius:6px;}
+#extraIcon {min-width:20px; position:fixed; top:47%; left:7%; z-index:101; height:10%; width:5%; opacity:1.0; border-radius:6px;}
+#extraIcon2 {min-width:20px; position:fixed; top:71%; left:7%; z-index:101; height:10%; width:5%; opacity:1.0; border-radius:6px;}
+#foodIcon {min-width:20px; position:fixed; top:83%; left:1%; z-index:101; height:10%; width:5%; opacity:1.0; border-radius:6px;}
+#extraIcon3 {min-width:20px; position:fixed; top:83%; left:7%; z-index:101; height:10%; width:5%; opacity:1.0; border-radius:6px;}
+
+#slider{position:fixed; top:83%; left:27%; z-index:400; height:5%; width:20%; opacity:1.0; border-radius:6px;}
