@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>SMELLIE Interface</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title>SMELLIE Control Interface (It "still" does not stink)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1	.0">
+    <meta name="description" content="SMELLIE Control Interface">
+    <meta name="author" content="Christopher Jones @ Oxford University for SNO+">
 
     <!-- Le styles -->
     <link href="../assets/css/bootstrap.css" rel="stylesheet">
@@ -93,10 +93,10 @@
 						</select>
 					</form>
 	
-					<div class="control-group" id="calibrationTableRefId">
+					<div class="control-group" id="calibrationTableRefId" style="display:block">
                 		<label class="control-label" for="calibrationTableRef">Calibration Table Reference</label>
                         <div class="controls">
-                            <input type="number" id="calibrationTableRefId" placeholder="e.g. 1">
+                            <input type="number" id="calibrationTableRefIdinput" placeholder="e.g. 1">
                         </div>
                     </div>
 					
@@ -115,8 +115,8 @@
 					
 					<form>
                 		<label class="control-label" for="calibrationMode">Build Calibration Table:</label>						
-						<input type="radio" name="calibrationMode" value="true" id="calibrationTrueId"> True<br>
-						<input type="radio" name="calibrationMode" value="false" checked id="calibrationFalseId"> False
+						<input onclick="buildCalTableMode()"type="radio" name="calibrationMode" value="true" id="calibrationTrueId"> True<br>
+						<input onclick="nobuildCalTableMode()"type="radio" name="calibrationMode" value="false" checked id="calibrationFalseId"> False
 					</form> 
 					
 					
@@ -150,49 +150,72 @@
 					</div> <!-- End of Blocked Class -->	
 					<div class="well span3" id="startButtons"> 
 					<h4>SMELLIE Run Control:</h4><br>
-					<h6> This will have SMELLIE run patterns in the future!</h6><br>                                           						
+					<h6> This will have SMELLIE run patterns in the future!</h6><br>                                           
 						<div class="control-group">
 							<a onClick="loadValues()" class="btn btn btn-action">Load</a>
-							<a onClick="submitToSmellieDaq()" class="btn btn btn-primary">Start</a>
+							<a onClick="submitToSmellieDaq()" class="btn btn btn-primary" id="startButton">Start</a>
 						</div>
 
 						<div class="control-group">
 							<a href="#" class="btn btn btn-danger">Configuration Settings</a>
 						</div>						
 					</div>
+					 
+					<div class="well span3" id="inputErrors"><h4>Input ERRORS:</h4></div>
 					
 					<div id="hiddenJSON"></div>
-
 				
             </div>
         </div>
 	<script>
 	/* ERROR FLAGS --------------------------------------------------*/
  	//if any of these flag is equal to zero then this document will get posted
-    var calibrationFlag = 0; //calibration table not set and is not set to Build calibration table
-	var nakedLaserIntensityflag = 0; //naked intensity on the laser isn't correctly set
-	var smellietriggerModeFlag = 0; //SMELLIE trigger mode is within correct range
-	var runIdFlag = 0; 				//SMELLIE run Id flag 
+    var calibrationFlag = 0; 						//calibration table not set and is not set to Build calibration table
+	var nakedLaserIntensityflag = 0; 				//naked intensity on the laser isn't correctly set
+	var smellietriggerModeFlag = 0; 				//SMELLIE trigger mode is within correct range
+	var runIdFlag = 0; 								//SMELLIE run Id flag 
+	var totalErrorMessage;							//Complete Error Message
+	var stopRunAbility = 10; 						//Stop a run from occuring (defaults to 10 to indicate the loading is not yet safe
 	/*------------------------------------------------------------------*/
+
+	function buildCalTableMode(){								//GUI interface changes if the build calibration mode is active				
+		$("#calibrationTableRefId").css( "display", "none");	//This will make the calibration Table Id Reference field visible
+	}
 	
-	function slaveMode(){ //if slave mode is selected
+	function nobuildCalTableMode(){								//GUI interface changes to disable calibration reference id				
+		$("#calibrationTableRefId").css( "display", "block");	//Removes the calibration table id reference field
+	}
+	
+	function clearErrorDiv(){
+		$("#calibrationTableRefId").css("display", "block");	//reset the calibration table button
+		$("#inputErrors").css( "display", "none");				//reset the input error html
+		totalErrorMessage = "<h4>Input ERRORS:</h4><ul>";		//reset the error message	
+	
+	}
+
+	//if slave mode is selected
+	function slaveMode(){ 										
 		$("#triggerModeinput").css( "display", "none");
 	}
 
-	function masterMode(){ //if master mode is selected
+	//if master mode is selected
+	function masterMode(){ 
 		$("#triggerModeinput").css( "display", "block");
 	}
 	
-	/* NOTE:The timestamp is outside the loadValues function because this is also used to Submit to the SMELLIE DAQ/ORCA/CouchDB*/
-	// Time Stamp for a SMELLIE run
-	var timeStamp = new Date().getTime(); //returns the current time in epoch format (time in ms from January 1970)
-
 	function loadValues(){
+		
+		/* NOTE:The timestamp is outside the loadValues function because this is also used to Submit to the SMELLIE DAQ/ORCA/CouchDB*/
+		// Time Stamp for a SMELLIE run
+		var timeStamp = new Date().getTime(); //returns the current time in epoch format (time in ms from January 1970)	
+	
+		clearErrorDiv() //clear and setup the error message catch	
+	
 		// Run ID (currently the User inputs this from ORCA)
 		var run_id = $("#runIDId").val();
 		if(!run_id.length){ //if the run ID is not set
 			run_id = 1;			
-			alert("run ID is not set! Defaulting to 1!");
+			totalErrorMessage = totalErrorMessage + "<li><h6>Run ID is not set! Defaulting to 1!</h6></li>";
 			runIdFlag = 1;
 		}
 		else{
@@ -205,38 +228,43 @@
 			author = "No Author Specified";
 		}					
 		
-		// SMELLIE Calibration Mode
+		// SMELLIE Calibration Mode ----------------------------------------------------------------------
 		var calibrationMode = document.getElementsByName("calibrationMode");
 			 
-		if (calibrationMode[0].checked){ // to run in make SMELLIE calibration mode (true)
+		if (calibrationMode[0].checked){ 								// to run in make SMELLIE calibration mode (true)
 			var smellieCalibrationMode = $("#calibrationTrueId").val(); //return true
-			$("#calibrationTableRefId").css("display","none"); //turn off the option to pick a calibration reference number
+			$("#calibrationTableRefId").css("display","none"); 			//turn off the option to pick a calibration reference number
 		}
-		else if($(calibrationMode[1].checked)){ // to run in make normal SMELLIE run (false)
-			var smellieCalibrationMode = $("#calibrationFalseId").val(); //return false
-			$("#calibrationTableRefId").css("display","block"); //turn on the option to pick a calibration reference number
+		else if($(calibrationMode[1].checked)){ 							// to run in make normal SMELLIE run (false)
+			var smellieCalibrationMode = $("#calibrationFalseId").val(); 	//return false
+			$("#calibrationTableRefId").css("display","block"); 			//turn on the option to pick a calibration reference number
 		}
 		else{ //If the calibration mode isn't correct set due to HTML error or otherwise
+			totalErrorMessage = totalErrorMessage + "<li><h6>The Calibration Mode is not correctly set</h6></li>";			
 			alert("Error: The Calibration Mode is not correctly set");
 		}
+		//-------------------------------------------------------------------------------------------------------
 	
 		// SMELLIE Calibration Table Reference
-		var smellieCalibrationTableReference = $("#calibrationTableRefId").val(); 
+		var smellieCalibrationTableReference = $("#calibrationTableRefIdinput").val(); //value of the input
 		
 		// Check to see if a Calibration Table Reference has been given	
-		if(smellieCalibrationMode == "false"){ 							
-			if (!smellieCalibrationTableReference.length && calibrationMode[1].checked){ //this code checks to see if the calibration length is empty and the mode is not set to Build calibration mode
-				calibrationFlag = 1; //raise calibration flag
+		if(smellieCalibrationMode == "false"){ 	
+		//to see if the calibration length is empty and the mode is not set to Build calibration mode						
+			if (!smellieCalibrationTableReference.length && calibrationMode[1].checked){ 
+				calibrationFlag = 1; //raise calibration id flag
+				totalErrorMessage = totalErrorMessage + "<li><h6>Calibration Table Reference Id is not set</h6></li>";							
+				alert("Calibration Table Reference Id is not set.");
 			} 
 			else{
-				calibrationFlag = 0; //lower calibration flag
+				calibrationFlag = 0; //lower calibration id flag
 			}
 		}
 		else{
 			// During a SMELLIE Calibration run the table reference is NULL
 			smellieCalibrationTableReference = "NULL";
 		}
-			
+							
 		//Trigger Mode 
 		var triggerMode = document.getElementsByName("triggerModeName"); //read the current operator input 
 	
@@ -247,6 +275,7 @@
 			var smellietriggerMode = $("#slaveModeId").val(); //return "Slave mode"
 		}
 		else{ //If the calibration mode isn't correct set due to HTML error or otherwise
+			totalErrorMessage = totalErrorMessage + "<li><h6>The SMELLIE Trigger Mode is not correctly set</h6></li>";						
 			alert("Error: The SMELLIE Trigger Mode is not correctly set");
 		}
 		
@@ -262,10 +291,12 @@
 		var nakedLaserIntensity = $("#laserIntensityId").val();
 		if(!nakedLaserIntensity.length){ //if the nakedLaserIntensity is not set
 			nakedLaserIntensityflag = 1; //raise the laser Intensity Flag
-			alert("Naked Laser Intensity not set.")
+			alert("Naked Laser Intensity not set.")	
+			totalErrorMessage = totalErrorMessage + "<li><h6>Naked Laser Intensity not set.</h6></li>";						
 		}
 		else if(nakedLaserIntensity < 0 || nakedLaserIntensity > 100){
 			nakedLaserIntensityflag = 1; //raise the laser Intensity Flag
+			totalErrorMessage = totalErrorMessage + "<li><h6>Naked Laser Intensity has to be between 0 and 100 (%)</h6></li>";
 			alert("Naked Laser Intensity has to be between 0 and 100 (%)");
 		}
 		else{
@@ -298,6 +329,7 @@
 			if (triggerMode[0].checked){ //Check to see the detector is actually running in slave mode
 				smellietriggerMode = 0; 				
 				smellietriggerModeFlag = 1;  //raise the SMELLIE Trigger mode flag
+				totalErrorMessage = totalErrorMessage + "<li><h6>The SMELLIE Pulse Frequency needs to be between " + minSmellieFreq + " (Hz) and " + maxSmellieFreq + " (Hz)</h6></li>";			
 				alert("The SMELLIE Pulse Frequency needs to be between " + minSmellieFreq + " (Hz) and " + maxSmellieFreq + " (Hz)");
 			}
 			else{
@@ -306,40 +338,43 @@
 		}
 
 
-		var jsonSmellieRunFile = '{"doc_type": "smellie_run","run_name": "SMELLIE","approved": true,"run_list": [{"run_id": ' + run_id + ', "hw": [ ],"author":"' + author + '", "time_stamp": "' + timeStamp + '","author": "' + author + '","smellie_calibration_table_reference": "' + smellieCalibrationTableReference +'","make_smellie_calibration_table": ' + smellieCalibrationMode + ',"trigger_mode": "' + smellietriggerMode + '", "laser_selected": [' + laserChannel + '],"naked_laser_intensity":"' + nakedLaserIntensity + '","photons_per_pulse": "' + photonsPerPulse + '","nb_pulses": "' + nbPulsesValue + '", "fibre_switch_channel": ' + fibreSwitchChannel +  ',"smellie_pulse_frequency": "' + smelliePulseFrequency + '"}]}';	
-	//console.log(jsonSmellieRunFile);
+		var jsonSmellieRunFile = '{"doc_type": "smellie_run","run_name": "SMELLIE","approved": true,"run_list": [{"run_id": ' + run_id + ', "hw": [ ],"author":"' + author + '", "time_stamp": "' + timeStamp + '","author": "' + author + '","smellie_calibration_table_reference": "' + smellieCalibrationTableReference +'","make_smellie_calibration_table": "' + smellieCalibrationMode + '","trigger_mode": "' + smellietriggerMode + '", "laser_selected": ' + laserChannel + ',"naked_laser_intensity":"' + nakedLaserIntensity + '","photons_per_pulse": "' + photonsPerPulse + '","nb_pulses": "' + nbPulsesValue + '", "fibre_switch_channel": ' + fibreSwitchChannel +  ',"smellie_pulse_frequency": "' + smelliePulseFrequency + '"}]}';	
+	
+	console.log(jsonSmellieRunFile);
 	$("#hiddenJSON").css('display','none');
-	$("#hiddenJSON").html(jsonSmellieRunFile);	
+	$("#hiddenJSON").html(jsonSmellieRunFile);
+	
+	var errorFlagSum = calibrationFlag  + nakedLaserIntensityflag + runIdFlag + smellietriggerModeFlag;
+	stopRunAbility = errorFlagSum; 
+			
+	if(errorFlagSum > 0){ //disable the start button
+		totalErrorMessage = totalErrorMessage + "</ul>"; //close the bullet point of error message before printing		
+		$('#inputErrors').html(totalErrorMessage);
+		$("#inputErrors").css( "display", "block");
+	}	
 		
 	} //End of the Load Values button
 
-	function submitToCouchDB(){
-	// submit the JSON file to couchDB 
-	}
-		
-	function working(){
-		alert("this is working");
-	}
-
-	function notworking(){
-		alert("this is not working");
-	}
 		
 	function submitToSmellieDaq(){
-	// submit to the SMELLIE DAQ (or ORCA in the future or both depending on future run scheme)
-	 //var jsonSmellie = document.getElementById("hiddenJSON").innerHTML();
-	var jsonSmellieRunFile = $("#hiddenJSON").html();
-	console.log(jsonSmellieRunFile);
-	$.ajax(
-        {
-            url: "http://couch.snopl.us/smellie",
-            type: 'POST',
-            data: jsonSmellieRunFile,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-			success : function(resp) {}
-        });
-	
+		if(stopRunAbility > 0){
+			alert("Cannot start SMELLIE run, please refer to input settings");
+		}
+		else{
+			// submit to the SMELLIE DAQ (or ORCA in the future or both depending on future run scheme)
+			//var jsonSmellie = document.getElementById("hiddenJSON").innerHTML();
+			var jsonSmellieRunFile = $("#hiddenJSON").html();
+			console.log(jsonSmellieRunFile);
+			$.ajax(
+				{
+					url: "http://couch.snopl.us/smellie",
+					type: 'POST',
+					data: jsonSmellieRunFile,
+					dataType: 'json',
+					contentType: 'application/json; charset=utf-8',
+					success: alert("Staring run..."), 
+				});
+		}
 	} //end of submitToSmellieDaq()
 	
 	</script>
