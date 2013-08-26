@@ -361,7 +361,8 @@
 			alert("Cannot start SMELLIE run, please refer to input settings");
 		}
 		else{
-			// submit to the SMELLIE DAQ (or ORCA in the future or both depending on future run scheme)
+			//Include a method to send a message to the Python script indicating that it is ready to send commands 
+			//submit to the SMELLIE DAQ (or ORCA in the future or both depending on future run scheme)
 			//var jsonSmellie = document.getElementById("hiddenJSON").innerHTML();
 			var jsonSmellieRunFile = $("#hiddenJSON").html();
 			console.log(jsonSmellieRunFile);
