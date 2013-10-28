@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>TELLIE Control Interface (It "still" does not stink)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1	.0">
+    <meta name="description" content="SMELLIE Control Interface">
+    <meta name="author" content="Christopher Jones @ Oxford University for SNO+">
+
+    <!-- Le styles -->
+    <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+		background-color:#94878B;     
+		}
+    </style>
+    <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  
+  	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  </head>
+ 
+<body>
+
+<div class="container">
+        	<div class="row-fluid">
+            	<div class="span12">
+					<h1>TELLIE Control Panel</h1>	
+				</div>
+			</div>
+</div>
+
+
+<div class="container">
+        	<div class="row-fluid">
+            	<!--<div class="span12">-->
+                	<!--<div class="span6">-->
+                  			
+					<!-- A view of the json file or similar will go here -->
+                	<!--</div>-->
+				
+				
+				<div class="well span3" id="inputTable">
+					<h4>General Settings:</h4>
+                	<div class="control-group">
+                		<label class="control-label" for="laserIntensity">Laser Intensity (%)</label>
+                        <div class="controls">
+                            <input type="number" id="laserIntensityId" placeholder="e.g. 10">
+                        </div>
+                    </div>
+	
+					<div class="control-group">
+                		<label class="control-label" for="runID">Run ID</label>
+                        <div class="controls">
+                            <input type="number" id="runIDId" placeholder="e.g. 5768 (Read from ORCA)">
+                        </div>
+                    </div>
+
+						
+			        <form>	
+                		<label class="control-label" for="laserChannel">Laser Channel</label>
+						<select name="laserChannelSelect" id="laserChannelSelectId" >
+						<!-- This should eventually correspond to a laser frequency and a laser head -->	
+							<option value="1">Channel 1</option>
+							<option value="2">Channel 2</option>
+							<option value="3">Channel 3</option>
+							<option value="4">Channel 4</option>
+							<option value="5">Channel 5</option>			
+						</select>
+					</form>
+
+			        <form>	
+                		<label class="control-label" for="fibreSwitchChannel">Fibre Switch Channel</label>
+						<select name="fibreSwitchChannelSelect" id="fibreSwitchSelectId" >
+						<!-- This should eventually correspond to a laser frequency and a laser head -->	
+							<option value="1">Channel 1</option>
+							<option value="2">Channel 2</option>
+							<option value="3">Channel 3</option>
+							<option value="4">Channel 4</option>
+							<option value="5">Channel 5</option>
+							<option value="6">Channel 6</option>
+							<option value="7">Channel 7</option>
+							<option value="8">Channel 8</option>
+							<option value="9">Channel 9</option>
+							<option value="10">Channel 10</option>
+							<option value="11">Channel 11</option>
+							<option value="12">Channel 12</option>
+							<option value="13">Channel 13</option>
+							<option value="14">Channel 14</option>
+						</select>
+					</form>
+	
+					<div class="control-group" id="calibrationTableRefId" style="display:block">
+                		<label class="control-label" for="calibrationTableRef">Calibration Table Reference</label>
+                        <div class="controls">
+                            <input type="number" id="calibrationTableRefIdinput" placeholder="e.g. 1">
+                        </div>
+                    </div>
+					
+					<div class="control-group">
+                		<label class="control-label" for="operatorName">Operator Name</label>
+                        <div class="controls">
+                            <input type="text" id="operatorNameId" placeholder="e.g. Christopher Jones">
+                        </div>
+                    </div>
+					
+					<form>
+                		<label class="control-label" for="triggerMode">SMELLIE Trigger:</label>						
+						<input onclick="masterMode()" type="radio" name="triggerModeName" value="SMELLIETriggersSNOplus" id="masterModeId"> Master Mode<br>
+						<input onclick="slaveMode()" type="radio" name="triggerModeName" value="SNOplusTriggersSMELLIE"  id="slaveModeId" checked> Slave Mode
+					</form> 
+					
+					<form>
+                		<label class="control-label" for="calibrationMode">Build Calibration Table:</label>						
+						<input onclick="buildCalTableMode()"type="radio" name="calibrationMode" value="true" id="calibrationTrueId"> True<br>
+						<input onclick="nobuildCalTableMode()"type="radio" name="calibrationMode" value="false" checked id="calibrationFalseId"> False
+					</form> 
+					
+					
+					
+ 					                                           
+				</div>
+
+				<div class="well span3" id="triggerModeinput" style="display:none">
+				<h4 id="modesettings">Master Mode Settings:</h4>
+					<div class="control-group">
+                		<label class="control-label" for="photonsPerPulseRef">Estimated Photons per Pulse</label>
+                        <div class="controls">
+                            <input type="number" id="photonsPerPulseId" placeholder="e.g. 10000">
+                        </div>
+                    </div>
+				
+					<div class="control-group">
+                		<label class="control-label" for="numOfPulsesRef">Number of Laser Pulses</label>
+                        <div class="controls">
+                            <input type="number" id="numOfPulsesId" placeholder="e.g. 1000">
+                        </div>
+                    </div>
+
+					<div class="control-group">
+                		<label class="control-label" for="smelliePulseFrequencyRef">Pulse Frequency (Hz)</label>
+                        <div class="controls">
+                            <input type="number" id="pulseFrequencyId" placeholder="between 0 - 1000">
+                        </div>
+                    </div>
+
+					</div> <!-- End of Blocked Class -->	
+					<div class="well span3" id="startButtons"> 
+					<h4>SMELLIE Run Control:</h4><br>
+					<h6> This will have SMELLIE run patterns in the future!</h6><br>                                           
+						<div class="control-group">
+							<a onClick="loadValues()" class="btn btn btn-action">Load</a>
+							<a onClick="submitToSmellieDaq()" class="btn btn btn-primary" id="startButton">Start</a>
+						</div>
+
+						<div class="control-group">
+							<a href="#" class="btn btn btn-danger">Configuration Settings</a>
+						</div>						
+					</div>
+					 
+					<div class="well span3" id="inputErrors"><h4>Input ERRORS:</h4></div>
+					
+					<div id="hiddenJSON"></div>
+				
+            </div>
+        </div>
+	<script>
+	/* ERROR FLAGS --------------------------------------------------*/
+ 	//if any of these flag is equal to zero then this document will get posted
+    var calibrationFlag = 0; 						//calibration table not set and is not set to Build calibration table
+	var nakedLaserIntensityflag = 0; 				//naked intensity on the laser isn't correctly set
+	var smellietriggerModeFlag = 0; 				//SMELLIE trigger mode is within correct range
+	var runIdFlag = 0; 								//SMELLIE run Id flag 
+	var totalErrorMessage;							//Complete Error Message
+	var stopRunAbility = 10; 						//Stop a run from occuring (defaults to 10 to indicate the loading is not yet safe
+	/*------------------------------------------------------------------*/
+
+	function buildCalTableMode(){								//GUI interface changes if the build calibration mode is active				
+		$("#calibrationTableRefId").css( "display", "none");	//This will make the calibration Table Id Reference field visible
+	}
+	
+	function nobuildCalTableMode(){								//GUI interface changes to disable calibration reference id				
+		$("#calibrationTableRefId").css( "display", "block");	//Removes the calibration table id reference field
+	}
+	
+	function clearErrorDiv(){
+		$("#calibrationTableRefId").css("display", "block");	//reset the calibration table button
+		$("#inputErrors").css( "display", "none");				//reset the input error html
+		totalErrorMessage = "<h4>Input ERRORS:</h4><ul>";		//reset the error message	
+	
+	}
+
+	//if slave mode is selected
+	function slaveMode(){ 										
+		$("#triggerModeinput").css( "display", "none");
+	}
+
+	//if master mode is selected
+	function masterMode(){ 
+		$("#triggerModeinput").css( "display", "block");
+	}
+	
+	function loadValues(){
+		
+		/* NOTE:The timestamp is outside the loadValues function because this is also used to Submit to the SMELLIE DAQ/ORCA/CouchDB*/
+		// Time Stamp for a SMELLIE run
+		var timeStamp = new Date().getTime(); //returns the current time in epoch format (time in ms from January 1970)	
+	
+		clearErrorDiv() //clear and setup the error message catch	
+	
+		// Run ID (currently the User inputs this from ORCA)
+		var run_id = $("#runIDId").val();
+		if(!run_id.length){ //if the run ID is not set
+			run_id = 1;			
+			totalErrorMessage = totalErrorMessage + "<li><h6>Run ID is not set! Defaulting to 1!</h6></li>";
+			runIdFlag = 1;
+		}
+		else{
+			runIdFlag = 0;
+		}
+	
+		// Operator of the SMELLIE Run
+		var author = $("#operatorNameId").val();
+		if (author == ""){
+			author = "No Author Specified";
+		}					
+		
+		// SMELLIE Calibration Mode ----------------------------------------------------------------------
+		var calibrationMode = document.getElementsByName("calibrationMode");
+			 
+		if (calibrationMode[0].checked){ 								// to run in make SMELLIE calibration mode (true)
+			var smellieCalibrationMode = $("#calibrationTrueId").val(); //return true
+			$("#calibrationTableRefId").css("display","none"); 			//turn off the option to pick a calibration reference number
+		}
+		else if($(calibrationMode[1].checked)){ 							// to run in make normal SMELLIE run (false)
+			var smellieCalibrationMode = $("#calibrationFalseId").val(); 	//return false
+			$("#calibrationTableRefId").css("display","block"); 			//turn on the option to pick a calibration reference number
+		}
+		else{ //If the calibration mode isn't correct set due to HTML error or otherwise
+			totalErrorMessage = totalErrorMessage + "<li><h6>The Calibration Mode is not correctly set</h6></li>";			
+			alert("Error: The Calibration Mode is not correctly set");
+		}
+		//-------------------------------------------------------------------------------------------------------
+	
+		// SMELLIE Calibration Table Reference
+		var smellieCalibrationTableReference = $("#calibrationTableRefIdinput").val(); //value of the input
+		
+		// Check to see if a Calibration Table Reference has been given	
+		if(smellieCalibrationMode == "false"){ 	
+		//to see if the calibration length is empty and the mode is not set to Build calibration mode						
+			if (!smellieCalibrationTableReference.length && calibrationMode[1].checked){ 
+				calibrationFlag = 1; //raise calibration id flag
+				totalErrorMessage = totalErrorMessage + "<li><h6>Calibration Table Reference Id is not set</h6></li>";							
+				alert("Calibration Table Reference Id is not set.");
+			} 
+			else{
+				calibrationFlag = 0; //lower calibration id flag
+			}
+		}
+		else{
+			// During a SMELLIE Calibration run the table reference is NULL
+			smellieCalibrationTableReference = "NULL";
+		}
+							
+		//Trigger Mode 
+		var triggerMode = document.getElementsByName("triggerModeName"); //read the current operator input 
+	
+		if (triggerMode[0].checked){ // run SMELLIE in master mode
+			var smellietriggerMode = $("#masterModeId").val(); //return "Master mode"
+		}
+		else if(triggerMode[1].checked){ // run SMELLIE in slave mode
+			var smellietriggerMode = $("#slaveModeId").val(); //return "Slave mode"
+		}
+		else{ //If the calibration mode isn't correct set due to HTML error or otherwise
+			totalErrorMessage = totalErrorMessage + "<li><h6>The SMELLIE Trigger Mode is not correctly set</h6></li>";						
+			alert("Error: The SMELLIE Trigger Mode is not correctly set");
+		}
+		
+		//Laser Channel Selection 
+		var laserSelector = document.getElementById("laserChannelSelectId"); //get the laser Selector HTML element
+		var laserChannel = laserSelector.options[laserSelector.selectedIndex].value; //return the selected Laser Channel on the laser Selector HTML element
+		
+		//Laser Channel Selection 
+		var fibreSwitchSelector = document.getElementById("fibreSwitchSelectId"); //get the laser Selector HTML element
+		var fibreSwitchChannel = fibreSwitchSelector.options[fibreSwitchSelector.selectedIndex].value; //return the selected fibre Channel on the fibre switch Selector HTML element
+	
+		// Naked Laser Intensity
+		var nakedLaserIntensity = $("#laserIntensityId").val();
+		if(!nakedLaserIntensity.length){ //if the nakedLaserIntensity is not set
+			nakedLaserIntensityflag = 1; //raise the laser Intensity Flag
+			alert("Naked Laser Intensity not set.")	
+			totalErrorMessage = totalErrorMessage + "<li><h6>Naked Laser Intensity not set.</h6></li>";						
+		}
+		else if(nakedLaserIntensity < 0 || nakedLaserIntensity > 100){
+			nakedLaserIntensityflag = 1; //raise the laser Intensity Flag
+			totalErrorMessage = totalErrorMessage + "<li><h6>Naked Laser Intensity has to be between 0 and 100 (%)</h6></li>";
+			alert("Naked Laser Intensity has to be between 0 and 100 (%)");
+		}
+		else{
+			nakedLaserIntensityflag = 0; //lower the laser Intensity Flag
+		}
+	
+		//Photons per Pulse (Only for Master Mode)
+		var photonsPerPulse = "NULL" //This needs to be changed but is sufficient for the moment
+		
+		//Number of Pulses (Only for Master Mode - Slave mode is yet to be defined)
+		if(triggerMode[1].checked){ 
+			var nbPulsesValue = "NULL"; //if in Slave Mode then the number of pulses in NULL as the run configuration is different
+		}
+		else{
+			var nbPulsesValue = $("#numOfPulsesId").val();
+		}
+		
+		//SMELLIE Pulse Frequency (Only for Master Mode - Slave mode is yet to be defined)
+		if(triggerMode[1].checked){ 
+			var smelliePulseFrequency = "NULL"; //if in Slave Mode then the number of pulses in NULL as the run configuration is different
+		}
+		else{
+			var smelliePulseFrequency = $("#smelliePulseFrequency").val(); //in master mode return the pulse frequency
+		}
+				
+		//Check to make sure the SMELLIE Pulse Frequency is within a safe input range
+		var maxSmellieFreq = 1000; //value in Hz
+		var minSmellieFreq = 0;    //value in Hz 
+		if(smelliePulseFrequency > maxSmellieFreq || smelliePulseFrequency < minSmellieFreq){
+			if (triggerMode[0].checked){ //Check to see the detector is actually running in slave mode
+				smellietriggerMode = 0; 				
+				smellietriggerModeFlag = 1;  //raise the SMELLIE Trigger mode flag
+				totalErrorMessage = totalErrorMessage + "<li><h6>The SMELLIE Pulse Frequency needs to be between " + minSmellieFreq + " (Hz) and " + maxSmellieFreq + " (Hz)</h6></li>";			
+				alert("The SMELLIE Pulse Frequency needs to be between " + minSmellieFreq + " (Hz) and " + maxSmellieFreq + " (Hz)");
+			}
+			else{
+				smellietriggerModeFlag = 0;	//lower the SMELLIE Trigger mode flag	
+			}
+		}
+
+
+		var jsonSmellieRunFile = '{"doc_type": "smellie_run","run_name": "SMELLIE","approved": true,"run_list": [{"run_id": ' + run_id + ', "hw": [ ],"author":"' + author + '", "time_stamp": "' + timeStamp + '","author": "' + author + '","smellie_calibration_table_reference": "' + smellieCalibrationTableReference +'","make_smellie_calibration_table": "' + smellieCalibrationMode + '","trigger_mode": "' + smellietriggerMode + '", "laser_selected": ' + laserChannel + ',"naked_laser_intensity":"' + nakedLaserIntensity + '","photons_per_pulse": "' + photonsPerPulse + '","nb_pulses": "' + nbPulsesValue + '", "fibre_switch_channel": ' + fibreSwitchChannel +  ',"smellie_pulse_frequency": "' + smelliePulseFrequency + '"}]}';	
+	
+	console.log(jsonSmellieRunFile);
+	$("#hiddenJSON").css('display','none');
+	$("#hiddenJSON").html(jsonSmellieRunFile);
+	
+	var errorFlagSum = calibrationFlag  + nakedLaserIntensityflag + runIdFlag + smellietriggerModeFlag;
+	stopRunAbility = errorFlagSum; 
+			
+	if(errorFlagSum > 0){ //disable the start button
+		totalErrorMessage = totalErrorMessage + "</ul>"; //close the bullet point of error message before printing		
+		$('#inputErrors').html(totalErrorMessage);
+		$("#inputErrors").css( "display", "block");
+	}	
+		
+	} //End of the Load Values button
+
+		
+	function submitToSmellieDaq(){
+		if(stopRunAbility > 0){
+			alert("Cannot start SMELLIE run, please refer to input settings");
+		}
+		else{
+			//Include a method to send a message to the Python script indicating that it is ready to send commands 
+			//submit to the SMELLIE DAQ (or ORCA in the future or both depending on future run scheme)
+			//var jsonSmellie = document.getElementById("hiddenJSON").innerHTML();
+			var jsonSmellieRunFile = $("#hiddenJSON").html();
+			console.log(jsonSmellieRunFile);
+			$.ajax(
+				{
+					url: "http://couch.snopl.us/smellie",
+					type: 'POST',
+					data: jsonSmellieRunFile,
+					dataType: 'json',
+					contentType: 'application/json; charset=utf-8',
+					success: alert("Staring run..."), 
+				});
+		}
+	} //end of submitToSmellieDaq()
+	
+	</script>
+	 <!-- Le javascript 
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap-transition.js"></script>
+    <script src="../assets/js/bootstrap-alert.js"></script>
+    <script src="../assets/js/bootstrap-modal.js"></script>
+    <script src="../assets/js/bootstrap-dropdown.js"></script>
+    <script src="../assets/js/bootstrap-scrollspy.js"></script>
+    <script src="../assets/js/bootstrap-tab.js"></script>
+    <script src="../assets/js/bootstrap-tooltip.js"></script>
+    <script src="../assets/js/bootstrap-popover.js"></script>
+    <script src="../assets/js/bootstrap-button.js"></script>
+    <script src="../assets/js/bootstrap-collapse.js"></script>
+    <script src="../assets/js/bootstrap-carousel.js"></script>
+    <script src="../assets/js/bootstrap-typeahead.js"></script>
+
+</body>
+</html>
