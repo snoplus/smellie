@@ -178,6 +178,13 @@
 	var stopRunAbility = 10; 						//Stop a run from occuring (defaults to 10 to indicate the loading is not yet safe
 	/*------------------------------------------------------------------*/
 
+    // Check for the various File API support.
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      //alert('The File APIs are fully supported in this browser.');
+    } else {
+      alert('The File APIs are not fully supported in this browser.');
+    }
+
 	function buildCalTableMode(){								//GUI interface changes if the build calibration mode is active				
 		$("#calibrationTableRefId").css( "display", "none");	//This will make the calibration Table Id Reference field visible
 	}
@@ -363,10 +370,11 @@
 		else{
 			//Include a method to send a message to the Python script indicating that it is ready to send commands 
 			//submit to the SMELLIE DAQ (or ORCA in the future or both depending on future run scheme)
-			//var jsonSmellie = document.getElementById("hiddenJSON").innerHTML();
 			var jsonSmellieRunFile = $("#hiddenJSON").html();
 			console.log(jsonSmellieRunFile);
-			$.ajax(
+            
+            //This is Code help as a copy/reference of how to post to the SNO+ DB 
+			/*$.ajax(
 				{
 					url: "http://couch.snopl.us/smellie",
 					type: 'POST',
@@ -374,9 +382,34 @@
 					dataType: 'json',
 					contentType: 'application/json; charset=utf-8',
 					success: alert("Staring run..."), 
+				});*/
+
+            $.ajax(
+				{
+					url: "http://localhost:10000/",
+					type: 'POST',
+					data: jsonSmellieRunFile,
+					dataType: 'json',
+					contentType: 'application/json; charset=utf-8',
+					success: runSequence(),
 				});
+            /*This is used in conjuction with ORCA */
 		}
 	} //end of submitToSmellieDaq()
+    
+    //Defines the handshaking/communication between the operator (via smellie.html) and ORCA   
+    function runSequence(){
+        //This function will only be called if the jsonFile has been sucessfully created 
+        alert("This will prompt ORCA to check the json...")
+        //Commence handshaking with ORCA ...
+    }
+    
+    //Called if there is a problem with the JSON file created by smellie.html
+    function failSequence(){
+        alert("There is an unknown issue with this JSON file. Page will now reload")
+        location.reload()   
+    }
+       
 	
 	</script>
 	 <!-- Le javascript 
