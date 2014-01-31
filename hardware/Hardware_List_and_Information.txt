@@ -56,7 +56,6 @@ SMELLIE consists of the following hardware components:
 -- this receives light from any one of the lasers via the beamsplitters, and routes to to one of 14 possible output fibres that then enter the detector
 	- see "FibreSwitch_Logic_Diagrams.pdf"
 -- it is a passive switch, i.e. there is no amplification of the light, and as a result there are some insertion losses
-	- see "FibreSwitch_Insertion_Losses.xlsx"
 -- each input/output combination is assigned a specific overall channel number between 1 and 70 inclusive, and this channel is selected using software
 
 --------------------------------------------------
