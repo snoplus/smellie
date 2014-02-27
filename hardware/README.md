@@ -23,12 +23,7 @@ Contents:
     + __Fibre_Specifications.pdf__ - the technical specifications of the optical fibres used by the SMELLIE system
     + __FibreSwitch_Logic_Diagrams.pdf__ - the internal switching mechanisms of the FibreSwitch, showing which input/output combinations use which switching blocks
     + __Monitoring_PMT_Electronics_v2_Analogue.pdf__ - schematic of the Monitoring PMT Analogue PCB
-    + __Monitoring_PMT_Electronics_v2_Digital.pdf__ - schematic of the Monitoring PMT Digital PCB  
-_
-
-* __Setup_Procedure.txt__  
--- This outlines the steps that should be taken to mount the SMELLIE hardware on the 3 electronics trays that will then go into the ELLIE electronics rack  
--- These steps should be accompanied by the following files:
+    + __Monitoring_PMT_Electronics_v2_Digital.pdf__ - schematic of the Monitoring PMT Digital PCB
     + __ELLIE_Rack_Full.jpg__ - a schematic of the entire ELLIE electronics rack, including the TELLIE components located in the top half
     + __ELLIE_Rack_BottomHalf.pdf__ - a schematic of the bottom half of the ELLIE electronics rack, showing the positions of the 3 SMELLIE trays
     + __ELLIE_Rack_SMELLIE_Trays.jpg__ - the layouts of the 3 SMELLIE electronics trays  
@@ -37,5 +32,3 @@ _
 * __Monitoring_PMT_LightTightness_Procedure.txt__  
 -- This outlines the steps for checking that the Monitoring PMT is light-tight  
 -- Possible solutions are also given for any problems that may be encountered  
-_
-
