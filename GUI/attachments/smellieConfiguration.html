@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SMELLIE Configuration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1	.0">
+    <meta name="description" content="SMELLIE Control Interface">
+    <meta name="author" content="Christopher Jones @ Oxford University for SNO+">
+
+    <!-- Le styles -->
+    <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+		background-color:#FFFFFF;     
+		}
+    </style>
+    <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  
+  	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  </head>
+ 
+<body>
+
+ <div class="navbar navbar-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">SMELLIE Configuration (Expert Users ONLY)</a>
+          <ul style="width: 60%" class="nav" role="navigation">
+            <li style="float: right"><a href="smellie.html"> SMELLIE Controls </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+<div class="container">
+        	<div class="row-fluid">
+            	<!--<div class="span12">-->
+                	<!--<div class="span6">-->
+                  			
+					<!-- A view of the json file or similar will go here -->
+                	<!--</div>-->
+				
+				
+				<div class="well span3" id="inputTable">
+					<h4>Hardware Settings:</h4>
+            
+                    <a href="#">View Current/Old Configurations</a> 
+                    <br></br>
+    
+                    <!--<a href="#">Click for an Explaination/Help</a>
+                    <br></br>--> 
+    
+                    <div class="control-group">
+                		<label class="control-label" for="operatorName">Operator Name</label>
+                        <div class="controls">
+                            <input type="text" id="operatorNameId" placeholder="e.g. Christopher Jones">
+                        </div>
+                    </div>
+						
+			        <form>	
+                        <a href="" data-toggle="tooltip" title="Safe/Empty Laser Switch Channel" placement="top">Safe/Empty Laser Channel</a>
+                		<!--<label class="control-label" for="safeLaserChannel">Safe/Empty Laser Channel</label>-->
+						<select name="safeLaserChannel" id="safeLaserChannelId" >
+						<!-- This should eventually correspond to a laser frequency and a laser head -->	
+                            <option value="0">Channel 0</option>							
+                            <option value="1">Channel 1</option>
+							<option value="2">Channel 2</option>
+							<option value="3">Channel 3</option>
+							<option value="4">Channel 4</option>
+							<option value="5">Channel 5</option>			
+						</select>
+					</form>
+
+			        <form>	
+                        <a href="" data-toggle="tooltip" title="Empty Output channel from the Laser into the Fibre Switch" placement="top">Safe Fibre Switch Input Channel</a>
+                		<!--<label class="control-label" for="safeFibreSwitchChannel">Safe Fibre Switch Input Channel</label>-->
+						<select name="safeFibreSwitchChannel" id="safeFibreSwitchInputChannelId" >
+						<!-- This corresponds to a safe Fibre Switch input -->	
+                            <option value="0">Channel 0</option>							
+                            <option value="1">Channel 1</option>
+							<option value="2">Channel 2</option>
+							<option value="3">Channel 3</option>
+							<option value="4">Channel 4</option>
+							<option value="5">Channel 5</option>
+							<option value="6">Channel 6</option>
+							<option value="7">Channel 7</option>
+							<option value="8">Channel 8</option>
+							<option value="9">Channel 9</option>
+							<option value="10">Channel 10</option>
+							<option value="11">Channel 11</option>
+							<option value="12">Channel 12</option>
+							<option value="13">Channel 13</option>
+							<option value="14">Channel 14</option>
+						</select>
+					</form>
+    
+                    <form>	
+                        <a href="" data-toggle="tooltip" title="Empty Output channel from the Fibre Switch into the Detector" placement="top">Safe Fibre Switch Output Channel</a>
+                		<!--<label class="control-label" for="safeFibreSwitchChannel">Safe Fibre Switch Output Channel</label>-->
+						<select name="safeFibreSwitchChannel" id="safeFibreSwitchOutputChannelId" >
+						<!-- This corresponds to a safe Fibre Switch input -->	
+                            <option value="0">Channel 0</option>							
+                            <option value="1">Channel 1</option>
+							<option value="2">Channel 2</option>
+							<option value="3">Channel 3</option>
+							<option value="4">Channel 4</option>
+							<option value="5">Channel 5</option>
+							<option value="6">Channel 6</option>
+							<option value="7">Channel 7</option>
+							<option value="8">Channel 8</option>
+							<option value="9">Channel 9</option>
+							<option value="10">Channel 10</option>
+							<option value="11">Channel 11</option>
+							<option value="12">Channel 12</option>
+							<option value="13">Channel 13</option>
+							<option value="14">Channel 14</option>
+						</select>
+					</form>
+                    
+					<div class="control-group" id="fsSerialPortId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="Serial Port used on SNODROP to communicate with the Fibre Switch" placement="top">Fibre Switch::Serial Port</a>
+                		<!--<label class="control-label" for="fsSerialPortId">Fibre Switch::Serial Port</label>-->
+                        <div class="controls">
+                            <input type="number" id="fsSerialPortIdinput" placeholder="e.g. 0">
+                        </div>
+                    </div>
+                
+                    <div class="control-group" id="fsBaudRateId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="Baud Rate is between the SNODROP and the Fibre Switch" placement="top">Fibre Switch::Baud Rate</a>
+                		<!--<label class="control-label" for="fsBaudRateId">Fibre Switch::Baud Rate</label>-->
+                        <div class="controls">
+                            <input type="number" id="fsBaudRateIdinput" placeholder="e.g. 57600">
+                        </div>
+                    </div>	
+        
+                    <div class="control-group" id="lswaitId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="The time in seconds the software needs to safely wait between switching between lasers" placement="top">Laser Switch Wait</a>
+                		<!--<label class="control-label" for="fsBaudRateId">Fibre Switch::Baud Rate</label>-->
+                        <div class="controls">
+                            <input type="number" id="lswaitIdinput" placeholder="e.g. 30">
+                        </div>
+                    </div>		
+					
+                    <div class="control-group" id="sepiaLaserDriverModuleSlotId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="The module slot Id for the Sepia box (see SMELLIE documentation)" placement="top">SEPIA::Laser Driver Module Slot ID</a>
+                        <div class="controls">
+                            <input type="number" id="sepiaLaserDriverModuleSlotIdinput" placeholder="e.g. 200">
+                        </div>
+                    </div>		
+
+                    <div class="control-group" id="sepiaLaserDriverPrimaryId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="The Laser Driver Primary Id for the Sepia Box (see SMELLIE documentation)" placement="top">SEPIA::Laser Driver Primary ID</a>
+                        <div class="controls">
+                            <input type="number" id="sepiaLaserDriverPrimaryIdinput" placeholder="e.g. 1">
+                        </div>
+                    </div>		
+
+                    <div class="control-group" id="orcaIpAddressId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="The IP Address of ORCA" placement="top">ORCA IP address</a>
+                        <div class="controls">
+                            <input type="text" id="orcaIpAddressIdinput" placeholder="e.g. 192.168.0.1">
+                        </div>
+                    </div>	
+
+                    <div class="control-group" id="orcaServerPortId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="Orca Server Port" placement="top">ORCA Server Port</a>
+                        <div class="controls">
+                            <input type="number" id="orcaServerPortIdinput" placeholder="e.g. 50007">
+                        </div>
+                    </div>			
+ 					                                           
+				</div>
+
+				<div class="well span3" style="display:block">
+
+                     <div class="control-group" id="snodropClientPortId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="Snodrop client Port" placement="top">SNODROP Client Port</a>
+                        <div class="controls">
+                            <input type="number" id="snodropClientPortIdinput" placeholder="e.g. 50007">
+                        </div>
+                    </div>			
+
+                    <div class="control-group" id="snodropIpAddressId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="The IP Address of SNODROP (SMELLIE DAQ)" placement="top">SNODROP IP address</a>
+                        <div class="controls">
+                            <input type="text" id="snodropIpAddressIdinput" placeholder="e.g. 192.168.0.2">
+                        </div>
+                    </div>
+
+					<div class="control-group" id="tcpipCommMaxStringId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="Provide the maximum string length (in bytes) over the TCPIP Port" placement="top">TCPIP Max String Length</a>
+                        <div class="controls">
+                            <input type="number" id="tcpipCommMaxStringIdinput" placeholder="e.g. 1024">
+                        </div>
+                    </div>
+            
+                    <div class="control-group" id="snodropMaxListenersId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="Give the maximum number of connections that can be made to SNODROP" placement="top">SNODROP::Maximum number of connections</a>
+                        <div class="controls">
+                            <input type="number" id="snodropMaxListenersIdinput" placeholder="e.g. 5">
+                        </div>
+                    </div>
+
+                    <div class="control-group" id="detectorDBIpAddressId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="Ip Address of the Detector DB" placement="top">Detector DB Ip Address</a>
+                        <div class="controls">
+                            <input type="text" id="detectorDBIpAddressIdinput" placeholder="e.g. 192.168.0.3">
+                        </div>
+                    </div>
+				
+                    <div class="control-group" id="niDeviceNameId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="Ip Address of the Detector DB" placement="top">NI::Device Name</a>
+                        <div class="controls">
+                            <input type="text" id="niDeviceNameIdinput" placeholder="e.g. Dev1">
+                        </div>
+                    </div>
+
+                    <div class="control-group" id="selfTestNumOfPulsesId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="Number of Laser Pulses in the SMELLIE pre-run Self-test" placement="top">Self-Test::Number of Pulses</a>
+                        <div class="controls">
+                            <input type="number" id="selfTestNumOfPulsesIdinput" placeholder="e.g. 10">
+                        </div>
+                    </div>
+
+                    <div class="control-group" id="selfTestTrigFreqId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="Rate at which laser pulses are created in a SMELLIE pre-run self-test" placement="top">Self-Test::Laser Trigger Frequency (Hz)</a>
+                        <div class="controls">
+                            <input type="number" id="selfTestTrigFreqIdinput" placeholder="e.g. 10000">
+                        </div>
+                    </div>
+
+                    <div class="control-group" id="selfTestSampFreqId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="Rate at which SMELLIE self-test PMT is sampled" placement="top">Self-Test::PMT Sampling Rate (Hz)</a>
+                        <div class="controls">
+                            <input type="number" id="selfTestSampFreqIdinput" placeholder="e.g. 100000">
+                        </div>
+                    </div>
+
+                    <div class="control-group" id="selfTestNumSamplesPerPulseId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="Number of PMT Samples Per Laser Pulse (see SMELLIE documentation)" placement="top">Self-Test::Number of PMT Samples Per Laser Pulse (Hz)</a>
+                        <div class="controls">
+                            <input type="number" id="selfTestNumSamplesPerPulseIdinput" placeholder="e.g. 100">
+                        </div>
+                    </div>
+
+                    <div class="control-group" id="selfTestNITriggerOutputPinId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="NI (National Instruments) Trigger Output PIN (see SMELLIE documentation)" placement="top">Self-Test::Trigger Output Pin</a>
+                        <div class="controls">
+                            <input type="text" id="selfTestNITriggerOutputPinIdinput" placeholder="e.g. /ctr0">
+                        </div>
+                    </div>
+
+                    <div class="control-group" id="selfTestNIAnalogueInputPinId" style="display:block">
+                        <a href="" data-toggle="tooltip" title="The analogue input is taken from the PMT readout" placement="top">Self-Test::NI Analogue Input PIN</a>
+                        <div class="controls">
+                            <input type="text" id="selfTestNIAnalogueInputPinIdinput" placeholder="e.g. /ai0:1">
+                        </div>
+                    </div>
+					
+				</div> <!-- End of Blocked Class -->	
+
+			    <div class="well span3" id="startButtons"> 
+                    
+                    <a href="#fs2detectorModal" role="button" class="btn" data-toggle="modal">Fibre Switch to Detector Map</a>
+
+			        <!-- Modal -->
+                    <div id="fs2detectorModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h3 id="myModalLabel">Fibre Switch to Detector Map</h3>
+                        </div>
+
+                        <div class="modal-body">
+                            <!--Insert the Body of the Modal Here -->
+                            <p> This Map describes which Fibre Switch output corresponds to which fibre going into the detector </p>
+                                
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="Fibre Switch Output 1" placement="top">Fibre Switch Output 1</a>
+                                <div class="controls">
+                                    <input type="text" id="fs2detector1" placeholder="e.g. FS107">
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="Fibre Switch Output 2" placement="top">Fibre Switch Output 2</a>
+                                <div class="controls">
+                                    <input type="text" id="fs2detector2" placeholder="e.g. FS107">
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="Fibre Switch Output 3" placement="top">Fibre Switch Output 3</a>
+                                <div class="controls">
+                                    <input type="text" id="fs2detector3" placeholder="e.g. FS107">
+                                </div>
+                            </div>        
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="Fibre Switch Output 4" placement="top">Fibre Switch Output 4</a>
+                                <div class="controls">
+                                    <input type="text" id="fs2detector4" placeholder="e.g. FS107">
+                                </div>
+                            </div>    
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="Fibre Switch Output 5" placement="top">Fibre Switch Output 5</a>
+                                <div class="controls">
+                                    <input type="text" id="fs2detector5" placeholder="e.g. FS107">
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="Fibre Switch Output 6" placement="top">Fibre Switch Output 6</a>
+                                <div class="controls">
+                                    <input type="text" id="fs2detector6" placeholder="e.g. FS107">
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="Fibre Switch Output 7" placement="top">Fibre Switch Output 7</a>
+                                <div class="controls">
+                                    <input type="text" id="fs2detector7" placeholder="e.g. FS107">
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="Fibre Switch Output 8" placement="top">Fibre Switch Output 8</a>
+                                <div class="controls">
+                                    <input type="text" id="fs2detector8" placeholder="e.g. FS107">
+                                </div>
+                            </div>
+                
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="Fibre Switch Output 9" placement="top">Fibre Switch Output 9</a>
+                                <div class="controls">
+                                    <input type="text" id="fs2detector9" placeholder="e.g. FS107">
+                                </div>
+                            </div>
+
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="Fibre Switch Output 10" placement="top">Fibre Switch Output 10</a>
+                                <div class="controls">
+                                    <input type="text" id="fs2detector10" placeholder="e.g. FS107">
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="Fibre Switch Output 11" placement="top">Fibre Switch Output 11</a>
+                                <div class="controls">
+                                    <input type="text" id="fs2detector11" placeholder="e.g. FS107">
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="Fibre Switch Output 12" placement="top">Fibre Switch Output 12</a>
+                                <div class="controls">
+                                    <input type="text" id="fs2detector12" placeholder="e.g. FS107">
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="Fibre Switch Output 13" placement="top">Fibre Switch Output 13</a>
+                                <div class="controls">
+                                    <input type="text" id="fs2detector13" placeholder="e.g. FS107">
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="Fibre Switch Output 14" placement="top">Fibre Switch Output 14</a>
+                                <div class="controls">
+                                    <input type="text" id="fs2detector14" placeholder="e.g. FS107">
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Add to configuration</button>
+                        </div>
+                    </div>
+                
+                    <br></br>
+
+                    <a href="#ls2fsmapModal" role="button" class="btn" data-toggle="modal">Laser to Fibre Splitter Map</a>
+
+			        <!-- Modal -->
+                    <div id="ls2fsmapModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h3 id="myModalLabel">Laser to Fibre Splitter Map</h3>
+                        </div>
+
+                        <div class="modal-body">
+                            <p> This Map describes which laser corresponds to which Fibre Splitter </p>
+                            <!--Insert the Body of the Modal Here -->
+                
+                             <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="375nm Laser" placement="top">Splitter connected to 375nm Laser</a>
+                                <div class="controls">
+                                    <input type="text" id="ls2fsmap375" placeholder="e.g. 50/50">
+                                </div>
+                            </div>
+
+                             <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="405nm Laser" placement="top">Splitter connected to 405nm Laser</a>
+                                <div class="controls">
+                                    <input type="text" id="ls2fsmap405" placeholder="e.g. 99/1">
+                                </div>
+                            </div>
+
+                             <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="440nm Laser" placement="top">Splitter connected to 440nm Laser</a>
+                                <div class="controls">
+                                    <input type="text" id="ls2fsmap440" placeholder="e.g. 90/10">
+                                </div>
+                            </div>
+
+                             <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="500nm Laser" placement="top">Splitter connected to 500nm Laser</a>
+                                <div class="controls">
+                                    <input type="text" id="ls2fsmap500" placeholder="e.g. 70/30">
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Add to configuration</button>
+                        </div>
+                    </div>
+                    
+                    <br></br>
+
+                    <a href="#fs2lsmapModal" role="button" class="btn" data-toggle="modal">Laser to Fibre Switch Input</a>
+
+			        <!-- Modal -->
+                    <div id="fs2lsmapModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h3 id="myModalLabel">Laser to Fibre Switch Input</h3>
+                        </div>
+
+                        <div class="modal-body">    
+                            <p> This Map describes which laser is connected to which input on the laser switch </p>
+                            <!--Insert the Body of the Modal Here -->
+
+                             <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="375nm Laser input into Laser Switch" placement="top">375nm Laser</a>
+                                <div class="controls">
+                                    <input type="number" id="ls2lh375" placeholder="e.g. 1">
+                                </div>
+                            </div>
+
+                             <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="405nm Laser input into Laser Switch" placement="top">405nm Laser</a>
+                                <div class="controls">
+                                    <input type="number" id="ls2lh405" placeholder="e.g. 2">
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="440nm Laser input into Laser Switch" placement="top">440nm Laser</a>
+                                <div class="controls">
+                                    <input type="number" id="ls2lh440" placeholder="e.g. 3">
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="500nm Laser input into Laser Switch" placement="top">500nm Laser</a>
+                                <div class="controls">
+                                    <input type="number" id="ls2lh500" placeholder="e.g. 4">
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="NULL Laser input into Laser Switch" placement="top">NULL Laser</a>
+                                <div class="controls">
+                                    <input type="number" id="ls2lhNULL" placeholder="e.g. 5">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Add to configuration</button>
+                        </div>
+                    </div>
+
+                    <br></br>
+
+                    <a href="#tcpipModal" role="button" class="btn" data-toggle="modal">TCPIP Timeouts</a>
+
+			        <!-- Modal -->
+                    <div id="tcpipModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h3 id="myModalLabel">TCPIP Timeouts</h3>
+                        </div>
+
+                        <div class="modal-body">    
+                            <p> TCPIP Communication Timeouts for different types of error:</p>
+                            <!--Insert the Body of the Modal Here -->
+
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="Intensity Timeout" placement="top">Intensity Timeout (s)</a>
+                                <div class="controls">
+                                    <input type="number" id="intensityTimeout" placeholder="e.g. 10">
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="Frequency (not set correctly) Timeout" placement="top">Frequency Timeout (s)</a>
+                                <div class="controls">
+                                    <input type="number" id="frequencyTimeout" placeholder="e.g. 10">
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="FibreSwitch (not set correctly) Timeout" placement="top">Fibre Switch timeout (s)</a>
+                                <div class="controls">
+                                    <input type="number" id="fibreSwitchTimeout" placeholder="e.g. 10">
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="NI Trigger(not set correctly) Timeout" placement="top">NI Trigger timeout (s)</a>
+                                <div class="controls">
+                                    <input type="number" id="niTriggerTimeout" placeholder="e.g. 10">
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="display:block">
+                                <a href="" data-toggle="tooltip" title="NI Pulse Fetch(not set correctly) Timeout" placement="top">NI Pulse Fetch timeout (s)</a>
+                                <div class="controls">
+                                    <input type="number" id="niPulseFGeTimeout" placeholder="e.g. 10">
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Add to configuration</button>
+                        </div>
+                    </div>
+			
+			    </div>
+			     
+			    <div id="hiddenJSON"></div>
+
+                <div class="well span3" id="startButtons"> 
+			    <h4>SMELLIE Run Control:</h4><br>
+			    <h6> This will have SMELLIE run patterns in the future!</h6><br>                                           
+				    <div class="control-group">
+					    <a onClick="loadValues()" class="btn btn btn-action">Load</a>
+					    <a onClick="submitToSmellieDaq()" class="btn btn btn-primary" id="startButton">Start</a>
+				    </div>
+
+                <br></br>
+
+                <div id="inputErrors" style="display:block"><h4>Input ERRORS:</h4></div>
+			
+			    </div>
+			     
+			    <div id="hiddenJSON"></div>
+				
+            </div>
+        </div>
+	<script>
+	/* ERROR FLAGS --------------------------------------------------*/
+ 	//if any of these flag is equal to zero then this document will get posted
+    var calibrationFlag = 0; 						//calibration table not set and is not set to Build calibration table
+	var nakedLaserIntensityflag = 0; 				//naked intensity on the laser isn't correctly set
+	var smellietriggerModeFlag = 0; 				//SMELLIE trigger mode is within correct range
+	var configIdFlag = 0; 						    //SMELLIE config_id flag 
+	var totalErrorMessage;							//Complete Error Message
+	var stopRunAbility = 10; 						//Stop a run from occuring (defaults to 10 to indicate the loading is not yet safe
+	/*------------------------------------------------------------------*/
+
+    // Check for the various File API support.
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      //alert('The File APIs are fully supported in this browser.');
+    } else {
+      alert('The File APIs are not fully supported in this browser.');
+    }
+    
+    //This function loads the most recent version of the configuration file. Values are then modified
+    function loadRecentValues(){
+    
+        var request = $.ajax(
+	    {
+		    url: "http://couch.snopl.us/smellie/",
+		    type: 'GET',
+            username: 'snoplus',
+            password: 'PureTe->Dirac!=True',
+		    //data: jsonSmellieRunFile,
+		    dataType: 'json',
+		    contentType: 'application/json; charset=utf-8',
+		    //success: runSequence(),
+	    });    
+        console.log(request);
+    }
+    
+    loadRecentValues();
+	
+	function clearErrorDiv(){
+		$("#calibrationTableRefId").css("display", "block");	//reset the calibration table button
+		$("#inputErrors").css( "display", "none");				//reset the input error html
+		totalErrorMessage = "<h4>Input ERRORS:</h4><ul>";		//reset the error message		
+	}
+
+    //This function is used to provide a default value in case the field isn't filled
+    function defaultFill(parameter,defaultValue){
+        if(!parameter.length){
+            parameter = defaultValue
+            console.log("Defaulting to " + defaultValue);
+        }  
+        return parameter;
+    }
+    
+
+    //pull and generate an array of values for the fibreSwitch to Detector Map
+    function fs2Detector(){ 
+        
+        var totalString = '"fibre_switch_to_detector_fibre_map":[ { "output_channel":'
+        
+        for(var i=1;i<15;i++){
+            if(i == 14){
+                totalString = totalString + i.toString() + '],';    
+            }
+            else{
+                totalString = totalString + i.toString() + ',';
+            }
+        }
+            
+        totalString = totalString + '"detector_fibre":["';
+         
+        for(var i=1;i<15;i++){
+
+            var fsArgumentFormat = "#fs2detector";              
+            var fsArgument = fsArgumentFormat.concat(i.toString());
+            var fsValue = $(fsArgument).val(); 
+
+            if(i == 14){
+                totalString = totalString + fsValue.toString() + '"]';    
+            }
+            else{
+                totalString = totalString + fsValue.toString() + '","';
+            }
+
+        }
+        totalString = totalString + '}]';
+        //console.log(totalString);
+        return totalString;
+    }
+
+    //pull and generate an array of values for the laser head to fibre splitter map
+    function lh2fsMap(){ 
+        
+        var laserFrequencies = new Array("375","405","440","500");
+        
+        var totalString = '"laser_head_to_fibre_splitter_map":[ { "fibre_splitter_id":'
+
+        for(var i=0;i<laserFrequencies.length;i++){
+
+            if(i == laserFrequencies.length - 1){
+                totalString = totalString + laserFrequencies[i] + '],';    
+            }
+            else{
+                totalString = totalString + laserFrequencies[i] + ',';
+            }
+
+        }
+            
+        totalString = totalString + '"fibre_splitter_type":["';
+         
+        for(var i=0;i<laserFrequencies.length;i++){
+
+            var lh2fsBaseArg = "#ls2fsmap";              
+            var fsArgument = lh2fsBaseArg + laserFrequencies[i];
+            var fsValue = $(fsArgument).val(); 
+
+            if(i == laserFrequencies.length -1){
+                totalString = totalString + fsValue.toString() + '"]';    
+            }
+            else{
+                totalString = totalString + fsValue.toString() + '","';
+            }
+
+        }
+        totalString = totalString + '}]';
+        //console.log(totalString);
+        return totalString;
+    }
+
+    //pull and generate an array of values for the laser head to fibre Switch map
+    function lh2fswitchMap(){ 
+        
+        var laserFrequencies = new Array("375","405","440","500","NULL");
+        
+        var totalString = '"fibre_switch_from_laser_head_map":[ { "laser_head_wavelength":"'
+
+        for(var i=0;i<laserFrequencies.length;i++){
+
+            if(i == laserFrequencies.length - 1){
+                totalString = totalString + laserFrequencies[i] + '"],';    
+            }
+            else{
+                totalString = totalString + laserFrequencies[i] + '","';
+            }
+
+        }
+            
+        totalString = totalString + '"input_channel":["';
+         
+        for(var i=0;i<laserFrequencies.length;i++){
+
+            var lh2fsBaseArg = "#ls2lh";              
+            var fsArgument = lh2fsBaseArg + laserFrequencies[i];
+            var fsValue = $(fsArgument).val(); 
+
+            if(i == laserFrequencies.length -1){
+                totalString = totalString + fsValue.toString() + '"]';    
+            }
+            else{
+                totalString = totalString + fsValue.toString() + '","';
+            }
+
+        }
+        totalString = totalString + '}]';
+        //console.log(totalString);
+        return totalString;
+    }
+
+    //pull and generate an array of TCPIP timeouts
+    function tcpipTimemoutFuct(){ 
+        
+        var timeoutArray = new Array("intensityTimeout","frequencyTimeout","fibreSwitchTimeout","niTriggerTimeout","niPulseFGeTimeout");
+        
+        var totalString = '"tcpip_communication_timeouts":[ { "timeout_name":"'
+
+        for(var i=0;i<timeoutArray.length;i++){
+
+            if(i == timeoutArray.length - 1){
+                totalString = totalString + timeoutArray[i] + '"],';    
+            }
+            else{
+                totalString = totalString + timeoutArray[i] + '","';
+            }
+
+        }
+            
+        totalString = totalString + '"timeout_value":["';
+         
+        for(var i=0;i<timeoutArray.length;i++){
+             
+            var fsArgument ='#' + timeoutArray[i];
+            var fsValue = $(fsArgument).val(); 
+
+            if(i == timeoutArray.length -1){
+                totalString = totalString + fsValue.toString() + '"]';    
+            }
+            else{
+                totalString = totalString + fsValue.toString() + '","';
+            }
+
+        }
+        totalString = totalString + '}]';
+        //console.log(totalString);
+        return totalString;
+    }
+    
+	
+	function loadValues(){
+		
+		/* NOTE:The timestamp is outside the loadValues function because this is also used to Submit to the SMELLIE DAQ/ORCA/CouchDB*/
+		// Time Stamp for a SMELLIE run
+		var timeStamp = new Date().getTime(); //returns the current time in epoch format (time in ms from January 1970)	
+	
+		clearErrorDiv() //clear and setup the error message catch	
+	
+		// TODO:Config ID (Need to catch this from ORCA and read the most recent configuration ID) 
+		var config_id = "test";
+		if(!config_id.length){ //if the run ID is not set
+			config_id = 1;			
+			totalErrorMessage = totalErrorMessage + "<li><h6>Config ID has not been read from ORCA! Defaulting to 1!</h6></li>";
+			configIdFlag = 1;
+		}
+		else{
+			configIdFlag = 0;
+		}
+	
+		// Operator of the SMELLIE Run
+		var author = $("#operatorNameId").val();
+		if (author == ""){
+			author = "No Author Specified";
+		}					
+	
+		//Safe Laser Channel Selection 
+		var laserSelector = document.getElementById("safeLaserChannelId"); //get the safe laser channel Id
+		var safeLaserChannelId = laserSelector.options[laserSelector.selectedIndex].value; //return the selected Laser Channel on the laser Selector HTML element
+        safeLaserChannelId = defaultFill(safeLaserChannelId,0);
+
+		//Safe Fibre Switch INPUT Channel Selection 
+		var fibreSwitchSelector = document.getElementById("safeFibreSwitchInputChannelId"); 
+		var safeFibreSwitchInputChannelId = fibreSwitchSelector.options[fibreSwitchSelector.selectedIndex].value; 
+        safeFibreSwitchInputChannelId = defaultFill(safeFibreSwitchInputChannelId,5);
+	
+        //Safe Fibre Switch OUTPUT Channel Selection 
+		var fibreSwitchSelector = document.getElementById("safeFibreSwitchOutputChannelId"); 
+		var safeFibreSwitchOutputChannelId = fibreSwitchSelector.options[fibreSwitchSelector.selectedIndex].value; 
+        safeFibreSwitchInputChannelId = defaultFill(safeFibreSwitchInputChannelId,14);
+
+        //Get the fibre switch serial port
+        var fibreSwitchSerialPort = $("#fsSerialPortIdinput").val();
+        fibreSwitchSerialPort = defaultFill(fibreSwitchSerialPort,0);
+
+        //Get the fibre switch baud rate
+        var fibreSwitchBaudRate = $("#fsBaudRateIdinput").val(); 
+        fibreSwitchBaudRate = defaultFill(fibreSwitchBaudRate,57600);        
+
+        //Get the laser waiting period
+        var lswaitId = $("#lswaitIdinput").val();   
+        lswaitId = defaultFill(lswaitId,30); 
+        
+
+        //Get the Sepia Laser Driver Module Slot ID (Refer to the NI/SMELLIE Documentation)
+        var sepiaLaserDriverModuleSlotId = $('#sepiaLaserDriverModuleSlotIdinput').val();
+        sepiaLaserDriverModuleSlotId = defaultFill(sepiaLaserDriverModuleSlotId,200);
+
+        //Get the Sepia Laser Driver Primary ID (Refer to the NI/SMELLIE Documentation)
+        var sepiaLaserDriverPrimaryId = $('#sepiaLaserDriverPrimaryIdinput').val();
+        sepiaLaserDriverPrimaryId = defaultFill(sepiaLaserDriverPrimaryId,1);
+    
+        var orcaIpAddressIdinput = $('#orcaIpAddressIdinput').val();
+        orcaIpAddressIdinput = defaultFill(orcaIpAddressIdinput,"192.168.0.1");
+
+        var snodropIpAddressIdinput = $('#snodropIpAddressIdinput').val();
+        snodropIpAddressIdinput = defaultFill(snodropIpAddressIdinput,"192.168.0.2");
+        
+        var orcaServerPortIdinput = $('#orcaServerPortIdinput').val();
+        orcaServerPortIdinput = defaultFill(orcaServerPortIdinput,"50007");
+
+        var snodropClientPortIdinput = $('#snodropClientPortIdinput').val();
+        snodropClientPortIdinput = defaultFill(snodropClientPortIdinput,"50007");
+    
+        var tcpipCommMaxStringIdinput = $('#tcpipCommMaxStringIdinput').val();
+        tcpipCommMaxStringIdinput = defaultFill(tcpipCommMaxStringIdinput,"1024");
+
+        var snodropMaxListenersIdinput = $('#snodropMaxListenersIdinput').val();
+        snodropMaxListenersIdinput = defaultFill(snodropMaxListenersIdinput,"5");
+
+        var detectorDBIpAddressIdinput = $('#detectorDBIpAddressIdinput').val();
+        detectorDBIpAddressIdinput = defaultFill(detectorDBIpAddressIdinput,"192.168.0.3");
+        
+        var niDeviceNameIdinput = $('#niDeviceNameIdinput').val();
+        niDeviceNameIdinput = defaultFill(niDeviceNameIdinput,"Dev1");
+        
+        var selfTestNumOfPulsesIdinput = $('#selfTestNumOfPulsesIdinput').val();
+        selfTestNumOfPulsesIdinput = defaultFill(niDeviceNameIdinput,"10");
+
+        var selfTestTrigFreqIdinput = $('#selfTestTrigFreqIdinput').val();
+        selfTestTrigFreqIdinput = defaultFill(selfTestTrigFreqIdinput,"10000");
+
+        var selfTestSampFreqIdinput = $('#selfTestSampFreqIdinput').val();
+        selfTestSampFreqIdinput = defaultFill(selfTestSampFreqIdinput,"100000");
+
+        var selfTestNumSamplesPerPulseIdinput = $('#selfTestNumSamplesPerPulseIdinput').val();
+        selfTestNumSamplesPerPulseIdinput = defaultFill(selfTestNumSamplesPerPulseIdinput,"100");
+
+        var selfTestNITriggerOutputPinIdinput = $('#selfTestNITriggerOutputPinIdinput').val();  
+        selfTestNITriggerOutputPinIdinput = defaultFill(selfTestNITriggerOutputPinIdinput,"/ctr0");
+
+        var selfTestNIAnalogueInputPinIdinput = $('#selfTestNIAnalogueInputPinIdinput').val();
+        selfTestNIAnalogueInputPinIdinput = defaultFill(selfTestNIAnalogueInputPinIdinput,"/ai0:1");
+    
+        var fs2DetectorVar = fs2Detector();
+    
+        var lh2fsMapVar = lh2fsMap();
+    
+        var lh2fswitchMapVar = lh2fswitchMap();
+        
+        var tcpipTimemoutVar = tcpipTimemoutFuct();
+
+		var jsonSmellieRunFile = '{"doc_type": "smellie_config_file","approved": true,"config_list": [{"config_id": ' + config_id + ',"author":"' + author + '", "time_stamp": "' + timeStamp + '"' + ',"tcpip_communication_timeouts": [ ],"safe_laser_switch_output":'+ safeLaserChannelId + ',"safe_laser_switch_output":' + safeFibreSwitchOutputChannelId + ',"safe_laser_switch_input:"' + safeFibreSwitchInputChannelId + ',"fibre_switch_from_laser_head_map": [ ],"fibre_switch_to_laser_head_map": [ ],"fibre_switch_serial_port":"' + fibreSwitchSerialPort + '","fibre_switch_baud_rate":"' + fibreSwitchBaudRate +  '",laser_switch_wait":' + lswaitId +',"laser_head_to_fibre_splitter_map": [ ],"laser_switch_to_laser_head_map": [ ]'+ ',"sepia_laser_driver_module_slotId":' + sepiaLaserDriverModuleSlotId +',"sepia_laser_driver_primary_id":' + sepiaLaserDriverPrimaryId + ',"snodrop_ip_address":' + snodropIpAddressIdinput + ',"orca_ip_address":' + orcaIpAddressIdinput + ',"orca_server_port":' +  orcaServerPortIdinput  + ',"snodrop_client_port":' + snodropClientPortIdinput +',"tcpip_communication_max_string_length":' + tcpipCommMaxStringIdinput + ',"snodrop_max_number_listening_connections":' + snodropMaxListenersIdinput + ',"dectector_database_server_ip_address":' + detectorDBIpAddressIdinput + ',"NI_device_name":' + niDeviceNameIdinput +',"self_test_number_of_pulses":'+ selfTestNumOfPulsesIdinput + ',"self_test_trigger_frequency":' + selfTestTrigFreqIdinput + ',"self_test_sampling_frequency":' + selfTestSampFreqIdinput +',self_test_number_samples_per_pulse":' + selfTestNumSamplesPerPulseIdinput + ',"self_test_NI_trigger_output_pin":' + selfTestNITriggerOutputPinIdinput +',"self_test_NI_analogue_input_pin":' + selfTestNIAnalogueInputPinIdinput +'},],' + fs2DetectorVar +',' + lh2fsMapVar + ',' + lh2fswitchMapVar + ',' + tcpipTimemoutVar + '}';	
+	
+	console.log(jsonSmellieRunFile);
+	/*$("#hiddenJSON").css('display','none');
+	$("#hiddenJSON").html(jsonSmellieRunFile);
+	
+	var errorFlagSum = calibrationFlag  + nakedLaserIntensityflag + runIdFlag + smellietriggerModeFlag;
+	stopRunAbility = errorFlagSum; 
+			
+	if(errorFlagSum > 0){ //disable the start button
+		totalErrorMessage = totalErrorMessage + "</ul>"; //close the bullet point of error message before printing		
+		$('#inputErrors').html(totalErrorMessage);
+		$("#inputErrors").css( "display", "block");
+	}*/	
+		
+	} //End of the Load Values button
+
+		
+	function submitToSmellieDaq(){
+		if(stopRunAbility > 0){
+			alert("Cannot start SMELLIE run, please refer to input settings");
+		}
+		else{
+			//Include a method to send a message to the Python script indicating that it is ready to send commands 
+			//submit to the SMELLIE DAQ (or ORCA in the future or both depending on future run scheme)
+			var jsonSmellieRunFile = $("#hiddenJSON").html();
+			console.log(jsonSmellieRunFile);
+            
+            //This is Code help as a copy/reference of how to post to the SNO+ DB 
+			/*$.ajax(
+				{
+					url: "http://couch.snopl.us/smellie",
+					type: 'POST',
+					data: jsonSmellieRunFile,
+					dataType: 'json',
+					contentType: 'application/json; charset=utf-8',
+					success: alert("Staring run..."), 
+				});*/
+
+            $.ajax(
+				{
+					url: "http://localhost:10000/",
+					type: 'POST',
+					data: jsonSmellieRunFile,
+					dataType: 'json',
+					contentType: 'application/json; charset=utf-8',
+					success: runSequence(),
+				});
+            /*This is used in conjuction with ORCA */
+		}
+	} //end of submitToSmellieDaq()
+    
+    //Defines the handshaking/communication between the operator (via smellie.html) and ORCA   
+    function runSequence(){
+        //This function will only be called if the jsonFile has been sucessfully created 
+        alert("This will prompt ORCA to check the json...")
+        //Commence handshaking with ORCA ...
+    }
+    
+    //Called if there is a problem with the JSON file created by smellie.html
+    function failSequence(){
+        alert("There is an unknown issue with this JSON file. Page will now reload")
+        location.reload()   
+    }
+       
+	
+	</script>
+	 <!-- Le javascript 
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap-transition.js"></script>
+    <script src="../assets/js/bootstrap-alert.js"></script>
+    <script src="../assets/js/bootstrap-modal.js"></script>
+    <script src="../assets/js/bootstrap-dropdown.js"></script>
+    <script src="../assets/js/bootstrap-scrollspy.js"></script>
+    <script src="../assets/js/bootstrap-tab.js"></script>
+    <script src="../assets/js/bootstrap-tooltip.js"></script>
+    <script src="../assets/js/bootstrap-popover.js"></script>
+    <script src="../assets/js/bootstrap-button.js"></script>
+    <script src="../assets/js/bootstrap-collapse.js"></script>
+    <script src="../assets/js/bootstrap-carousel.js"></script>
+    <script src="../assets/js/bootstrap-typeahead.js"></script>
+
+</body>
+</html>
