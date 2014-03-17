@@ -360,7 +360,7 @@
 		totalErrorMessage = totalErrorMessage + "</ul>"; //close the bullet point of error message before printing		
 		$('#inputErrors').html(totalErrorMessage);
 		$("#inputErrors").css( "display", "block");
-	}	
+	}		
 		
 	} //End of the Load Values button
 
@@ -376,7 +376,7 @@
 			console.log(jsonSmellieRunFile);
             
             //This is Code help as a copy/reference of how to post to the SNO+ DB 
-			/*$.ajax(
+			$.ajax(
 				{
 					url: "http://couch.snopl.us/smellie",
 					type: 'POST',
@@ -384,8 +384,7 @@
 					dataType: 'json',
 					contentType: 'application/json; charset=utf-8',
 					success: alert("Staring run..."), 
-				});*/
-
+				});
             $.ajax(
 				{
 					url: "http://localhost:10000/",
