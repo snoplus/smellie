@@ -50,9 +50,9 @@ def SEPIA2_USB_OpenDevice():
 	iRetVal = SEPIA2_USB_OpenDevice_API(p1,p2)
         
 	if (iRetVal == 0):
-		print 'PYSEPIA: Connected to USB Device with serial number: ' + p2.value
+		print 'PYSEPIA:SEPIA2_USB_OpenDevice: Connected to USB Device with serial number: ' + p2.value
 	else:
-		print 'PYSEPIA: Not Connected to USB Device'
+		print 'PYSEPIA:SEPIA2_USB_OpenDevice: Not Connected to USB Device'
         #print 'SEPIA2_USB_OpenDevice::iDevIdx ' + str(p1.value)
         return p1.value,iRetVal
         
@@ -187,7 +187,7 @@ def SEPIA2_COM_DecodeModuleType(iModuleType):
 	p1 = ctypes.c_int(iModuleType)
 	p2 = ctypes.c_char_p(cModuleType)
 
-        SEPIA2_COM_DecodeModuleType_API(p1,p2)
+        returnval = SEPIA2_COM_DecodeModuleType_API(p1,p2)
 	
         #print 'PYSEPIA: Module Type return value: ' + str(returnval)
 	#print 'PYSEPIA: Module Type: ' + str(p2.value)
@@ -212,8 +212,10 @@ def SEPIA2_COM_GetModuleType(iDevIdx,iSlotId,iGetPrimary):
 	p4 = ctypes.cast(addr, INTP)  
 		
 	iRetVal = SEPIA2_COM_GetModuleType_API(p1,p2,p3,p4)
-	
+
+	#print "iRetVal " + str(iRetVal)
 	return p4.contents.value
+	#return iRetVal
 
 
 def SEPIA2_COM_GetSerialNumber(iDevIdx,iSlotId): 
@@ -258,7 +260,7 @@ def SEPIA2_COM_HasSecondaryModule(iDevIdx,iSlotId):
 def SEPIA2_SCM_GetLaserSoftLock(iDevIdx,iSlotId): 
 	pbSoftLocked = 0		# this produces a copy of previous allocated memory
 	UCHARP = ctypes.POINTER(ctypes.c_ubyte)		# sets up an unsigned character pointer
-	#pbSoftLocked = "10"
+	#pbSoftLocked = 10
 	
 	SEPIA2_SCM_GetLaserSoftLock_Proto = ctypes.WINFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,UCHARP)
 	SEPIA2_SCM_GetLaserSoftLock_Params = (1,"p1",0),(1,"p2",0),(1,"p3",0),
@@ -277,17 +279,17 @@ def SEPIA2_SCM_GetLaserSoftLock(iDevIdx,iSlotId):
 
 
 def SEPIA2_SCM_SetLaserSoftLock(iDevIdx,iSlotId,pbSoftLocked): 
-	SEPIA2_SCM_SetLaserSoftLock_Proto = ctypes.WINFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_ubyte)
+	SEPIA2_SCM_SetLaserSoftLock_Proto = ctypes.WINFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 	SEPIA2_SCM_SetLaserSoftLock_Params = (1,"p1",0),(1,"p2",0),(1,"p3",0),
 	SEPIA2_SCM_SetLaserSoftLock_API = SEPIA2_SCM_SetLaserSoftLock_Proto(("SEPIA2_SCM_SetLaserSoftLock",sepiadll),SEPIA2_SCM_SetLaserSoftLock_Params)
 	
 	p1 = ctypes.c_int(iDevIdx)	   
 	p2 = ctypes.c_int(iSlotId)  
-	p3 = ctypes.c_ubyte(pbSoftLocked)
+	p3 = ctypes.c_int(pbSoftLocked)
 
-	SEPIA2_SCM_SetLaserSoftLock_API(p1,p2,p3)
+	returnValue = SEPIA2_SCM_SetLaserSoftLock_API(p1,p2,p3)
 	
-	return p3.value
+	return returnValue
 
 
 def SEPIA2_SCM_GetLaserLocked(iDevIdx,iSlotId): 

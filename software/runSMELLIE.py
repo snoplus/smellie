@@ -14,6 +14,10 @@ import fibreSwitch as fs
 import socket as conn                # socket constructor and constants
 import niADC as ni
 
+#Threading functions
+import serial,time
+from threading import Thread
+
 ##DECLARE GLOBAL VARIABLES TAKEN FROM THE CONFIG FILE
 def readConfigFile(config_id):
         global safeLaserSwitchOutput, safeFibreSwitchInput,safeFibreSwitchOutput 
@@ -294,7 +298,13 @@ trigger_frequency_flag = '132'                  # this flag indicates that the t
 timeout_flag = '123456'                         # this is the timeout flag for all calls to the timeout function
 
 # Whenever there is an error, the program will revert back to this point and wait for more commands via TCP/IP (from ORCA)
-def main():	
+def main():
+
+        #Start the interlock keep-alive pulse
+        
+
+        
+        #time.sleep(10)
 	print "\n"
 	print "Simple TCP/IP Run (Main) - Starting SMELLIE RUN..."
 	

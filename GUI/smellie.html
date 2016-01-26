@@ -1,0 +1,48 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+
+  <script>
+    
+    
+    var inputFile = 'smellie_config.json';
+    var inputConfigID = 1; 
+    $(function() {
+    
+    
+    var people = [];
+    
+    $.getJSON(inputFile, function(data) {
+    $.each(data.config_list, function(i,f) {
+    if (f.config_id == inputConfigID){
+    $.each(f,function(key,value){
+      var normalCol = "<p>" + key + "   " + value + "</p>"
+      //$(tblRow).appendTo("#data");
+      $(normalCol).appendTo("#data");
+    });
+    }
+    });
+
+    //});
+    //});
+    
+    });
+    
+    });
+  </script>
+</head>
+
+<body>
+
+  <div id="currentItem" style="position:fixed; top:10%; right:50%;"></div>
+  <div id="LaserSwitch" style="background:#98bf21;height:100px;width:100px;position:fixed; top:10%; right:20%; border-radius:6px;">
+  <p id="data" style="position:fixed; top:0px; left:0px;"></p>
+  
+
+
+</div>
+  </div>
+  
+</body>
+</html>

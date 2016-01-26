@@ -2,6 +2,10 @@
 # Written by Christopher Jones (19/01/2013)
 # Additional changes by Krish Majumdar (01/03/2013, 05/03/2013)
 
+# This script is designed to test the SMELLIE system. Currently this is the test given in
+# the "installing the SMELLIE Off-Detector" Hardware document and is the specific test for
+# subsection 6)c. of the "testing the full hardware" section of this document.
+
 # Import all functions found in the following python modules:
 import sys, time, os
 import pysepiaUser as sepiaUser
@@ -26,39 +30,39 @@ def set_laser_switch_channel(channel):
     sepiaUser.close(iDevIdx)
     rs.Execute()                                    
     iDevIdx,iModuleType,iSlotID = sepiaUser.initialise() 
-    sepiaUser.laser_soft_lock_on(iDevIdx, iSlotID)	
+    sepiaUser.laser_soft_lock_on(iDevIdx, iSlotID)
 
 
 def test_run(ls_channel, fs_input_channel, logfile, iDevIdx, iModuleType, iSlotID):
+    
     print "Installation Testing (Test Run) - Testing Laser Switch Channel: " + str(ls_channel)
     set_laser_switch_channel(ls_channel)
-    sepiaUser.set_laser_intensity(100, iDevIdx)	    # set the intensity to 100%
-    sepiaUser.set_laser_frequency(4, iDevIdx)		# this is the internal 5MHz trigger frequency ... use to check if Sepia is working properly
+    sepiaUser.set_laser_intensity(100, iDevIdx) # set the intensity to 100%
+    #sepiaUser.set_laser_frequency(4, iDevIdx) # this is the internal 5MHz trigger frequency ... use to check if Sepia is working properly
     
     for fs_output_channel in range(1, 15):
-        
-		channel_number = ((fs_input_channel - 1) * 14) + fs_output_channel
-        fs.SetFSChannel(channel_number)                          # set the fibreSwitch channel 
-        sepiaUser.laser_soft_lock_off(iDevIdx, iSlotID)		     # unlock the laser 
-        time.sleep(1)						
+
+        channel_number = ((fs_input_channel - 1) * 14) + fs_output_channel
+        fs.SetFSChannel(channel_number) # set the fibreSwitch channel
+        sepiaUser.laser_soft_lock_off(iDevIdx, iSlotID) # unlock the laser
+        time.sleep(1)
 
         # this section of code is for generating a pulse via the NI Box, and reading the PMT value
         trigger_frequency = 10000
         number_of_pulses = 100000
         digi_trig = ni.GenerateDigitalTrigger(trigger_frequency, number_of_pulses)
         read_signal = ni.AcquireAnalogue()
-        number_of_measurements = 1  
+        number_of_measurements = 1
         voltage_signal = str(read_signal.start(number_of_measurements))
-		digi_trig.start()
-        
-		digi_trig.stop()
+        digi_trig.start()
+        digi_trig.stop()
         read_signal = ni.AcquireAnalogue()
         a = raw_input("Generating pulse train ... press Enter to interrupt ...\n")
         read_signal.stop()
+
+        logfile.write(str(ls_channel) + '\t' + str(channel_number) + '\t' + voltage_signal[1:-1] + '\n')
         
-		logfile.write(str(ls_channel) + '\t' + str(channel_number) + '\t' + voltage_signal[1:-1] + '\n')
-        
-		sepiaUser.laser_soft_lock_on(iDevIdx, iSlotID)
+    sepiaUser.laser_soft_lock_on(iDevIdx, iSlotID)
 
 
 def main():
@@ -82,11 +86,12 @@ def main():
     sepiaUser.laser_soft_lock_on(iDevIdx, iSlotID)
     sepiaUser.close(iDevIdx)
     
-	f.close()
+    f.close()
     time.sleep(1)
     folder_path = "C:\Users\LocalAdmin\Desktop\smellie_install_tests"    
 
 main()
+
 
 
 
