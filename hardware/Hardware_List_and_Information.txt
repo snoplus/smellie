@@ -2,85 +2,78 @@
 SMELLIE consists of the following hardware components:
 (the name given in [] brackets is how the component is referred to throughout the rest of the Hardware documentation)
 
-Please see the following images for the locations of these components:
--- ELLIE_Rack_Full.jpg - a schematic of the entire ELLIE electronics rack, including the TELLIE components located in the top half
--- ELLIE_Rack_BottomHalf.pdf - a schematic of the bottom half of the ELLIE electronics rack, showing the positions of the 3 SMELLIE trays
--- ELLIE_Rack_SMELLIE_Trays.jpg - the layouts of the 3 SMELLIE electronics trays
-
 --------------------------------------------------
 
 
 * 4 Laser-heads
 [lasers]
 -- these produce (almost) monochromatic pulses of light at wavelengths of 375, 407, 446 and 495nm
-	- see pg 1 to 4 of "Laser_Spectra_Wavelength+Timing.pdf" for wavelength profiles
--- the pulses are very fast, on the order of < 1ns
-	- see pg 5 to 8 of "Laser_Spectra_Wavelength+Timing.pdf" for timing profiles
+	- see pg 1-4 of "Laser_Wavelength_Timing_Spectra.pdf
+-- the pulses are very fast, on the order of <1ns
+	- see pg 5-8 of "Laser_Wavelength_Timing_Spectra.pdf
 
 --------------------------------------------------
 
 
 * PicoQuant SEPIA II Laser Driver Unit
-[Sepia]
--- this supplies power and control commands to the lasers, but only one at a time, since Sepia only contains a single driver unit
--- it is software-controlled, either via the manufacturer's bespoke program (installed on SNODROP) or using the Oxford-developed SMELLIE software
+[Sepia Unit]
+-- this supplies power and control to any one of the lasers, but only one at a time, since the Sepia Unit only contains a single driver unit
+-- it is software-controlled, either via the manufacturer's bespoke program or using the Oxford-developed SMELLIE software
 
 --------------------------------------------------
 
 
 * Laser Switch Unit
 [LaserSwitch]
--- there are 2 identical LaserSwitch units ... one is at SNOLab as part of the SMELLIE system, and the other is at Oxford University
+-- there are 2 identical Laser Switch units ... one is at SNOLab as part of the SMELLIE system, and the other is at Oxford University
 -- both were designed and built at Oxford University by Mr. Rik Elliott (r.elliott2@physics.ox.ac.uk)
--- the LaserSwitch is capable of running off the Canadian 120V Mains power
-
 -- this has two functions:
-1) it allows remote and automated switching between the 4 lasers, eliminating the need for an operator to manually change which laser is being driven by Sepia by connecting the correct LEMO cable
-	- it basically acts as a 1-to-4 (up to 6) LEMO adapter - taking the single set of input signals from Sepia and sending it to a user-specified "destination" laser
-	- the "destination" laser can be specified either via software, or using the manual controls located on the LaserSwitch front panel
-	- the LaserSwitch front panel displays the currently active output channel (LEDs on the right side) and the currently selected output channel (8-segment display)
-2) it provides mains power to Sepia
-	- when changing between lasers, Sepia must be reset in order to recognise the change - this involves powering down and powering back up again
-	- Sepia is powered from the mains through the LaserSwitch, and therefore the latter can be used to perform this reset remotely, without needing to use the physical power switch on Sepia
+
+1) it allows remote and automated switching between the 4 lasers, eliminating the need for an operator to manually change which laser is being driven by the Sepia Unit by connecting the correct LEMO cable
+	- it basically acts as a 1-to-4 (up to 6) LEMO adapter - taking the single set of input signals from the Sepia Unit and sending it to a user-specified "destination" laser
+	- the "destination" laser can be specified either via software, or using the manual controls located on the Laser Switch itself
+	- the Laser Switch front panel displays the currently active output channel (LEDs on the right side) and the currently selected output channel (8-segment display)
+
+2) it provides mains power to the Sepia Unit
+	- when changing between lasers, the Sepia Unit must be reset in order to recognise the change in lasers - this involves powering down and powering back up again
+	- the Sepia Unit is powered from the mains via the Laser Switch, and therefore the latter can be used to perform this reset remotely, without needing to use the physical power switch on the Sepia Unit
 
 --------------------------------------------------
 
 
 * 4 Beamsplitters
 [beamsplitters]
--- the light from each laser is split into 2 parts: one of which eventually enters the detector, and the other which is used within the SMELLIE system for internal laser monitoring
+-- the light from each laser is split into 2 parts: one of which eventually enters the detector, and the other which is used within the SMELLIE system for internal monitoring
+-- because the lasers all have slightly different intensities and attenuations through the fibres, the split-ratios may not be the same across all 4 beamsplitters
 
 *** SECTION INCOMPLETE - include the actual splitters being used ***
 
 --------------------------------------------------
 
 
-* 4 Attenuators
-[attenuators]
--- the light from each laser, even after passing through the beamsplitters, may still need to be attenuated before entering the detector for safety
-
-*** SECTION INCOMPLETE - include the exact attenuation levels being used ***
-
---------------------------------------------------
-
-
 * Laser Components 5x14 Fibre Switch Unit
 [FibreSwitch]
--- this receives light from any one of the lasers via the beamsplitters and attenuators, and routes it to one of 14 possible output fibres that then enter the detector
+-- this receives light from any one of the lasers via the beamsplitters, and routes to to one of 14 possible output fibres that then enter the detector
 	- see "FibreSwitch_Logic_Diagrams.pdf"
 -- it is a passive switch, i.e. there is no amplification of the light, and as a result there are some insertion losses
--- each input/output combination is assigned a specific overall channel number between 1 and 70 inclusive by the FibreSwitch internal logic, and this channel is selected using software-control
--- the FibreSwitch cannot run off the Canadian 120V Mains power - it requires UK 240V.  Therefore, it should be powered through the 4-way extension and 120-to-240V transformer
+	- see "FibreSwitch_Insertion_Losses.xlsx"
+-- each input/output combination is assigned a specific overall channel number between 1 and 70 inclusive, and this channel is selected using software
 
 --------------------------------------------------
 
 
 * National Instruments ADC Unit
-[NI Box]
--- this provides the SMELLIE internal trigger, which is a (0 - 5)V pulse at a user-specified frequency (currently 1kHz)
--- this trigger signal is also sent to the MTC External ASync, so that the detector "knows" when to expect light to be emitted from the SMELLIE fibres
--- it is software-controlled, either via the manufacturer's bespoke program (installed on SNODROP) or using the Oxford-developed SMELLIE software
--- there are 2 identical NI boxes ... one is at SNOLab as part of the SMELLIE system, and the other is at Oxford University
+[NI Unit]
+-- this provides the SMELLIE internal trigger signal, which is a (0 - 5)V pulse at a user-specified frequency (currently 1 or 10kHz)
+-- this trigger signal is also sent to the SNO+ MTC, so that the detector "knows" when to expect light to be emitted from the 14 SMELLIE fibres
+-- it is software-controlled, either via the manufacturer's bespoke program or using the Oxford-developed SMELLIE software
+
+-- the NI Unit does not contain a line-driver, and so it is not capable on its own of sending signals to both the SMELLIE hardware and the SNO+ MTC (the latter via a long 50ohm BNC cable)
+-- this has been solved by attaching a line-driver circuit [NI-Driver] to the NI Unit's MTC-bound BNC output
+-- there are 2 identical NI-Driver units ... one is at SNOLab as part of the SMELLIE system, and the other is at Oxford University
+-- both were designed and built at Oxford University by Mr. John Saunders (j.saunders1@physics.ox.ac.uk)
+
+*** SECTION INCOMPLETE - bit more on the NI-Driver when they are finished ***
 
 --------------------------------------------------
 
@@ -89,16 +82,17 @@ Please see the following images for the locations of these components:
 [Monitoring PMT]
 -- there are 2 identical Monitoring PMT units ... one is at SNOLab as part of the SMELLIE system, and the other is at Oxford University
 -- both were designed and built at Oxford University by Mr. John Saunders (j.saunders1@physics.ox.ac.uk)
-	- see "Monitoring_PMT_Electronics_v2_Analogue.pdf" and "Monitoring_PMT_Electronics_v2_Digital.pdf"
+	- see "Monitoring_PMT_Electronics_Analogue.pdf", "Monitoring_PMT_Electronics_Digital.pdf" and "Monitoring_PMT_Electronics_Trigger.pdf"
+-- this has three functions:
 
--- this has multiple functions:
-1) it "decides" which trigger source - ECL from the MTC or TTL from the NI Box - will be used (i.e. which mode: "slave" or "master" respectively, that SMELLIE is operating in)
+1) it "decides" which trigger source - TUBii from SNO+ or internal from the NI Unit - will be used (i.e. which mode SMELLIE is operating in)
 	- strictly speaking, this "decision" is purely passive - i.e. whichever source is currently producing a signal is the one that is used ... there is no actual switching between the source
-	- the SMELLIE software has been written so that the trigger sources can never be sending signals simultaneously
-2) it converts the ECL signal from the MTC to a standard (0 -> 5)V TTL signal
-3) it converts the TTL signal (either the NI directly or the converted ECL) to the (-2 -> 1)V signal that Sepia requires for triggering
-4) it allows per-pulse monitoring of the lasers
-	- the laser intensity can vary by small amounts on a pulse-by-pulse basis, and this will affect the number of photons entering the detector
+	- the SMELLIE software has been written so that the trigger sources can never be producing signal simultaneously
+
+2) it converts the standard (0 -> 5)V trigger signal produced at either source to the (-2 -> 1)V signal that the Sepia Unit requires for triggering
+
+3) it allows per-pulse monitoring of the lasers
+	- the laser intensity can change by small amounts on a pulse-by-pulse basis, and this will affect the number of photons entering the detector
 	- it is therefore important to monitor the intensity, and this done by sending some of the laser light (via the beamsplitter) to a PMT which then returns a voltage signal (per pulse)
 	- ideally, this voltage should remain constant over many pulses, but any deviations can be monitored in real time, and if possible, the laser settings can be adjusted to account for any changes
 
@@ -107,18 +101,16 @@ Please see the following images for the locations of these components:
 
 * Power Supply Unit
 [PMT power supply]
--- this supplies power to the Monitoring PMT
--- there are 2 identical PMT power supplies (one for each Monitoring PMT) ... one is at SNOLab as part of the SMELLIE system, and the other is at Oxford University
+-- this supplies power to the Monitoring PMT and the NI-Driver
+-- there are 2 identical PMT power supplies (one for each Monitoring PMT and NI-Driver) ... one is at SNOLab as part of the SMELLIE system, and the other is at Oxford University
 -- both were designed and built at Oxford University by Mr. John Saunders (j.saunders1@physics.ox.ac.uk)
--- each PMT power supply has two power outputs, since the Monitoring PMT needs two power inputs (analogue and digital boards) - these outputs and inputs are identical and can be used interchangeably
--- the PMT power supply cannot run off the Canadian 120V Mains power - it requires UK 240V.  Therefore, it should be powered through the 4-way extension and 120-to-240V transformer
+-- the PMT power supply has two power outputs - these are identical and can be used interchangeably
 
 --------------------------------------------------
 
 
 * SNOdrop PC
-[SNODROP]
--- all SMELLIE control scripts are stored and run from this computer, as well as bespoke manufacturer software for Sepia and the NI Box
--- for most of running time, SNODROP will be controlled remotely via TCP/IP from ORCA - only during SMELLIE setup and diagnostics will SNODROP be used directly
--- SNODROP is located near or next to the ELLIE electronics rack
--- SNODROP is capable of running off the Canadian 120V Mains power
+[SNOdrop]
+-- all SMELLIE control scripts are stored and run from this computer
+-- for most of running time, SNOdrop will be controlled remotely via TCP/IP from ORCA - only during SMELLIE setup and diagnostics will SNOdrop be used directly
+-- SNOdrop is located near or next to the ELLIE electronics rack

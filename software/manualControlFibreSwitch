@@ -1,0 +1,22 @@
+import fibreSwitch as fs
+
+def safeFibreSwitch():
+    fs_input_channel = 5
+    fs_output_channel = 1
+
+    channel_number = ((fs_input_channel - 1) * 14) + fs_output_channel      # pick the correct channel number
+    print(channel_number)
+    fs.SetFSChannel(channel_number)
+
+def setFibreSwitch(fs_input_channel,fs_output_channel):
+    channel_number = ((fs_input_channel - 1) * 14) + fs_output_channel      # pick the correct channel number
+    print(channel_number)
+    fs.SetFSChannel(channel_number)
+
+
+#safeFibreSwitch()
+#This will set the fibre switch to a different laser channel
+#40 percent intensity seems to work fine
+setFibreSwitch(1,11)
+#setFibreSwitch(3,11)
+#mainRun()

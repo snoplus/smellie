@@ -7,9 +7,10 @@
 import time, sys
 from pysepia import *	# Import all functions present in pysepia.py
 
-global sepia_iSlotId,sepiaPrimaryId
+global sepia_iSlotId,sepiaPrimaryId,sepia_controller_slot
 sepia_iSlotId = 200
 sepiaPrimaryId = 1
+sepia_controller_slot = 000
 
 #def setSepiaSlotId(newSlotId):
 #        global sepia_iSlotId
@@ -48,6 +49,14 @@ def initialise():
         SEPIA2_SLM_SetParameters(iDevIdx,sepia_iSlotId,initial_frequency,initial_intensity)
         #print 'setParamtersOutput:: ' + str(setParamtersOutput)
 	return iDevIdx,iModuleType,sepia_iSlotId
+
+def initialiseSCMModule():
+        iDevIdx,USBOpenVal = SEPIA2_USB_OpenDevice()
+        getmapoutput = SEPIA2_FWR_GetModuleMap(iDevIdx)	# retrieve the module map
+        iModuleType = SEPIA2_COM_GetModuleType(iDevIdx,sepia_controller_slot,1)
+        #print iModuleType
+        SEPIA2_COM_DecodeModuleType(iModuleType)
+        return iDevIdx,iModuleType,sepia_controller_slot
 
 
 # Close the laser
@@ -90,7 +99,7 @@ def set_laser_intensity(new_intensity, iDevIdx):
 
 # Set the frequency mode of the laser
 def set_laser_frequency(new_frequency, iDevIdx):
-	if (new_frequency >= 0) and (new_frequency < 8):
+	if (new_frequency > 1) and (new_frequency < 8):
 		pass
 	else:
 		# NOTE: I may need to change this call when integrating with an ORCA-like system 
@@ -115,11 +124,11 @@ def get_laser_lock_status(iDevIdx, iSlotID):
 
 # Turn on the laser's soft-lock
 def laser_soft_lock_on(iDevIdx, iSlotID):
-	SEPIA2_SCM_SetLaserSoftLock(iDevIdx,iSlotID,1)		# value of 1 means that the laser is soft-locked
-	return 1
+	return SEPIA2_SCM_SetLaserSoftLock(iDevIdx,iSlotID,1)		# value of 1 means that the laser is soft-locked
+	
 
 
 # Turn off the laser's soft-lock
 def laser_soft_lock_off(iDevIdx, iSlotID):
-	SEPIA2_SCM_SetLaserSoftLock(iDevIdx,iSlotID,0)		# value of 0 means that the laser is not soft-locked
- 	return 0 
+	return SEPIA2_SCM_SetLaserSoftLock(iDevIdx,iSlotID,0)		# value of 0 means that the laser is not soft-locked
+ 	
