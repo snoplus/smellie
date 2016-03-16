@@ -1,10 +1,4 @@
-import sys, time, os,ctypes
-import pysepiaUser as sepiaUser
-import pysepia
-import subprocess as sub
-import laserSwitch as rs
-import fibreSwitch as fs
-import socket as conn                # socket constructor and constants
+import sys, time
 import niADCDoublePulse as ni
 import niADC as ni_old
 
