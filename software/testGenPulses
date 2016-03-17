@@ -1,5 +1,0 @@
-import niADC as ni
-
-digi_trig = ni.GenerateDigitalTrigger(100, 1000)
-digi_trig.start()
-digi_trig.stop()

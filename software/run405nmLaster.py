@@ -130,18 +130,11 @@ def main2():
     #cycleFibreSwitch()
 
 #main2()
+if __name__ == "__main__":    
+    iDevIdx,iModuleType,iSlotID = sepiaUser.initialise() 
+    set_to_safe_state(iDevIdx, iSlotID)
+    initialSetLaser(4,6,60)
+    time.sleep(5)
+    setFibreSwitch(4,8)
 
-iDevIdx,iModuleType,iSlotID = sepiaUser.initialise() 
-set_to_safe_state(iDevIdx, iSlotID)
-initialSetLaser(4,6,60)
-time.sleep(5)
-setFibreSwitch(4,8)
-
-#cycleFibreSwitch(3,2)
-
-
-    
-
-
-
-
+    #cycleFibreSwitch(3,2)

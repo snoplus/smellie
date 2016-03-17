@@ -147,13 +147,13 @@ def setFibreSwitch(fs_input_channel,fs_output_channel):
     print(channel_number)
     fs.SetFSChannel(channel_number)
 
-
-#safeFibreSwitch()
-#This will set the fibre switch to a different laser channel
-#40 percent intensity seems to work fine
-setFibreSwitch(5,14)
-#setFibreSwitch(3,11)
-#mainRun()
+if __name__ == "__main__":
+    #safeFibreSwitch()
+    #This will set the fibre switch to a different laser channel
+    #40 percent intensity seems to work fine
+    setFibreSwitch(5,14)
+    #setFibreSwitch(3,11)
+    #mainRun()
 
 
 

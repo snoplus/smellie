@@ -28,4 +28,3 @@ PROCESS_TERMINATE = 1
 handle = ctypes.windll.kernel32.OpenProcess(PROCESS_TERMINATE,False,int(sepiaPid))
 retValue = ctypes.windll.kernel32.TerminateProcess(handle,-1)
 print retValue
-

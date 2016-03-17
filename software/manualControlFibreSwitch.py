@@ -9,5 +9,6 @@ def setFibreSwitch(fs_input_channel,fs_output_channel):
 #setFibreSwitch(input_channel,output_channel)
 #input_channel is from 1 to 5 (inclusive)
 #output_channel is from 1 to 15 (inclusive)
-setFibreSwitch(xx,yy)
+if __name__ == "__main__":
+    setFibreSwitch(xx,yy)
 

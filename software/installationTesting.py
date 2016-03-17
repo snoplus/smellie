@@ -89,8 +89,8 @@ def main():
     f.close()
     time.sleep(1)
     folder_path = "C:\Users\LocalAdmin\Desktop\smellie_install_tests"    
-
-main()
+if __name__ == "__main__":
+    main()
 
 
 
