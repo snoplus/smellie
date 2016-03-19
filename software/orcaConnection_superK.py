@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys, time, os, string, time
+import time
 from ctypes import *
 
 class statusBitStructure(Structure):

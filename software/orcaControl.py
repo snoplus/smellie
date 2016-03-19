@@ -267,5 +267,5 @@ def main():
 	set_ni_trigger_frequency(pulse_frequency, sockobj)
 	
 	run_completion(sockobj)
-
-main()
+if __name__ == "__main__":
+        main()

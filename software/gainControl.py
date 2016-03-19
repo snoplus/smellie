@@ -37,9 +37,3 @@ def testingFunction():
             gain_trig.stop()
             gain_trig.clear()
             print "Gain voltage output set to %f volts." %vNew
-
-    
-    
-
-
-

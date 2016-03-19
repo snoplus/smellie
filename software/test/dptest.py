@@ -1,10 +1,4 @@
-import sys, time, os,ctypes
-import pysepiaUser as sepiaUser
-import pysepia
-import subprocess as sub
-import laserSwitch as rs
-import fibreSwitch as fs
-import socket as conn                # socket constructor and constants
+import sys, time
 import niADCDoublePulse as ni
 import niADC as ni_old
 
@@ -33,8 +27,8 @@ def pulse_master_mode_old(master_mode_trigger_frequency,master_mode_number_of_pu
         retValue = "Error: " + str(ValueError) + "  " + str(Argument)
     return retValue
 
-
-##i = 10
-##while(i == 10):
-pulse_master_mode(20000000,2)
-##    time.sleep(0.05)
+if __name__ == "__main__":
+   ##i = 10
+   ##while(i == 10):
+   pulse_master_mode(20000000,2)
+   ##    time.sleep(0.05)
