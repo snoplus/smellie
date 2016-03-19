@@ -1,0 +1,6 @@
+[submodule "daq/LabJackPython"]
+	path = daq/LabJackPython
+	url = https://github.com/labjack/LabJackPython.git
+[submodule "LabJackPython"]
+	path = LabJackPython
+	url = https://github.com/labjack/LabJackPython.git
