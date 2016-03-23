@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-from SimpleXMLRPCServer import SimpleXMLRPCServer
-# Import all the functions in the following python modules:
 import sys, time, os,ctypes
 import pysepiaUser as sepiaUser
 import pysepia
@@ -8,13 +6,6 @@ import gainControl as gc
 import subprocess as sub
 import laserSwitch as rs
 import fibreSwitch as fs
-import socket as conn                # socket constructor and constants
-import niADC as ni	
-
-
-#Start a simple XML-RPC Protocol server hosted on the SNODROP machine on a port 
-port = 5020
-server = SimpleXMLRPCServer(("0.0.0.0", port))
 
 def set_safe_states():
     retValue = 0
@@ -29,7 +20,6 @@ def set_safe_states():
     except ValueError, Argument:
         retValue = "Error: " + str(ValueError) + "  " + str(Argument)
     return retValue
-
 
 def set_laser_switch(laser_switch_channel):
     retValue = 0
@@ -164,17 +154,3 @@ def kill_sepia_and_nimax():
         retValue = "Error: " + str(ValueError) + "  " + str(Argument)
     print retValue
     return retValue
-
-
-#Gives the server access to these functions
-server.register_function(set_fibre_switch)
-server.register_function(set_safe_states)
-server.register_function(set_laser_switch)
-server.register_function(set_laser_intensity)
-server.register_function(set_soft_lock_on)
-server.register_function(set_soft_lock_off)
-server.register_function(pulse_master_mode)
-server.register_function(laser_testing_mode)
-server.register_function(kill_sepia_and_nimax)
-server.register_function(set_gain_control)
-server.serve_forever()
