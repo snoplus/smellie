@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-from SimpleXMLRPCServer import SimpleXMLRPCServer
-# Import all the functions in the following python modules:
 import sys, time, os,ctypes
 import pysepiaUser as sepiaUser
 import pysepia
@@ -8,13 +6,6 @@ import gainControl as gc
 import subprocess as sub
 import laserSwitch as rs
 import fibreSwitch as fs
-import socket as conn                # socket constructor and constants
-import niADC as ni	
-
-
-#Start a simple XML-RPC Protocol server hosted on the SNODROP machine on a port 
-port = 5020
-server = SimpleXMLRPCServer(("0.0.0.0", port))
 
 def set_safe_states():
     retValue = 0
@@ -26,10 +17,9 @@ def set_safe_states():
         rs.SetSelectedChannel(0)			      # set the laserSwitch to channel 0 (default)
         sepiaUser.close(iDevIdx)
         rs.Execute()                                      # execute the laserSwitch channel change from above
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
+    except errorCode, Argument:
+        retValue = "Error: " + str(errorCode) + "  " + str(Argument)
     return retValue
-
 
 def set_laser_switch(laser_switch_channel):
     retValue = 0
@@ -39,8 +29,8 @@ def set_laser_switch(laser_switch_channel):
         rs.SetSelectedChannel(int(laser_switch_channel))
         sepiaUser.close(iDevIdx)
         rs.Execute() 
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
+    except errorCode, Argument:
+        retValue = "Error: " + str(errorCode) + "  " + str(Argument)
     return retValue
 
 def set_fibre_switch(input_channel,output_channel):
@@ -48,8 +38,8 @@ def set_fibre_switch(input_channel,output_channel):
     try:
         print "Set the Fibre Switch to input Channel:" + str(input_channel) +" and output channel:" + str(output_channel)
         fs.SetIOChannels(int(input_channel), int(output_channel))
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
+    except errorCode, Argument:
+        retValue = "Error: " + str(errorCode) + "  " + str(Argument)
     return retValue
 
 def set_laser_intensity(intensity):
@@ -61,8 +51,8 @@ def set_laser_intensity(intensity):
         sepiaUser.set_laser_intensity(int(intensity), iDevIdx)
         time.sleep(1.0)
         sepiaUser.close(iDevIdx)
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
+    except errorCode, Argument:
+        retValue = "Error: " + str(errorCode) + "  " + str(Argument)
     return retValue
 
 def set_soft_lock_on():
@@ -74,8 +64,8 @@ def set_soft_lock_on():
         sepiaUser.laser_soft_lock_on(iDevIdx, iSlotID)
         time.sleep(1.0)
         sepiaUser.close(iDevIdx)
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
+    except errorCode, Argument:
+        retValue = "Error: " + str(errorCode) + "  " + str(Argument)
     return retValue
 
 def set_gain_control(voltage):
@@ -83,8 +73,8 @@ def set_gain_control(voltage):
     try:
         print "Setting gain control to " + str(voltage) + " mV"
         gc.startGainControl(voltage)
-    except ValueError, Argument:
-        retValue = "Error:" + str(ValueError) + "  " + str(Argument)    
+    except errorCode, Argument:
+        retValue = "Error:" + str(errorCode) + "  " + str(Argument)    
     return retValue
 
 def set_soft_lock_off():
@@ -96,8 +86,8 @@ def set_soft_lock_off():
         sepiaUser.laser_soft_lock_off(iDevIdx, iSlotID)
         time.sleep(1.0)
         sepiaUser.close(iDevIdx)
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
+    except errorCode, Argument:
+        retValue = "Error: " + str(errorCode) + "  " + str(Argument)
     return retValue
 
 def pulse_master_mode(master_mode_trigger_frequency,master_mode_number_of_pulses):
@@ -107,8 +97,8 @@ def pulse_master_mode(master_mode_trigger_frequency,master_mode_number_of_pulses
         digi_trig = ni.GenerateDigitalTrigger(int(master_mode_trigger_frequency), int(master_mode_number_of_pulses))
         digi_trig.start()
         digi_trig.stop()
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
+    except errorCode, Argument:
+        retValue = "Error: " + str(errorCode) + "  " + str(Argument)
     return retValue
 
 def laser_testing_mode():
@@ -118,8 +108,8 @@ def laser_testing_mode():
         iDevIdx,iModuleType,iSlotID = sepiaUser.initialise()
         sepiaUser.set_laser_frequency(2, iDevIdx)        # set the laser frequency to 20Mhz
         sepiaUser.close(iDevIdx)
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
+    except errorCode, Argument:
+        retValue = "Error: " + str(errorCode) + "  " + str(Argument)
     return retValue
 
 def findnth(haystack, needle, n):
@@ -160,21 +150,7 @@ def kill_sepia_and_nimax():
         retValue = ctypes.windll.kernel32.TerminateProcess(handle,-1)
         print retValue
 
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
+    except errorCode, Argument:
+        retValue = "Error: " + str(errorCode) + "  " + str(Argument)
     print retValue
     return retValue
-
-
-#Gives the server access to these functions
-server.register_function(set_fibre_switch)
-server.register_function(set_safe_states)
-server.register_function(set_laser_switch)
-server.register_function(set_laser_intensity)
-server.register_function(set_soft_lock_on)
-server.register_function(set_soft_lock_off)
-server.register_function(pulse_master_mode)
-server.register_function(laser_testing_mode)
-server.register_function(kill_sepia_and_nimax)
-server.register_function(set_gain_control)
-server.serve_forever()

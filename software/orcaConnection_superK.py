@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import time
+import time, logging
 from ctypes import *
 
 class statusBitStructure(Structure):
@@ -18,117 +18,111 @@ libc = cdll.msvcrt
 
 def portOpen(COMPort):
     #int32_t __cdecl PortOpen(char COMport[]);
-    retValue = 0
-    ValueError = 0
-    try:
-        ValueError += dll.PortOpen(COMPort)
-        print "Port Opened:",COMPort.value
-        
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
-    return ValueError 
+    errorCode = 0
+    logging.basicConfig(filename='superKLogRun{}.log'.format(runnumber), level=logging.INFO)
+    errorCode += dll.PortOpen(COMPort)
+    if (errorCode==0):
+        logging.info( 'Port Opened: {}'.format(COMPort.value) )
+    else:
+        logging.error( 'Could not open port. Tried: {}, ErrorCode: {}'.format( COMPort.value, errorCode ) )
+    return errorCode 
 
 def portClose(COMPort):
     #int32_t __cdecl PortClose(char COMport[]);
-    retValue = 0
-    ValueError = 0
-    try:
-        ValueError += dll.PortOpen(COMPort)
-        print "Port Closed:",COMPort.value
-        
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
-    return ValueError     
+    errorCode = 0
+    errorCode += dll.PortClose(COMPort)
+    if (errorCode==0):
+        logging.info( 'Port Closed: {}'.format(COMPort.value) )
+    else:
+        logging.error( 'Could not close port. Tried: {}, ErrorCode: {}'.format( COMPort.value, errorCode ) )
+    return errorCode
 
 def getSuperKInfo(COMPort):
     #int32_t __cdecl GetSuperKInfo(char COMport[], char moduleSerialNumber[],int32_t len, int32_t *moduleType, uint16_t *firmwareVersion, char extendedVersionInfo[], int32_t len2);
-    retValue = 0
-    ValueError = 0
-    try:
-        serialBuff = int(8)
-        serial = (c_char_p*serialBuff)()
-        moduleType = c_int32(0)
-        firmware = c_uint16(0)
-        versionInfoBuff = int(26)
-        versionInfo = (c_char_p*versionInfoBuff)()
+    errorCode = 0
+    serialBuff = int(8)
+    serial = (c_char_p*serialBuff)()
+    moduleType = c_int32(0)
+    firmware = c_uint16(0)
+    versionInfoBuff = int(26)
+    versionInfo = (c_char_p*versionInfoBuff)()
 
-        ValueError += dll.GetSuperKInfo(COMPort, byref(serial), serialBuff, byref(moduleType), byref(firmware), byref(versionInfo), versionInfoBuff)
-        
-        serial = str(cast(serial,c_char_p).value)
-        versionInfo = str(cast(versionInfo,c_char_p).value)
-        print "SuperK Info:","\n\tFirmware:", firmware.value, "\n\tVersion Info:",versionInfo, "\n\tmodule type:", format(moduleType.value,'02X'), "\n\tserial number:",serial
-        
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
-    return ValueError
+    errorCode += dll.GetSuperKInfo(COMPort, byref(serial), serialBuff, byref(moduleType), byref(firmware), byref(versionInfo), versionInfoBuff)
+    
+    serial = str(cast(serial,c_char_p).value)
+    versionInfo = str(cast(versionInfo,c_char_p).value)
+    
+    if (errorCode==0):
+        logging.info( 'SuperK Info.\n\tFirmware: {}\n\tVersion Info: {}\n\tModule Type: {}\n\tSerial Number: {}'.format(firmware.value,versionInfo,format(moduleType.value,'02X'),serial) )
+    else:
+        logging.info( 'Could not get SuperK Info. ErrorCode: {}'.format( errorCode ) )
+    return errorCode
 
 def getVariaInfo(COMPort):
     #int32_t __cdecl GetVariaInfo(char COMport[], char moduleSerialNumber[],int32_t len, int32_t *moduleType, uint16_t *firmwareVersion, char extendedVersionInfo[], int32_t len2);
-    retValue = 0
-    ValueError = 0
-    try:
-        serialBuff = int(8)
-        serial = (c_char_p*serialBuff)()
-        moduleType = c_int32(0)
-        firmware = c_uint16(0)
-        versionInfoBuff = int(26)
-        versionInfo = (c_char_p*versionInfoBuff)()
+    errorCode = 0
 
-        ValueError += dll.GetVariaInfo(COMPort, byref(serial), serialBuff, byref(moduleType), byref(firmware), byref(versionInfo), versionInfoBuff)
-        
-        serial = str(cast(serial,c_char_p).value)
-        versionInfo = str(cast(versionInfo,c_char_p).value)
-        print "Varia Info:","\n\tFirmware:", firmware.value, "\n\tVersion Info:", versionInfo, "\n\tmodule type:", format(moduleType.value,'02X'), "\n\tserial number:",serial
-        
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
-    return ValueError
+    serialBuff = int(8)
+    serial = (c_char_p*serialBuff)()
+    moduleType = c_int32(0)
+    firmware = c_uint16(0)
+    versionInfoBuff = int(26)
+    versionInfo = (c_char_p*versionInfoBuff)()
+
+    errorCode += dll.GetVariaInfo(COMPort, byref(serial), serialBuff, byref(moduleType), byref(firmware), byref(versionInfo), versionInfoBuff)
+    
+    serial = str(cast(serial,c_char_p).value)
+    versionInfo = str(cast(versionInfo,c_char_p).value)
+    
+    if (errorCode==0):
+        logging.info( 'Varia Info.\n\tFirmware: {}\n\tVersion Info: {}\n\tModule Type: {}\n\tSerial Number: {}'.format(firmware.value,versionInfo,format(moduleType.value,'02X'),serial) )
+    else:
+        logging.info( 'Could not get Varia Info. ErrorCode: {}'.format( errorCode ) )
+    return errorCode
 
 def getVariaReadings(COMPort):
     #int32_t __cdecl GetVariaReadings(char COMport[], double *monitorInputPercent);
-    retValue = 0
-    ValueError = 0
-    try:
-        monitorInput = c_double(0)
-        ValueError += dll.GetVariaReadings(COMPort, byref(monitorInput))
-        print "Varia Readings:", "\n\tmonitorInput:", monitorInput.value
+    errorCode = 0
+
+    monitorInput = c_double(0)
+    errorCode += dll.GetVariaReadings(COMPort, byref(monitorInput))
         
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
-    return ValueError
+    if (errorCode==0):
+        logging.info( 'Varia Readings: {}'.format(monitorInput.value) )
+    else:
+        logging.error( 'Could not successfully get Varia readings. ErrorCode: {}'.format( errorCode ) )
+    return errorCode
 
 def getSuperKReadings(COMPort):
     #int32_t __cdecl GetSuperKReadings(char COMport[], double *opticalPulseFreqkHz, double *actualInternalTrigFreqkHz, uint8_t *powerReadoutPercent, double *heatSinkTempC, double *supplyVoltagemV, uint8_t displayInfo[], int32_t len);
-    retValue = 0
-    ValueError = 0
-    try:
-        opticalPulseFreqkHz = c_double(0)
-        actualInternalTrigFreqkHz = c_double(0)
-        powerReadoutPercent = c_uint8(0)
-        heatSinkTempC = c_double(0)
-        supplyVoltagemV = c_double(0)
-        displayInfoBuff = c_int32(90)
-        displayInfo = (c_uint8*displayInfoBuff.value)()
-        
-        ValueError += dll.GetSuperKReadings(COMPort, byref(opticalPulseFreqkHz), byref(actualInternalTrigFreqkHz), byref(powerReadoutPercent), byref(heatSinkTempC), byref(supplyVoltagemV), byref(displayInfo), displayInfoBuff.value )
-        
-        print "SuperK Readings:", "\n\tOptical Pulse Freq (kHz):", opticalPulseFreqkHz.value, "\n\tActual Internal Trig Freq (kHz):", actualInternalTrigFreqkHz.value, "\n\tPower Readout (%):", powerReadoutPercent.value, "\n\tHeat Sink Temp (C):", heatSinkTempC.value, "\n\tSupply Voltage (mV):", supplyVoltagemV.value, "\n\tDisplay Info:\n", cast(displayInfo,c_char_p).value
-        
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
-    return ValueError
+    errorCode = 0
+    opticalPulseFreqkHz = c_double(0)
+    actualInternalTrigFreqkHz = c_double(0)
+    powerReadoutPercent = c_uint8(0)
+    heatSinkTempC = c_double(0)
+    supplyVoltagemV = c_double(0)
+    displayInfoBuff = c_int32(90)
+    displayInfo = (c_uint8*displayInfoBuff.value)()
+    
+    errorCode += dll.GetSuperKReadings(COMPort, byref(opticalPulseFreqkHz), byref(actualInternalTrigFreqkHz), byref(powerReadoutPercent), byref(heatSinkTempC), byref(supplyVoltagemV), byref(displayInfo), displayInfoBuff.value )
+    
+    if (errorCode==0):
+        logging.info( 'SuperK Readings.\n\tOptical Pulse Freq (kHz): {}\n\tActual Internal Trig Freq (kHz): {}\n\tPower Readout (%): {}\n\tHeat Sink Temp (C): {}\n\tSupply Voltage (mV): {}\n\tDisplay Info:\n\t{}'.format(opticalPulseFreqkHz.value,actualInternalTrigFreqkHz.value,powerReadoutPercent.value,heatSinkTempC.value,supplyVoltagemV.value, cast(displayInfo,c_char_p).value ) )
+    else:
+        logging.error( 'Could not successfully get SuperK Readings. ErrorCode: {}'.format( errorCode ) )
+    return errorCode
 
 def getVariaStatusBits(COMPort,bitCluster):
     #int32_t __cdecl GetVariaStatusBits(char COMport[], int32_t *bitMaskDecimal, Cluster2 *statusBitCluster);
-    retValue = 0
-    ValueError = 0
-    try:
-        bitMaskDecimal = c_int32(0)
-        ValueError += dll.GetVariaStatusBits(COMPort, byref(bitMaskDecimal), byref(bitCluster))    
+    errorCode = 0
+    bitMaskDecimal = c_int32(0)
+    errorCode += dll.GetVariaStatusBits(COMPort, byref(bitMaskDecimal), byref(bitCluster))    
 
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
-    return ValueError
+    if (errorCode==0):
+        logging.info( 'Get Varia Status Bits: {}(decimal)'.format(bitMaskDecimal.value) )
+    else:
+        logging.error( 'Could not get Varia Status Bits. ErrorCode: {}'.format( errorCode ) )
+    return errorCode 
 
 def printVariaStatusBits(bitCluster,option="ALL"):
     print "Varia Bit Status:"
@@ -223,15 +217,16 @@ def printVariaStatusBits(bitCluster,option="ALL"):
 
 def getSuperKStatusBits(COMPort,bitCluster):
     #int32_t __cdecl GetSuperKStatusBits(char COMport[], int32_t *bitMaskDecimal, Cluster1 *statusBitCluster);
-    retValue = 0
-    ValueError = 0
-    try:
-        bitMaskDecimal = c_int32(0)
-        ValueError += dll.GetSuperKStatusBits(COMPort, byref(bitMaskDecimal), byref(bitCluster))    
+    errorCode = 0
 
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
-    return ValueError
+    bitMaskDecimal = c_int32(0)
+    errorCode += dll.GetSuperKStatusBits(COMPort, byref(bitMaskDecimal), byref(bitCluster))
+    
+    if (errorCode==0):
+        logging.info( 'Get SuperK Status Bits: {}(decimal)'.format(bitMaskDecimal.value) )
+    else:
+        logging.error( 'Could not get SuperK Status Bits. ErrorCode: {}'.format( errorCode ) )
+    return errorCode 
 
 def printSuperKStatusBits(bitCluster,option="ALL"):
     print "SuperK Bit Status:"
@@ -326,247 +321,224 @@ def printSuperKStatusBits(bitCluster,option="ALL"):
 
 def getSuperKControls(COMPort,controlCluster):
     #int32_t __cdecl GetSuperKControls(char COMport[], Cluster *outputCluster);
-    retValue = 0
-    ValueError = 0
-    try:
-        ValueError += dll.GetSuperKControls(COMPort, byref(controlCluster))
-        
-        print "SuperK Controls:"
-        print "\tTrig Level Setpoint (mV):", controlCluster.trigLevelSetpointmV
-        print "\tDisplay Backlight (%):", controlCluster.displayBacklightPercent
-        print "\tTrigger Mode:", controlCluster.trigMode
-        print "\tInternal Pulse Freq (Hz):", controlCluster.internalPulseFreqHz
-        print "\tBurst Pulses:", controlCluster.burstPulses
-        print "\tWatchdog Interval (Sec):", controlCluster.watchdogIntervalSec
-        print "\tInternal Pulse Freq Limit (Hz):", controlCluster.internalPulseFreqLimitHz
+    errorCode = 0
+    errorCode += dll.GetSuperKControls(COMPort, byref(controlCluster))
 
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
-    return ValueError
+    if (errorCode==0):
+        logging.info( 'Get SuperK Control Readings.\n\tTrig Level Setpoint (mV): {}\n\tDisplay Backlight (%): {}\n\tTrigger Mode: {}\n\tInternal Pulse Freq (Hz): {}\n\tBurst Pulses: {}\n\tWatchdog Interval (Sec): {}\n\tInternal Pulse Freq Limit (Hz): {}'.format(controlCluster.trigLevelSetpointmV,controlCluster.displayBacklightPercent,controlCluster.trigMode,controlCluster.internalPulseFreqHz,controlCluster.burstPulses,controlCluster.watchdogIntervalSec,controlCluster.internalPulseFreqLimitHz) )
+    else:
+        logging.error( 'Could not get SuperK Status Bits. ErrorCode: {}'.format( errorCode ) )
+    return errorCode 
 
 def getVariaControls(COMPort):
     #int32_t __cdecl GetVariaControls(char COMport[], uint16_t *NDFilterSetpointPercentx10, uint16_t *SWFilterSetpointAngstrom, uint16_t *LPFilterSetpointAngstrom);
-    retValue = 0
-    ValueError = 0
-    try:
-        NDFilterSetpointPercentx10 = c_uint16(0)
-        SWFilterSetpointAngstrom = c_uint16(0)
-        LPFilterSetpointAngstrom = c_uint16(0)
-        ValueError += dll.GetVariaControls(COMPort, byref(NDFilterSetpointPercentx10), byref(SWFilterSetpointAngstrom), byref(LPFilterSetpointAngstrom))
+    errorCode = 0
+    NDFilterSetpointPercentx10 = c_uint16(0)
+    SWFilterSetpointAngstrom = c_uint16(0)
+    LPFilterSetpointAngstrom = c_uint16(0)
+    errorCode += dll.GetVariaControls(COMPort, byref(NDFilterSetpointPercentx10), byref(SWFilterSetpointAngstrom), byref(LPFilterSetpointAngstrom))
 
-        print "Varia Controls:"
-        print "\tND Filter Setpoint (% x 10):", NDFilterSetpointPercentx10.value
-        print "\tSW Filter Setpoint (nm x 10):", SWFilterSetpointAngstrom.value
-        print "\tLP Filter Setpoint (nm x 10):", LPFilterSetpointAngstrom.value
-
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
-    return ValueError
+    if (errorCode==0):
+        logging.info( 'Get Varia Control Readings.\n\tND Filter Setpoint (% x 10): {}\n\tSW Filter Setpoint (nm x 10):{}\n\tLP Filter Setpoint (nm x 10): {}'.format(NDFilterSetpointPercentx10.value,SWFilterSetpointAngstrom.value,LPFilterSetpointAngstrom.value) )
+    else:
+        logging.error( 'Could not open port. Tried: {}, ErrorCode: {}'.format( COMPort.value, str(errorCode) ) )
+    return errorCode 
 
 def setSuperKControls(COMPort,controlCluster,bitCluster):
     #int32_t __cdecl SetSuperKControls(char COMport[], Cluster *outputCluster);
-    retValue = 0
-    ValueError = 0
-    try:
-        ValueError += dll.SetSuperKControls(COMPort, byref(controlCluster))
-        
-        print "Setting SuperK Controls:"
-        print "\tSet Trig Level Setpoint (mV):", controlCluster.trigLevelSetpointmV
-        print "\tSet Display Backlight (%):", controlCluster.displayBacklightPercent
-        print "\tSet Trigger Mode:", controlCluster.trigMode
-        print "\tSet Internal Pulse Freq (Hz):", controlCluster.internalPulseFreqHz
-        print "\tSet Burst Pulses:", controlCluster.burstPulses
-        print "\tSet Watchdog Interval (Sec):", controlCluster.watchdogIntervalSec
-        print "\tSet Internal Pulse Freq Limit (Hz):", controlCluster.internalPulseFreqLimitHz
+    errorCode = 0
+    errorCode += dll.SetSuperKControls(COMPort, byref(controlCluster))
 
-        ValueError += getSuperKStatusBits(COMPort,bitCluster)
-        printSuperKStatusBits(bitCluster,"ON")
+    errorCode += getSuperKStatusBits(COMPort,bitCluster)
+    printSuperKStatusBits(bitCluster,"ON")
         
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
-    return ValueError
+    if (errorCode==0):
+        logging.info( 'tSet SuperK Controls.\n\tTrig Level Setpoint (mV): {}\n\tDisplay Backlight (%): {}\n\tTrigger Mode: {}\n\tInternal Pulse Freq (Hz): {}\n\tBurst Pulses: {}\n\tWatchdog Interval (Sec): {}\n\tInternal Pulse Freq Limit (Hz): {}'.format(controlCluster.trigLevelSetpointmV,controlCluster.displayBacklightPercent,controlCluster.trigMode,controlCluster.internalPulseFreqHz,controlCluster.burstPulses,controlCluster.watchdogIntervalSec,controlCluster.internalPulseFreqLimitHz) )
+    else:
+        logging.error( 'Could not set SuperK Status Bits. ErrorCode: {}'.format( errorCode ) )
+    return errorCode 
 
 def setSuperKControlEmission(COMPort,state,superKbitCluster,variabitCluster):
     #int32_t __cdecl SetSuperKControlEmission(char COMport[], uint8_t emission);
-    retValue = 0
-    ValueError = 0
-    try:
-        ValueError += getSuperKStatusBits(COMPort,superKbitCluster)
-        ValueError += getVariaStatusBits(COMPort,variabitCluster)
-        
-        if (state == 0): 
-            ValueError += dll.SetSuperKControlEmission(COMPort, c_uint8(0) )
+    errorCode = 0
+    errorCode += getSuperKStatusBits(COMPort,superKbitCluster)
+    errorCode += getVariaStatusBits(COMPort,variabitCluster)
+    
+    if (state == 0): 
+        errorCode += dll.SetSuperKControlEmission(COMPort, c_uint8(0) )
+        logging.info( 'Setting SuperK Control Emission: {}'.format(c_uint8(0).value) )
+        time.sleep(2)
+        errorCode += getSuperKStatusBits(COMPort,superKbitCluster)
+        if (superKbitCluster.bit0 == 1):
+            logging.error( 'Setting SuperK emission: ERROR! Emission set to zero but EMISSION IS ON.')
+        elif (superKbitCluster.bit0 == 0):
+            logging.info( 'Setting SuperK emission: Emission set to zero. Emission is OFF.')
+        else:
+            logging.error( 'Setting SuperK emission: ERROR! Emission set to zero but EMISSION STATE IS UNKNOWN: {}'.format(superKbitCluster.bit0) )
+    
+    elif (state == 1):
+        if (superKbitCluster.bit15 == 1) or (variabitCluster.bit15 == 1):
+            errorCode += dll.SetSuperKControlEmission(COMPort, 0 )
+            logging.info( 'Setting SuperK Control Emission: {}'.format(c_uint8(0).value) )
             time.sleep(2)
-            ValueError += getSuperKStatusBits(COMPort,superKbitCluster)
+            errorCode += getSuperKStatusBits(COMPort,superKbitCluster)
             if (superKbitCluster.bit0 == 1):
-                print "Setting SuperK emission: ERROR! Emission set to zero but EMISSION IS ON."
+                logging.error( 'Setting SuperK emission: ERROR present. Emission set to zero. Check system. WARNING EMISSION IS ON.')
             elif (superKbitCluster.bit0 == 0):
-                print "Setting SuperK emission: Emission set to zero. Emission is OFF."
+                logging.error( 'Setting SuperK emission: ERROR present. Emission set to zero. Emission is OFF.')
             else:
-                print "Setting SuperK emission: ERROR! Emission set to zero but EMISSION STATE IS UNKNOWN:", superKbitCluster.bit0
-        
-        elif (state == 1):
-            if (superKbitCluster.bit15 == 1) or (variabitCluster.bit15 == 1):
-                ValueError += dll.SetSuperKControlEmission(COMPort, 0 )
+                logging.error( 'Setting SuperK emission: ERROR present. Emission set to zero. Check system. WARNING EMISSION IS UNKNOWN.')
+            
+        elif (superKbitCluster.bit15 == 0) and (variabitCluster.bit15 == 0):
+            if (variabitCluster.bit12 == 0) and (variabitCluster.bit13 == 0) and (variabitCluster.bit14 == 0):
+                errorCode += dll.SetSuperKControlEmission(COMPort, c_uint8(state) )
+                logging.info( 'Setting SuperK Control Emission: {}'.format(c_uint8(state).value) )
                 time.sleep(2)
-                ValueError += getSuperKStatusBits(COMPort,superKbitCluster)
+                errorCode += getSuperKStatusBits(COMPort,superKbitCluster)
                 if (superKbitCluster.bit0 == 1):
-                    print "Setting SuperK emission: ERROR present. Emission set to zero. Check system. WARNING EMISSION IS ON."
+                    logging.info( 'Setting SuperK emission: {}, Emission is ON.'.format(state) )
                 elif (superKbitCluster.bit0 == 0):
-                    print "Setting SuperK emission: ERROR present. Emission set to zero. Emission is OFF."
+                    logging.error( 'Setting SuperK emission: ERROR, emission set to {} but emission is OFF. Check system.'.format(superKbitCluster.bit0) )
                 else:
-                    print "Setting SuperK emission: ERROR present. Emission set to zero. Check system. WARNING EMISSION IS UNKNOWN."
+                    logging.error( 'Setting SuperK emission: ERROR, state UNKNOWN: {}. Check system.'.format(superKbitCluster.bit0) )
+            else:
+                errorCode += dll.SetSuperKControlEmission(COMPort, 0 )
+                logging.info( 'Setting SuperK Control Emission: {}'.format(c_uint8(0).value) )
+                time.sleep(2)
+                errorCode += getSuperKStatusBits(COMPort,superKbitCluster)
+                if (superKbitCluster.bit0 == 1):
+                    logging.error( 'Setting SuperK emission: Unable to set while Varia filters moving. WARNING Emission is ON.' )
+                elif (superKbitCluster.bit0 == 0):
+                    logging.error( 'Setting SuperK emission: Unable to set while Varia filters moving. Emission set to zero.' )
+                else:
+                    logging.error( 'Setting SuperK emission: Unable to set while Varia filters moving. ERROR: Emission set to UNKNOWN state: {}'.format(superKbitCluster.bit0) )
                 
-            elif (superKbitCluster.bit15 == 0) and (variabitCluster.bit15 == 0):
-                if (variabitCluster.bit12 == 0) and (variabitCluster.bit13 == 0) and (variabitCluster.bit14 == 0):
-                    ValueError += dll.SetSuperKControlEmission(COMPort, c_uint8(state) )
-                    time.sleep(2)
-                    ValueError += getSuperKStatusBits(COMPort,superKbitCluster)
-                    if (superKbitCluster.bit0 == 1):
-                        print "Setting SuperK emission: ", state, " Emission is ON."
-                    elif (superKbitCluster.bit0 == 0):
-                        print "Setting SuperK emission: ERROR, emission set to ", superKbitCluster.bit0, " but emission is OFF. Check system."
-                    else:
-                        print "Setting SuperK emission: ERROR, state UNKNOWN: ", superKbitCluster.bit0, " Check system."
-                else:
-                    ValueError += dll.SetSuperKControlEmission(COMPort, 0 )
-                    time.sleep(2)
-                    ValueError += getSuperKStatusBits(COMPort,superKbitCluster)
-                    if (superKbitCluster.bit0 == 1):
-                        print "Setting SuperK emission: Unable to set while Varia filters moving. WARNING Emission is ON."
-                    elif (superKbitCluster.bit0 == 0):
-                        print "Setting SuperK emission: Unable to set while Varia filters moving. Emission set to zero."
-                    else:
-                        print "Setting SuperK emission: Unable to set while Varia filters moving. ERROR: Emission set to UNKNOWN state:", superKbitCluster.bit0
-                    
-                    ValueError = ValueError+1
+                errorCode = errorCode+1
 
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
-    return ValueError
+    if (errorCode!=0):
+        logging.error( 'Could not set SuperK Emission. ErrorCode: {}'.format( COMPort.value, str(errorCode) ) )
+    return errorCode 
 
 def setSuperKControlInterlock(COMPort,state,bitCluster):
     #int32_t __cdecl SetSuperKControlInterlock(char COMport[], uint8_t interlock);
-    retValue = 0
-    ValueError = 0
-    try:
-        ValueError += dll.SetSuperKControlInterlock(COMPort, c_uint8(state) )
-        time.sleep(2)
-        
-        ValueError += getSuperKStatusBits(COMPort,bitCluster)
-        printSuperKStatusBits(bitCluster, "ON")
-        
-        if (state == 1):
-            if (bitCluster.bit15 == 1):
-                if (bitCluster.bit1 == 0):
-                    print "Setting SuperK Control Interlock to", state, ": ERROR present. Interlock ON. Check system."
-                    ValueError = ValueError+1
-                elif (bitCluster.bit1 == 1):
-                    print "Setting SuperK Control Interlock to", state, ": ERROR present. Interlock Off. Check system."
-                    ValueError = ValueError+1
-                else:
-                    print "Setting SuperK Control Interlock to", state, ": ERROR present. Interlock state UNKNOWN. Check system."
-                    ValueError = ValueError+1
-            elif (bitCluster.bit15 == 0):
-                if (bitCluster.bit1 == 0):
-                    print "Setting SuperK Control Interlock to", state, ": ERROR present. Interlock ON. Check system."
-                    ValueError = ValueError+1
-                elif (bitCluster.bit1 == 1):
-                    print "Setting SuperK Control Interlock to", state, ": Success. Interlock Off."
-                else:
-                    print "Setting SuperK Control Interlock to", state, ": ERROR present. Interlock state UNKNOWN. Check system."
-                    ValueError = ValueError+1
-        elif (state == 0):
-            if (bitCluster.bit15 == 1):
-                if (bitCluster.bit1 == 0):
-                    print "Setting SuperK Control Interlock to", state, ": ERROR present. Interlock ON. Check system."
-                    ValueError = ValueError+1
-                elif (bitCluster.bit1 == 1):
-                    print "Setting SuperK Control Interlock to", state, ": ERROR present. Interlock Off. Check system."
-                    ValueError = ValueError+1
-                else:
-                    print "Setting SuperK Control Interlock to", state, ": ERROR present. Interlock state UNKNOWN. Check system."
-                    ValueError = ValueError+1
-            elif (bitCluster.bit15 == 0):
-                if (bitCluster.bit1 == 0):
-                    print "Setting SuperK Control Interlock to", state, ": Success. Interlock ON."
-                    ValueError = ValueError+1
-                elif (bitCluster.bit1 == 1):
-                    print "Setting SuperK Control Interlock to", state, ": ERROR present. Interlock Off."
-                    ValueError = ValueError+1
-                else:
-                    print "Setting SuperK Control Interlock to", state, ": ERROR present. Interlock state UNKNOWN. Check system."
-                    ValueError = ValueError+1
+    errorCode = 0
+    errorCode += dll.SetSuperKControlInterlock(COMPort, c_uint8(state) )
+    time.sleep(2)
+    
+    errorCode += getSuperKStatusBits(COMPort,bitCluster)
+    printSuperKStatusBits(bitCluster, "ON")
+    
+    if (state == 1):
+        if (bitCluster.bit15 == 1):
+            if (bitCluster.bit1 == 0):
+                logging.error( 'Setting SuperK Control Interlock to {}: ERROR present. Interlock ON. Check system.'.format(state) )
+                errorCode = errorCode+1
+            elif (bitCluster.bit1 == 1):
+                logging.error( 'Setting SuperK Control Interlock to {}: ERROR present. Interlock Off. Check system.'.format(state) )
+                errorCode = errorCode+1
+            else:
+                logging.error( 'Setting SuperK Control Interlock to {}: ERROR present. Interlock state UNKNOWN. Check system.'.format(state) )
+                errorCode = errorCode+1
+        elif (bitCluster.bit15 == 0):
+            if (bitCluster.bit1 == 0):
+                logging.error( 'Setting SuperK Control Interlock to {}: ERROR present. Interlock ON. Check system.'.format(state) )
+                errorCode = errorCode+1
+            elif (bitCluster.bit1 == 1):
+                logging.info( 'Setting SuperK Control Interlock to {}: Success. Interlock Off.'.format(state) )
+            else:
+                logging.error( 'Setting SuperK Control Interlock to {}: ERROR present. Interlock state UNKNOWN. Check system.'.format(state) )
+                errorCode = errorCode+1
+    elif (state == 0):
+        if (bitCluster.bit15 == 1):
+            if (bitCluster.bit1 == 0):
+                logging.error( 'Setting SuperK Control Interlock to {}: ERROR present. Interlock ON. Check system.'.format(state) )
+                errorCode = errorCode+1
+            elif (bitCluster.bit1 == 1):
+                logging.error( 'Setting SuperK Control Interlock to {}: ERROR present. Interlock Off. Check system.'.format(state) )
+                errorCode = errorCode+1
+            else:
+                logging.error( 'Setting SuperK Control Interlock to {}: ERROR present. Interlock state UNKNOWN. Check system.'.format(state) )
+                errorCode = errorCode+1
+        elif (bitCluster.bit15 == 0):
+            if (bitCluster.bit1 == 0):
+                logging.info( 'Setting SuperK Control Interlock to {}: Success. Interlock ON.'.format(state) )
+                errorCode = errorCode+1
+            elif (bitCluster.bit1 == 1):
+                logging.error( 'Setting SuperK Control Interlock to {}: ERROR present. Interlock Off. Check system.'.format(state) )
+                errorCode = errorCode+1
+            else:
+                logging.error( 'Setting SuperK Control Interlock to {}: ERROR present. Interlock state UNKNOWN. Check system.'.format(state) )
+                errorCode = errorCode+1
 
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
-    return ValueError
+    if (errorCode!=0):
+        logging.error( 'Could not set SuperK Interlock. ErrorCode: {}'.format( str(errorCode) ) )
+    return errorCode 
 
 def setVariaControls(COMPort, NDFilterSetpointPercentx10, SWFilterSetpointAngstrom, LPFilterSetpointAngstrom, superKBitCluster, variaBitCluster):
     #int32_t __cdecl SetVariaControls(char COMport[], uint16_t NDFilterSetpointPercentx10, uint16_t SWFilterSetpointAngstrom, uint16_t LPFilterSetpointAngstrom);
-    retValue = 0
-    ValueError = 0
-    try:
-        NDFilterSetpointPercentx10 = c_uint16(NDFilterSetpointPercentx10)
-        SWFilterSetpointAngstrom = c_uint16(SWFilterSetpointAngstrom)
-        LPFilterSetpointAngstrom = c_uint16(LPFilterSetpointAngstrom)
-        
-        ValueError += getVariaStatusBits(COMPort,variaBitCluster)
-        
-        if (superKBitCluster.bit0 == 0):
-            if (variaBitCluster.bit15 == 0):
-                if (SWFilterSetpointAngstrom.value > LPFilterSetpointAngstrom.value):
-                    if ((SWFilterSetpointAngstrom.value - LPFilterSetpointAngstrom.value) >= 100 and (SWFilterSetpointAngstrom.value - LPFilterSetpointAngstrom.value) <= 1000):
-                        ValueError += dll.SetVariaControls(COMPort, NDFilterSetpointPercentx10, SWFilterSetpointAngstrom, LPFilterSetpointAngstrom)
-                        
-                        ValueError += getVariaStatusBits(COMPort,variaBitCluster)
-                
-                        if (variaBitCluster.bit12 == 0) and (variaBitCluster.bit13 == 0) and (variaBitCluster.bit14 == 0):
-                            print "Setting Varia Filters to: SW(nm x 10):", SWFilterSetpointAngstrom.value, " and LP(nm x 10):", LPFilterSetpointAngstrom.value, "(ND: (%x10):", NDFilterSetpointPercentx10.value, ") : Success."
-                        else:
-                            print "Setting Varia Filters to: SW(nm x 10):", SWFilterSetpointAngstrom.value, " and LP(nm x 10):", LPFilterSetpointAngstrom.value, "(ND: (%x10):", NDFilterSetpointPercentx10.value, ") : Warning Filters moving, wait and check again."
-                            ValueError = ValueError+1
-                        
+    errorCode = 0
+    NDFilterSetpointPercentx10 = c_uint16(NDFilterSetpointPercentx10)
+    SWFilterSetpointAngstrom = c_uint16(SWFilterSetpointAngstrom)
+    LPFilterSetpointAngstrom = c_uint16(LPFilterSetpointAngstrom)
+    
+    errorCode += getVariaStatusBits(COMPort,variaBitCluster)
+    
+    if (superKBitCluster.bit0 == 0):
+        if (variaBitCluster.bit15 == 0):
+            if (SWFilterSetpointAngstrom.value > LPFilterSetpointAngstrom.value):
+                if ((SWFilterSetpointAngstrom.value - LPFilterSetpointAngstrom.value) >= 100 and (SWFilterSetpointAngstrom.value - LPFilterSetpointAngstrom.value) <= 1000):
+                    errorCode += dll.SetVariaControls(COMPort, NDFilterSetpointPercentx10, SWFilterSetpointAngstrom, LPFilterSetpointAngstrom)
+                    
+                    errorCode += getVariaStatusBits(COMPort,variaBitCluster)
+            
+                    if (variaBitCluster.bit12 == 0) and (variaBitCluster.bit13 == 0) and (variaBitCluster.bit14 == 0):
+                        logging.info( 'Setting Varia Filters to: SW(nm x 10): {} and LP(nm x 10): {}, (ND: (%x10): {}) : Success.'.format(SWFilterSetpointAngstrom.value,LPFilterSetpointAngstrom.value,NDFilterSetpointPercentx10.value) )
                     else:
-                        print "ERROR (setVariaControls): Minimum bandwidth is 10nm. Maximum bandwidth is 100nm. SP & LP filters must differ by at least 10nm and no more than 100nm."
-                else: 
-                    print "ERROR (setVariaControls): SWP filter value must be larger than LPP filter value"
-            elif (variaBitCluster.bit15 == 0):
-                print "Setting Varia Filters: ERROR present. Filters not set. Check system."
-                ValueError = ValueError+1
-        elif (superKBitCluster.bit0 == 1):
-            print "Setting Varia Filters: ERROR: Emission is ON. Cannot set filters without turning off emission."
+                        logging.error( 'Setting Varia Filters to: SW(nm x 10): {}and LP(nm x 10): {}, (ND: (%x10): {}. Warning Filters moving, wait and check again.'.format(SWFilterSetpointAngstrom.value, LPFilterSetpointAngstrom.value, NDFilterSetpointPercentx10.value) )
+                        errorCode = errorCode+1
+                else:
+                    logging.error( 'ERROR (setVariaControls): Minimum bandwidth is 10nm. Maximum bandwidth is 100nm. SP & LP filters must differ by at least 10nm and no more than 100nm.')
+                    errorCode = errorCode+1
+            else: 
+                logging.error( 'ERROR (setVariaControls): SWP filter value must be larger than LPP filter value'
+                errorCode = errorCode+1
+        elif (variaBitCluster.bit15 == 0):
+            logging.error( 'Setting Varia Filters: ERROR present. Filters not set. Check system.')
+            errorCode = errorCode+1
+    elif (superKBitCluster.bit0 == 1):
+        logging.error( 'Setting Varia Filters: ERROR: Emission is ON. Cannot set filters without turning off emission.')
+        errorCode = errorCode+1
 
-    except ValueError, Argument:
-        retValue = "Error: " + str(ValueError) + "  " + str(Argument)
-    return ValueError
+    if (errorCode!=0):
+        logging.error( 'Could not set Varia Controls. ErrorCode: {}'.format( errorCode ) )
+    return errorCode 
 
 def initialise(COMPort, superKControlCluster, superKBitCluster, variaBitCluster):
-    retValue = 0
-    ValueError = 0
+    errorCode = 0
     
-    print "Begin Initialise ---------------------------"
-    ValueError += getSuperKInfo(COMPort)
-    ValueError += getVariaInfo(COMPort)
-    ValueError += getVariaReadings(COMPort)
-    ValueError += getSuperKReadings(COMPort)
-    ValueError += getSuperKStatusBits(COMPort,superKBitCluster)
+    logging.info( 'Begin Initialise ---------------------------'
+    errorCode += getSuperKInfo(COMPort)
+    errorCode += getVariaInfo(COMPort)
+    errorCode += getVariaReadings(COMPort)
+    errorCode += getSuperKReadings(COMPort)
+    errorCode += getSuperKStatusBits(COMPort,superKBitCluster)
     printSuperKStatusBits(superKBitCluster,"ON")
-    ValueError += getVariaStatusBits(COMPort,variaBitCluster)
+    errorCode += getVariaStatusBits(COMPort,variaBitCluster)
     printVariaStatusBits(variaBitCluster,"ON")
-    ValueError += getSuperKControls(COMPort,superKControlCluster)
-    ValueError += getVariaControls(COMPort)
-    print "End Initialise ---------------------------"
+    errorCode += getSuperKControls(COMPort,superKControlCluster)
+    errorCode += getVariaControls(COMPort)
+    logging.info( 'End Initialise ---------------------------'
     
-    if (ValueError!=0):
-        retValue = "Error: " + str(ValueError)
-    return ValueError
+    if (errorCode==0):
+        logging.info( 'Initialised OK.')
+    else:
+        logging.error( 'Error during Initialisation. ErrorCode: {}'.format( errorCode ) )
+    return errorCode 
 
 def setSafeStates(COMPort, superKControlCluster, superKBitCluster, variaBitCluster):
-    retValue = 0
-    ValueError = 0
+    errorCode = 0
 
-    print "Begin superKSafeStates ---------------------------"
+    logging.error( 'Begin superKSafeStates ---------------------------'
     superKControlCluster.trigLevelSetpointmV = c_uint16(1000)
     superKControlCluster.displayBacklightPercent = c_uint8(50)
     superKControlCluster.trigMode = c_uint8(1)
@@ -576,21 +548,23 @@ def setSafeStates(COMPort, superKControlCluster, superKBitCluster, variaBitClust
     superKControlCluster.internalPulseFreqLimitHz = c_uint32(0)
 
     #if (superKBitCluster.bit0 == 1):
-        #ValueError += setSuperKControlEmission(COMPort,0,superKBitCluster,variaBitCluster)
+        #errorCode += setSuperKControlEmission(COMPort,0,superKBitCluster,variaBitCluster)
         #time.sleep(1)
     
-    ValueError += setSuperKControlInterlock(COMPort,1,superKBitCluster)
+    errorCode += setSuperKControlInterlock(COMPort,1,superKBitCluster)
     time.sleep(1)
-    #ValueError += setSuperKControlEmission(COMPort,0,superKBitCluster,variaBitCluster)
-    #ValueError += setSuperKControlInterlock(COMPort,0,superKBitCluster)
+    #errorCode += setSuperKControlEmission(COMPort,0,superKBitCluster,variaBitCluster)
+    #errorCode += setSuperKControlInterlock(COMPort,0,superKBitCluster)
     #time.sleep(1)
 
-    #ValueError += setSuperKControls(COMPort,superKControlCluster,superKBitCluster)
+    #errorCode += setSuperKControls(COMPort,superKControlCluster,superKBitCluster)
     #time.sleep(1)
-    #ValueError += setVariaControls(COMPort,0,8000,7900,superKBitCluster,variaBitCluster)
+    #errorCode += setVariaControls(COMPort,0,8000,7900,superKBitCluster,variaBitCluster)
     #time.sleep(5)
-    print "End superKSafeStates ---------------------------"
+    logging.error( 'End superKSafeStates ---------------------------'
     
-    if (ValueError!=0):
-        retValue = "Error: " + str(ValueError)
-    return ValueError
+    if (errorCode==0):
+        logging.info( 'Set Safe States OK.')
+    else:
+        logging.error( 'Error Setting Safe States. ErrorCode: {}'.format( errorCode ) )
+    return errorCode 
